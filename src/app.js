@@ -62,7 +62,7 @@ if(testcasesRoutes) {
 
 // InterfaceDesign API routes
 if (interfacedesignRoutes) {
-  app.use('/api', interfacedesignRoutes.main);
+  app.use('/api', interfacedesignRoutes.content);
 }
 
 // ============================================
