@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_SIG_08_A" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Signaturzähler: Nutzer-Authentifizierung logger</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Sicherheitsmodul einen fortlaufenden Signaturzähler bereitstellt, für die
+
+• erfolgreiche Entsperrung der PIN-Eingabe für einen autorisierten Nutzer
+• erfolgreiche Authentifizierung eines autorisierten Nutzers
+• erfolgreiche Abmeldung eines authentifizierten Nutzers
+Es wird der Nutzer logger betrachtet.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Die PIN-Eingabe für die Authentifizierung eines Nutzers logger ist blockiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Entsperren der PIN des Nutzers logger.</Command>
+      <RefFunction>unblockPin</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Abmelden des Nutzers logger.</Command>
+      <RefFunction>logOut</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Entsperren der PIN des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Abmeldung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Abmeldung des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers logger in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCounter enthält ein Wert. Dieser wird als $sig1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCounter enthält ein Wert. Dieser wird als $sig2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig1 ist kleiner als $sig2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Abmeldung des Nutzers logger in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCounter enthält ein Wert. Dieser wird als $sig3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig2 ist kleiner als $sig3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

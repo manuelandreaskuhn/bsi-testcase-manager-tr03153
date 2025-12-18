@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_FIN_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Transaktion beenden: mit ungesicherten Aktualisierungen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zum Beenden einer Transaktion die folgenden Aktionen durchführt:
+• Sicherung von vorherigen bisher ungesicherten Aktualisierungen der Transaktion
+• Abfragen der Log-Nachricht-Teile vom Sicherheitsmodul
+• Speicherung der Log-Nachricht-Teile im Speichermedium
+• Rückgabe der folgenden Daten:
+  o Information, dass eine Log-Nachricht für eine vorherige Aktualisierung erstellt wurde
+  o Zeitpunkt der Aktualisierung
+  o Prüfwert der Log-Nachricht für die Aktualisierung
+  o Signaturzählerstand nach Erstellung der Log-Nachricht für die Aktualisierung
+  o Zeitpunkt der Beendigung
+  o Prüfwert der Log-Nachricht für die Beendigung
+  o Signaturzähler nach Erstellung der Log-Nachricht für die Beendigung
+
+Der Test übergibt beim Aufruf der Funktion die 
+• Seriennummer des Aufzeichnungssystems,
+• Transaktionsnummer, 
+• Daten des Vorgangs und 
+• Art des Vorgangs.
+Zusätzlich erfolgt eine Prüfung der erstellten Log-Nachrichten für die Aktualisierung und die Beendigung der Transaktion und, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+    <Profile>SM_AGG</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten. Für forceSignature wird FALSE übergeben. Die übergebenen Daten unterscheiden sich bis auf die Seriennummer des Aufzeichnungssystems von den zuvor übergebenen Daten.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert firstLogSignatureCreationTime ist nicht vorhanden oder leer.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert firstLogSignatureValue ist nicht vorhanden oder leer.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert firstLogSignatureCounter ist nicht vorhanden oder leer.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data3 festgehalten. Der für processType übergebene Wert wird als $type3 festgehalten. Der für additionalExternalData übergebene Wert wird als $add3 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedFinishProtection entspricht updateLogCreated.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogSignatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $time1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogSignatureValue wird ein Wert zurückgegeben. Dieser wird als $signature1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogSignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogSignatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $time2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogSignatureValue wird ein Wert zurückgegeben. Dieser wird als $signature2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogSignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht updateTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht dem zuvor als $client1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht dem zuvor als $data2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht dem zuvor als $type2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds additionalExternalData entspricht dem zuvor als $add2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter entspricht dem zuvor als $sig1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime entspricht dem zuvor als $time1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureValue entspricht dem zuvor als $signature1 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht finishTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht dem zuvor als $client1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht dem zuvor als $data3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht dem zuvor als $type3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds additionalExternalData entspricht dem zuvor als $add3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter entspricht dem zuvor als $sig2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime entspricht dem zuvor als $time2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureValue entspricht dem zuvor als $signature2 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_28" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export Filter: Zeitraum, zu viele Records angefordert</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Der Test betrachtet einen Aufruf der Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten mit Werten für die Eingabeparameter:
+• startDate,
+• endDate,
+• maximumNumberRecords mit einem Wert größer 0.
+
+Es wird geprüft, ob die Fehlermeldung ErrorTooManyRecords ausgelöst wird, wenn die Anzahl der angeforderten Log-Nachrichten größer ist, als der Wert von maximumNumberRecords.</Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $starttime2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogSignatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $finishtime3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn4 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn4 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für startDate wird der zuvor festgehaltene Wert $starttime2 übergeben. Für endDate wird der zuvor festgehaltene Wert $finishtime3 übergeben. Für maximumNumberRecords wird 3 übergeben.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTooManyRecords ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

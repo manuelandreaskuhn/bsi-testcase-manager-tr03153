@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_TSV_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Ausgabe der Zeitaktualisierungsvariante</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen die unterstützte Variante zur Aktualisierung der Zeit korrekt ausgibt. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getTimeSyncVariant</RefFunction>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen.</Command>
+      <RefFunction>getTimeSyncVariant</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert des Parameters "supportedSyncVariant" entspricht der unterstützten Variante zur Aktualisierung der Zeit.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

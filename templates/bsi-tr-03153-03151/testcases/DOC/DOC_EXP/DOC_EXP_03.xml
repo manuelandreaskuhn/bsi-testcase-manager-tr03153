@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_EXP_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Verfügbarkeit von Export-Werkzeugen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller Hilfstools bereitstellt, die benötigt werden, um die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE zu exportieren.</Purpose>
+  <Profiles>
+    <Profile>EXPORTTOOL</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob der Hersteller Hilfstools bereitstellt, die benötigt werden, um die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE zu exportieren.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Hersteller stellt ein Hilfstools bereit, um die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE zu exportieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

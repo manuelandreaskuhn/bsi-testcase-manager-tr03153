@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_RFB_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Backup-Wiedereinspielung fremder Log-Nachrichten ablehnen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten bei Übergabe von Log-Nachrichten, die nicht von dieser TSE erstellt wurden, den Import der Log-Nachrichten ablehnt, die Fehlermeldung ErrorRestoreFailed auslöst und die Ausführung beendet.</Purpose>
+  <RefFunction>restoreFromBackup</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_RESTOREBACKUP</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält Log-Nachrichten, die nicht von dieser TSE erstellt wurden.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten mit dem TAR-Container, welcher Log-Nachrichten enthält, die nicht von dieser TSE erstellt wurden.</Command>
+      <RefFunction>restoreFromBackup</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorRestoreFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Log-Nachrichten in dem in Step 3 exportierten TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält alle Log-Nachrichten, die vor dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten im Speichermedium gespeichert waren, in unveränderter Weise.</ExpectedResult>
+        <ExpectedResult>Die Log-Nachrichten, die der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden und die nicht von dieser TSE erstellt wurden, sind nicht im TAR-Container vorhanden.</ExpectedResult>
+        <ExpectedResult>Die Log-Nachrichten, die im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Zertifikate in dem in Step 3 exportierten TAR-Container auf Vollständigkeit.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält alle Zertifikate, die vor dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten in der Technischen Sicherheitseinrichtung verwaltet wurden.</ExpectedResult>
+        <ExpectedResult>Der TAR-Container enthält keine Zertifikate, die bei dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden.</ExpectedResult>
+        <ExpectedResult>Die Zertifikate, die im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

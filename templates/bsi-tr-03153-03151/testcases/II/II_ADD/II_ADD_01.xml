@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_ADD_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Keine Zusatzfunktionen in der Schnittstelle</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Einbindungsschnittstelle neben den Funktionen der Einheitlichen Digitalen Schnittstelle gemäß der BSI TR-03153-1 weitere Funktionen unterstützt.</Purpose>
+  <Profiles>
+    <Profile>NO_ADDITIONAL_FUNCTIONALITIES</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller stellt Informationen zur Schnittstelle bereit.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob in der Dokumentation des Herstellers, neben den Funktionen gemäß der BSI TR-03153-1, keine weiteren Funktionen beschrieben sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In der Dokumentation des Herstellers sind, neben den Funktionen gemäß der BSI TR-03153-1, keine weitere Funktionen beschrieben.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der Prüfstelle im Laufe des Prüfverfahrens keine Zusatzfunktionen bekannt geworden sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Im Laufe des Prüfverfahrens sind der Prüfstelle keine Zusatzfunktionen bekannt geworden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

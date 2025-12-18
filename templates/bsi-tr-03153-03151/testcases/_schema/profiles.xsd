@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Schema für die Profil-Checkliste gemäß BSI TR-03153-TS Kapitel 5.1
+      Implementation Conformance Statement (ICS) - Herstellererklärung
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- Root Element -->
+  <xs:element name="ProfileConfiguration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Metadata" type="MetadataType"/>
+        <xs:element name="ProfileDefinitions" type="ProfileDefinitionsType" minOccurs="0"/>
+        <xs:element name="ChecklistSections" type="ChecklistSectionsType"/>
+        <xs:element name="DerivedProfiles" type="DerivedProfilesType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required"/>
+      <xs:attribute name="completed" type="xs:boolean" default="false"/>
+      <xs:attribute name="lastModified" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Profile Definitions (from TR-03153-TS Chapter 4) -->
+  <xs:complexType name="ProfileDefinitionsType">
+    <xs:sequence>
+      <xs:element name="ProfileCategory" type="ProfileCategoryType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProfileCategoryType">
+    <xs:sequence>
+      <xs:element name="Title" type="xs:string"/>
+      <xs:element name="TableReference" type="xs:string" minOccurs="0"/>
+      <xs:element name="Profile" type="ProfileDefinitionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="ProfileDefinitionType">
+    <xs:sequence>
+      <xs:element name="Description" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Metadata -->
+  <xs:complexType name="MetadataType">
+    <xs:sequence>
+      <xs:element name="Manufacturer" type="xs:string" minOccurs="0"/>
+      <xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+      <xs:element name="ProductVersion" type="xs:string" minOccurs="0"/>
+      <xs:element name="CreatedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="Description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Checklist Sections -->
+  <xs:complexType name="ChecklistSectionsType">
+    <xs:sequence>
+      <xs:element name="Section" type="SectionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SectionType">
+    <xs:sequence>
+      <xs:element name="Title" type="xs:string"/>
+      <xs:element name="Description" type="xs:string" minOccurs="0"/>
+      <xs:element name="Question" type="QuestionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Question Types -->
+  <xs:complexType name="QuestionType">
+    <xs:sequence>
+      <xs:element name="Text" type="xs:string"/>
+      <xs:element name="HelpText" type="xs:string" minOccurs="0"/>
+      <xs:element name="DependsOn" type="DependsOnType" minOccurs="0"/>
+      <xs:element name="Answer" type="AnswerType" minOccurs="0"/>
+      <xs:element name="ProfileMapping" type="ProfileMappingType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="QuestionTypeEnum" use="required"/>
+    <xs:attribute name="required" type="xs:boolean" default="false"/>
+    <xs:attribute name="group" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- DependsOn - For conditional questions -->
+  <xs:complexType name="DependsOnType">
+    <xs:sequence>
+      <xs:element name="Condition" type="ConditionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="logic" type="xs:string" default="OR"/>
+  </xs:complexType>
+  
+  <!-- Condition for DependsOn -->
+  <xs:complexType name="ConditionType">
+    <xs:sequence>
+      <xs:element name="Value" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="questionId" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="QuestionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="choice"/>
+      <xs:enumeration value="multi-choice"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Answer -->
+  <xs:complexType name="AnswerType">
+    <xs:sequence>
+      <xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="answered" type="xs:boolean" default="false"/>
+  </xs:complexType>
+
+  <!-- Profile Mapping -->
+  <xs:complexType name="ProfileMappingType">
+    <xs:sequence>
+      <xs:element name="Profile" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="condition" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Derived Profiles -->
+  <xs:complexType name="DerivedProfilesType">
+    <xs:sequence>
+      <xs:element name="ActiveProfile" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

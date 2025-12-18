@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_AUT_21" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Nur Standardnutzer erlaubt (unauthenticated, logger, admin, timeadmin)</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die TSE über die Einbindungsstelle von keinen weiteren Nutzern neben unauthenticated, logger, admin und timeadmin genutzt werden kann.</Purpose>
+  <RefFunction>authenticateUser</RefFunction>
+  <RefUser>unauthenticated</RefUser>
+  <RefUser>logger</RefUser>
+  <RefUser>admin</RefUser>
+  <RefUser>timeadmin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktion zur Authentifizierung von Nutzern. Beim Aufruf der Funktion wird eine unbekannte User-ID übergeben.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUnknownUserId ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>In der Herstellerdokumentation ist nachzuprüfen, ob die TSE über die Einbindungsschnittstelle von keinen weiteren Nutzern neben unauthenticated, logger, admin und timeadmin genutzt werden kann.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Herstellerdokumentation zeigt, dass nur die Nutzer logger, admin und timeadmin existieren und genutzt werden können.</ExpectedResult>
+        <ExpectedResult>Die Herstellerdokumentation zeigt, dass keine weiteren Nutzer und Rollen angelegt werden können.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

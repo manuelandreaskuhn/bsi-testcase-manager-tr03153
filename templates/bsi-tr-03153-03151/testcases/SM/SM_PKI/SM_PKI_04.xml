@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_04" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Dokumentation Verzeichnisdienst-Zugriff</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller eine schlüssige Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können.</Purpose>
+  <Profiles>
+    <Profile>DIRECTORY_SERVICES</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller stellt Informationen über den Verzeichnisdienst bereit.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob der Hersteller eine schlüssige Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikaten von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können, ist wird der Herstellerdokumentation hinreichend und plausibel erklärt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

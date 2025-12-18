@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_EXP_04" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export bei getrennten Sicherheitsmodul-Komponenten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität für den Export aller Log-Nachrichten und der zur Verifikation benötigten Zertifikate und Zusatzdateien erfolgreich aufgerufen werden kann, wenn die Verbindung zu Teilen des Sicherheitsmoduls getrennt ist.</Purpose>
+  <RefFunction>exportLogMessages</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Unterbrechung der Verbindung zu Teilen des Sicherheitsmoduls.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zu Teilen des Sicherheitsmoduls ist unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

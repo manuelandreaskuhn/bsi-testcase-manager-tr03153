@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TRA_04" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fehlermeldung bei Aktualisierung nicht gestarteter Transaktion</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob eine Fehlermeldung ausgelöst wird, bei Aktualisierung einer Transaktion mit einer Transaktionsnummer für die keine Transaktion gestartet wurde.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Die übergebene Transaktionsnummer ist größer als $tn1.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

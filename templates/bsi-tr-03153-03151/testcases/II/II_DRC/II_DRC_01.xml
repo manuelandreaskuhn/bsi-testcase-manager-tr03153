@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_DRC_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Client deregistrieren: Transaktionen verhindern</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Deregistrierung von Aufzeichnungssystemen es verhindert die Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktionen mit einer speziellen Seriennummer eines Aufzeichnungssystems erfolgreich auszuführen.
+Zusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>deregisterClient</RefFunction>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>registerClient</RefFunction>
+  <RefFunction>updateTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefFunction>exportLogMessages</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+      <RefFunction>deregisterClient</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client2 festgehalten.</Command>
+      <RefFunction>registerClient</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>deregisterClient</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Deregistrierung des Aufzeichnungssystems mit CLIENT-ID=$client1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Deregistrierung des Aufzeichnungssystems.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Deregistrierung des Aufzeichnungssystems mit CLIENT-ID=$client1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht deregisterClient.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht integration-interface.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht dem zuvor als $client1 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Deregistrierung des Aufzeichnungssystems mit CLIENT-ID=$client2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Deregistrierung des Aufzeichnungssystems.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Deregistrierung des Aufzeichnungssystems mit CLIENT-ID=$client2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht deregisterClient.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht integration-interface.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht dem zuvor als $client2 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit CLIENT-ID=$client1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit CLIENT-ID=$client2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit CLIENT-ID=$client2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit CLIENT-ID=$client2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

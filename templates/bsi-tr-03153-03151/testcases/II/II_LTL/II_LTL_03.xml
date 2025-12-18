@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_LTL_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Transaktionsaufzeichnung: ErrorLockTransactionLoggingFailed</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen beendet wird und die Fehlermeldung ErrorLockTransactionLoggingFailed ausgibt, wenn das Ausführen der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion nicht unterbunden werden kann.</Purpose>
+  <RefFunction>lockTransactionLogging</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_LOCKTRANSLOGGING</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen. Es wird ein Fehler provoziert, der bewirkt, dass das Ausführen der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion nicht unterbunden werden kann.</Command>
+      <RefFunction>lockTransactionLogging</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorLockTransactionLoggingFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorLockTransactionLoggingFailed ausgelöst wird, wenn das Ausführen der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion nicht unterbunden werden kann.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

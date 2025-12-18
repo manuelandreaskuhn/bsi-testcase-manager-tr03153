@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="STO_CAP_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Plausibilität der Speicherkapazität</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfen der Speicherkapazität des Speichermediums. Die Prüfung erfolgt auf Grundlage von Herstellerdokumenten.</Purpose>
+  <Profiles>
+    <Profile>STORAGE_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Herstellerdokumentation zur Technischen Sicherheitseinrichtung enthält Angaben zur Speicherkapazität in Form der Anzahl möglicher Transaktionen.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Angaben zur Speicherkapazität mit Bezug auf die Anzahl möglicher Transaktionen in der Herstellerdokumentation. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Angaben und Berechnungen des Herstellers zur Speicherkapaziät sind plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

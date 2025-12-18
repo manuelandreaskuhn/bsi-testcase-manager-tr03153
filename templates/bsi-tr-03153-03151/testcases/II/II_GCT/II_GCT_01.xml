@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GCT_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Ausgabe aktuelle CSP-Zeit</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit die aktuell eingestellten Zeit ausgibt, die auch für die Zeitstempelung der Log-Nachrichten verwendet wird. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getCurrentSeTime</RefFunction>
+  <Profiles>
+    <Profile>II_CURRENTTIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde auf die zum Zeitpunkt der Aktualisierung aktuelle offizielle Zeit aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit.</Command>
+      <RefFunction>getCurrentSeTime</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert des Parameters "currentSeTime" entspricht der offiziellen Zeit, welche zum Zeitpunkt des Aufrufs der Funktionalität, zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit, vorlag.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

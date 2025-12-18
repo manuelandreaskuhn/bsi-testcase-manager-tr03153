@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_18" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zulässige Log-Nachrichten-Typen Prüfung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die TSE ausschließlich solche Log-Nachrichten produziert, die in der BSI TR-03153-1 und dort referenzierten Technischen Richtlinien definiert sind. Die Prüfung erfolgt durch Durchsicht aller während der Tests exportierten Log-Nachrichten.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Es werden alle, während den durchgefürten Tests, exportierten (unterschiedlichen) Log-Nachrichten gelistet. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Auflistung enthält ausschließlich solche Log-Nachrichten, die in der BSI TR-03153-1 und dort referenzierten Technischen Richtlinien definiert sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

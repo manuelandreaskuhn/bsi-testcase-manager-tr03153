@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_KRY_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>TSE-Seriennummer Hashwert-Prüfung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung der Seriennummer der TSE durch externe Hashwertbildung über den öffentlichen Schlüssel dessen zugehöriger privater Schlüssel für die Absicherung von Transaktions-Log-Nachrichten verwendet wird.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert serialNumber wird ein Wert zurückgegeben. Dieser wird als $serial1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation des Zertifikats, das zum öffentlichen Schlüssel gehört, der für die Verifikation von Prüfwerten in Transaktions-Log-Nachrichten relevant ist.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält ein entsprechendes Zertifikat.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Export des öffentlichen Schlüssels aus dem Zertifikat.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der öffentliche Schlüssel ist exportiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Externe Hashwertbildung über den in Step 4 exportierten öffentlichen Schlüssel mittels einer anderen Implementierung der im ICS genannten Hashfunktion als jener, die von der TSE verwendet wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der berechnete Hashwert entspricht dem als $serial1 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

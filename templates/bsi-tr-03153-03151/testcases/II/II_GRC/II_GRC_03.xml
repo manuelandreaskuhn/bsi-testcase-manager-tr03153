@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GRC_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Registrierte Aufzeichnungssysteme abfragen: mehrere Clients</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der aktuell registrierten Aufzeichnungssysteme die Seriennummern der aktuell registrierten Aufzeichnungssysteme ausgibt, wenn kein Aufzeichnungssystem registriert ist. Zusätzlich wird geprüft ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getRegisteredClients</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_REGISTEREDCLIENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Kein Aufzeichnungssystem ist registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der aktuell registrierten Aufzeichnungssysteme.</Command>
+      <RefFunction>getRegisteredClients</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabeparameter registeredClients enthält eine leere SEQUENCE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

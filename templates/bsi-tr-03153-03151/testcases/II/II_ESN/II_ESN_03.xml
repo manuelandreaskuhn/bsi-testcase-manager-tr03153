@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ESN_03" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Seriennummer ausgeben: Hashwert korrekt</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob nach einem Aufruf der Funktionalität zur Ausgabe der Seriennummern der Hashwert, der die Seriennummer der TSE repräsentiert, korrekt ist. Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getSerialNumbers</RefFunction>
+  <RefFunction>getCertificate</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Seriennummern.</Command>
+      <RefFunction>getSerialNumbers</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die Funktionanlität gibt eine TLV-Struktur über den Ausgabeparameter serialNumbers zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette.</Command>
+      <RefFunction>getCertificate</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der Hashwert über den öffentlichen Schlüssel dem jeweiligen Datenfeld serialNumber entspricht.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Hashwert über den öffentlichen Schlüssel des relevanten Zertifikats entspricht dem jeweiligen Datenfeld serialNumber.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

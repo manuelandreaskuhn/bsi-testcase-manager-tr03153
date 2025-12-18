@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SDI_ERR_01_AD" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fehlerbehandlung updateTransaction</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Fehlermeldungen der Funktion updateTransaction nicht von den in der BSI TR-03151-1 vorgegebenen Bezeichnern und Werten abweichen.</Purpose>
+  <RefFunction>updateDevice</RefFunction>
+  <RefFunction>updateTransaction</RefFunction>
+  <Profiles>
+    <Profile>SDI</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine API-Definition (z. B. eine Header oder Interface Datei) vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Überprüfung der Fehlermeldungen der Funktion updateTransaction in der API-Definition.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Fehlermeldungen der Funktionen updateTransaction haben die in der BSI TR-03151-1 vorgegebenen Bezeichner und Werte.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

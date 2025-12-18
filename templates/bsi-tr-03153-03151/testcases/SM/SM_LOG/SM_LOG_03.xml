@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_LOG_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Log-Nachricht Audit-Start mit leerer eventData</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Log-Nachricht, die erstellt wird, wenn die Sicherheitsmodulanwendung die Audit-Funktionalität startet, als eventData eine leere ASN.1-Sequenz enthält.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Start der Audit-Funktionalität.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Audit-Funktionalität durch die Sicherheitsmodulanwendung in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Audit-Funktionalität durch die Sicherheitsmodulanwendung.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Audit-Funktionalität durch die Sicherheitsmodulanwendung in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht startAudit.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht SMA.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventData entspricht einer leeren ASN.1-Sequenz.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Falls die Audit-Funktionalität beim ersten Start der TSE oder während der Produktion der TSE startet, kann Testschritt 1 ausgelassen werden.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

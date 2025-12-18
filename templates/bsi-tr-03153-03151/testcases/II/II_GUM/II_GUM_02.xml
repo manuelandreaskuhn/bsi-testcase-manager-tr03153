@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GUM_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fehlerfall belegter Speicher</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität die Fehlermeldung ErrorGetUsedMemoryFailed ausgibt, wenn die aktuell verwendete Speicherkapazität nicht festgestellt werden kann.</Purpose>
+  <RefFunction>getUsedMemory</RefFunction>
+  <Profiles>
+    <Profile>II_USEDMEMORY</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität. Es wird ein Fehler provoziert, der bewirkt, dass die aktuell verwendete Speicherkapazität nicht festgestellt werden kann.</Command>
+      <RefFunction>getUsedMemory</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetUsedMemoryFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorGetUsedMemoryFailed ausgelöst wird, wenn die aktuell verwendete Speicherkapazität nicht festgestellt werden kann.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

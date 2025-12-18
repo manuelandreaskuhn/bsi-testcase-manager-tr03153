@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SDI_IMP_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Einbindungsschnittstelle Implementierung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Einbindungsschnittstelle in mindestens einer durch die BSI TR-03151-2 vorgegebene Implementierung vorliegt.</Purpose>
+  <Profiles>
+    <Profile>SDI</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine API-Definition (z. B. eine Header oder Interface Datei) vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der API-Definition, ob die Einbindungsschnittstelle in mindestens einer durch die BSI TR-03151-2 vorgegebene Implementierung vorliegt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Zur Prüfung liegt mindestens eine Einbindungsschnittstelle gemäß BSI TR-03151-2 vor.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

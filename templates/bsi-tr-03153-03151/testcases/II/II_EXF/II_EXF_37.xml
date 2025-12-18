@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_37" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export Filter: nur ein Parameter first/last übergeben</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten eine Fehlermeldung ausgibt, wenn nur ein Parameter von firstTransactionNumber und lastTransactionNumber übergeben wird.</Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für firsttransactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterMismatch ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für lasttransactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterMismatch ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

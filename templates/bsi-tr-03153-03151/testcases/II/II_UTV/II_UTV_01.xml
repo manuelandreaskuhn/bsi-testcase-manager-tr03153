@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UTV_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Unterstützte Update-Varianten abrufen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Wert, den die Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können, zurückgibt, die unterstützten Varianten für die Aktualisierung von Transaktionen im Sicherheitsmodul repräsentiert. 
+Die Prüfung des zurückgegebenen Wertes erfolgt gegen die angegebenen Varianten im ICS und das tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion.
+Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getUpdateVariants</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können.</Command>
+      <RefFunction>getUpdateVariants</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die Funktion gibt die unterstützten Varianten für die Aktualisierung von Transaktionen über den Rückgabeparameter supportedUpdateVariants zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der zurückgegebene Wert für die unterstützten Aktualisierungsvarianten dem entspricht, der im ICS genannt ist.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der zurückgegebene Wert entspricht der im ICC genannten Angabe zu den unterstützten Aktualisierungsvarianten für Transaktionen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der zurückgegebene Wert für die unterstützten Aktualisierungsvarianten dem tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion entspricht.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der zurückgegebene Wert für die unterstützten Aktualisierungsvarianten entspricht dem tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

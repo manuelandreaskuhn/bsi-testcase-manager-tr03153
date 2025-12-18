@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_ARCH_09" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zeitnahe Aufzeichnung bei Maximallast</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob zeitnah aufgezeichnet wird, wenn die maximale Anzahl an Technische Sicherheitseinrichtungen mit dem (sicherheitseinrichtungsübergreifenden) CSP verbunden ist und jede dieser TSE mit der maximalen Anzahl an Aufzeichnungssystemen und Transaktionen parallel angesprochen wird.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technischen Sicherheitseinrichtungen wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von den Technischen Sicherheitseinrichtungen authentifiziert.</Precondition>
+    <Precondition>Es ist die im ICS genannte, maximale Anzahl an Technische Sicherheitseinrichtungen mit dem (sicherheitseinrichtungsübergreifenden) CSP verbunden (ggf. eine). An jeder TSE ist die maximale Anzahl von Aufzeichnungssysteme registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf wiederholt bis die maximale Anzahl an parallel geöffneten Transaktionen erreicht ist, die das Sicherheitsmodul laut ICS verwalten kann. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Zwischen dem ersten Aufruf und der Beendigung des letzten Aufrufs sind weniger als MAX_UPDATE_DELAY Sekunden vergangen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jedes registrierte Aufzeichnungssystem wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Es werden möglichst viele unterschiedliche Transaktionen aktualisiert (ggf. auch mehrfach).</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Zwischen dem ersten Aufruf und der Beendigung des letzten Aufrufs sind weniger als MAX_UPDATE_DELAY Sekunden vergangen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien. Der Aufruf wird für jede mit dem Krypto-Kern verbundene TSE wiederholt.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachrichten für die Aktualisierungen der Transaktionen aus Testschritt 2 in den TAR-Containern. Die Identifikation erfolgt anhand der Dateinamen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die TAR-Container enthalten für jeden Aufruf in Testschritt 2 eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für die Aktualisierungen der Transaktion aus Testschritt 2 in dem TAR-Containern. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der größte Abstand zwischen zwei Werten, die in signatureCreationTime festgehalten wurden, ist kleiner als MAX_UPDATE_DELAY Sekunden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachrichten für die Aktualisierungen der Transaktionen aus Testschritt 3 in den TAR-Containern. Die Identifikation erfolgt anhand der Dateinamen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die TAR-Container enthalten für jeden Aufruf in Testschritt 3 eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für die Aktualisierungen der Transaktion aus Testschritt 3 in dem TAR-Containern. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der größte Abstand zwischen zwei Werten, die in signatureCreationTime festgehalten wurden, ist kleiner als MAX_UPDATE_DELAY Sekunden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

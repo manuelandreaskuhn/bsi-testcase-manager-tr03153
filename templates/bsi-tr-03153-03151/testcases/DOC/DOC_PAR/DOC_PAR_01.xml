@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_PAR_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Mehrmandantenfähigkeit und Auswirkungen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller den Anwender / Nutzer (Steuerpflichtigen) in einer Herstellerdokumentation zum Produkt darüber informiert, inwieweit die Nutzung mehrerer Aufzeichnungssysteme oder Eingabegeräte mit der TSE zulässig ist und welche Verzögerungen und Probleme bei dem Betrieb der TSE mit mehreren Aufzeichnungssystemen zu erwarten sind.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob der Hersteller den Anwender / Nutzer (Steuerpflichtigen) in einer Herstellerdokumentation zum Produkt darüber informiert, inwieweit die Nutzung mehrerer Aufzeichnungssysteme oder Eingabegeräte mit der TSE zulässig ist und welche Verzögerungen und Probleme bei dem Betrieb der TSE mit mehreren Aufzeichnungssystemen zu erwarten sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Hersteller informiert den Anwender / Nutzer (Steuerpflichtigen) in einer Herstellerdokumentation zum Produkt darüber, inwieweit die Nutzung mehrerer Aufzeichnungssysteme oder Eingabegeräte mit der TSE zulässig ist und welche Verzögerungen und Probleme bei dem Betrieb der TSE mit mehreren Aufzeichnungssystemen zu erwarten sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

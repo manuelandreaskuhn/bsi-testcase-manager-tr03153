@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GTS_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Transaktionsstatus abfragen: korrekter Zustand</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe des Stadiums in welchem sich eine Transaktion befindet den korrekten Zustand von Transaktionen ausgibt. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getTransactionState</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_TRANSACTIONSTATE</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des Stadiums in welchem sich eine Transaktion befindet. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>getTransactionState</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionState entspricht started.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird TRUE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des Stadiums in welchem sich eine Transaktion befindet. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>getTransactionState</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionState entspricht updated.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des Stadiums in welchem sich eine Transaktion befindet. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>getTransactionState</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionState entspricht finished.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

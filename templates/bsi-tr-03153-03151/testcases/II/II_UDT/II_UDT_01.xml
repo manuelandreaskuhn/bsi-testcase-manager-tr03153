@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UDT_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zeit aktualisieren mit übergebenen Werten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls die Zeit mit übergebenen Werten (newDateTime) aktualisiert und ob eine Log-Message erzeugt wird.
+Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird und, ob die Log-Nachricht korrekt erstellt wird.</Purpose>
+  <RefFunction>updateTime</RefFunction>
+  <RefUser>timeadmin</RefUser>
+  <Profiles>
+    <Profile>II_UPDATETIME</Profile>
+    <Profile>NO_TIME_SYNC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer timeadmin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Abmelden von Nutzern. Für den Aufruf wird der Funktionsname logOut verwendet.</Command>
+      <RefFunction>logOut</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der aktuelle Nutzer ist der Nutzer unauthenticated.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht updateTime.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht integration-interface.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht timeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds seTimeBeforeUpdate entspricht einem plausiblen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds seTimeAfterUpdate entspricht dem Zeitpunkt, der der Funktionalität übergeben wurde.</ExpectedResult>
+        <ExpectedResult>Falls clock slewing verwendet wird, sind die Datenfelder slewStepMicroSeconds und slewRateMicroSecondsPerSecond in slewSettings vorhanden und enthalten plausible Werte.</ExpectedResult>
+        <ExpectedResult>Falls clock slewing nicht verwendet wird, ist das Datenfelde slewSettings nicht vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

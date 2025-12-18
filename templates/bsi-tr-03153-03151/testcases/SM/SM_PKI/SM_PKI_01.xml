@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zertifikat und Zertifikatskette von zertifizierter PKI</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Zertifikat der TSE  und die Zertifikate der zugehörigen Zertifikatskette (einschließlich des Vertrauensankers) von einer Public Key Infrastruktur ausgestellt werden, welche über eine gültige Zertifizierung nach Teil 5 der Technischen Richtlinie BSI TR-03145 verfügt.</Purpose>
+  <Profiles>
+    <Profile>NO_INTERIM_PKI_RULING</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Herstellerdokumentation zur Public-Key-Infrastuktur liegt vor.</Precondition>
+    <Precondition>Der Hersteller betreibt eine Test-PKI, die funktional der für den Einsatz geplanten PKI gleicht.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Auslesen der Zertifikate aus dem TAR-Container des Exports. </Command>
+      <ExpectedResults>
+        <ExpectedResult>In dem TAR-Container sind nur das Zertifikat der TSE und die Zertifikate der zugehörigen Zertifikatskette vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Ermittlung der Herausgeber (Issuer) aller extrahierten Zertifikate.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Herausgeber (Issuer) der extrahierten Zertifikate sind Certification Authorities der Test-PKI.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die für den Einsatz geplante PKI über eine gültige Zertifizierung nach Teil 5 der Technischen Richtlinie BSI TR-03145 verfügt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Alle Certification Authorites der für den Einsatz geplanten PKI verfügen über eine gültige Zertifizierung gemäß BSI TR-03145-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

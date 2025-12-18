@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ERR_07_AA" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorParameterSyntax: Transaktions-Export mit Filter</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorParameterSyntax ausgeben, wenn beim Aufruf der Funktionalitäten eine falsche Syntax Eingabeparameter verwendet wird.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten ohne Fehlermeldung beendet werden würden, wenn beim Aufruf der Funktionalitäten keine falsche Syntax verwendet worden wäre.
+Es wird die Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion getestet.</Purpose>
+  <RefFunction>exportLogMessagesByFilter</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für den Parameter clientID verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für den Parameter transactionNumber verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für die Parameter firstTransactionNumber und lastTransactionNumber verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für die Parameter startDate und endDate verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für den Parameter maximumNumberRecords verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktion zum Export von Transaktions-Log-Nachrichten sowie von Zertifikaten und Zusatzdateien mit Filter-Funktion. Beim Aufruf der Funktion wird eine falsche Syntax für alle Parameter verwendet. </Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterSyntax ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorParameterSyntax ausgelöst wird, wenn beim Aufruf der Funktion eine falsche Syntax verwendet wird.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

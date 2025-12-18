@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_SIG_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Signaturzähler: sequentiell, mehrere Aktualisierungen, ohne Absicherung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Sicherheitsmodul einen fortlaufenden Signaturzähler bereitstellt, für
+
+• sequentielle Transaktionen
+• mit mehreren Aktualisierungen
+• ohne Absicherungsschritte</Purpose>
+  <Profiles>
+    <Profile>SM_AGG</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedFinishProtection entspricht updateLogCreated.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig1 ist kleiner als $sig2.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig2 ist kleiner als $sig3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig4 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig3 ist kleiner als $sig4.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedFinishProtection entspricht updateLogCreated.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig5 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig6 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig4 ist kleiner als $sig5.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig5 ist kleiner als $sig6.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig7 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig6 ist kleiner als $sig7.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedFinishProtection entspricht updateLogCreated.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig8 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert secondLogsignatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig9 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig7 ist kleiner als $sig8.</ExpectedResult>
+        <ExpectedResult>Der Wert von $sig8 ist kleiner als $sig9.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

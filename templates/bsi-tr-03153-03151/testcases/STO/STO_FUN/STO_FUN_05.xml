@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="STO_FUN_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Speicherung bei parallelen Transaktionen mit Aggregation</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Log-Nachrichten auf dem Speichermedium gespeichert werden. Der Test betrachtet Absicherungsschritte für mehrere parallele Transaktionen mit den zeitlich versetzten Phasen:
+• Start der Transaktion
+• mehrere Aktualisierungen der Transaktion
+• Beenden der Transaktion</Purpose>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>updateTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <Profiles>
+    <Profile>SM_AGG</Profile>
+    <Profile>SM_MULTI</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für processData wird der Wert $update01 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für processData wird der Wert $update02 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für processData wird der Wert $update03 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für processData wird der Wert $update04 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für processData wird der Wert $update05 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für processData wird der Wert $update06 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für processData wird der Wert $update07 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für processData wird der Wert $update08 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für processData wird der Wert $update09 übergeben. Für forceSignatur wird false übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob das Datenfeld processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update01, $update02 und $update03 entspricht.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container entspricht der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update01, $update02 und $update03.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob das Datenfeld processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update04, $update05 und $update06 entspricht.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container entspricht der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update04, $update05 und $update06.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob das Datenfeld processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update07, $update08 und $update09 entspricht.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds processData in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container entspricht der Konkatenation der in den Aktualisierungen der Transaktion übergebenen Werte $update07, $update08 und $update09.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn3.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

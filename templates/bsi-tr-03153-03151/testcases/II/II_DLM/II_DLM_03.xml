@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_DLM_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Log-Nachrichten löschen: Verbindung unterbrochen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zum Löschen der Log-Nachrichten die Fehlermeldung ErrorDeleteLogMessagesFailed auslöst, wenn die Kommunikationsverbindung zwischen der Einbindungsschnittstelle und dem Speichermedium unterbrochen ist.</Purpose>
+  <RefFunction>deleteLogMessages</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_DELETELOGS</Profile>
+    <Profile>STORAGE_REMOTE</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Unterbrechung der Kommunikationsverbindung zwischen der Einbindungsschnittstelle und dem Speichermedium.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Kommunikationsverbindung zwischen der Einbindungsschnittstelle und dem Speichermedium ist unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Löschen der Log-Nachrichten.</Command>
+      <RefFunction>deleteLogMessages</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorStorageMediumDisconnected ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

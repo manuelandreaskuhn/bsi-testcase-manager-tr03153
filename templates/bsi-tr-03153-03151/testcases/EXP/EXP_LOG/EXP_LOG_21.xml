@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_21" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>TSE-Verhalten bei unterbrochener Verbindung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob sich die TSE bei einer unterbrochenen Verbindung korrekt verhält.</Purpose>
+  <Profiles>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit wird unterbrochen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit ist unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementPartsDisconnected ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit wird wiederhergestellt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit ist nicht unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Transaktionszählers.</Command>
+      <RefFunction>getCurrentTransactionCounter</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container mit der zuvor zuvor als $tn1 festgehaltenen Transaktionsnummer. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für das Starten der Transaktion mit einer Transaktionsnummer größer als $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit wird unterbrochen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit ist unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementPartsDisconnected ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementPartsDisconnected ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit wird wiederhergestellt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen CSP-Einheit und SMAERS-Einheit ist nicht unterbrochen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container mit der zuvor zuvor als $tn1 festgehaltenen Transaktionsnummer. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht zum Beenden der Transaktion in dem TAR-Container mit der zuvor zuvor als $tn1 festgehaltenen Transaktionsnummer. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält keine Log-Nachricht für die Beendigung der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

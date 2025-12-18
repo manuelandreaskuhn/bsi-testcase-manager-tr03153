@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_KRY_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Externe Signaturverifizierung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung des Signaturverfahrens der Aufzeichnung durch externe Verifizierung der Signatur mit dem angegebenen Signaturverfahren.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Signaturverfahren ist aus dem ICS bekannt.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Es wird die Signatur der erstellten Log-Nachricht zurückgegeben.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation des Zertifikats, das zum öffentlichen Schlüssel gehört, der für die Verifikation von Prüfwerten in Transaktions-Log-Nachrichten relevant ist.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält ein entsprechendes Zertifikat.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Export des öffentlichen Schlüssels aus dem Zertifikat.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der öffentliche Schlüssel ist exportiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung des Prüfwertes in der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Der Prüfwert wird mittels einer anderen Implementierung des im ICS genannten Signaturverfahrens (andere Bibliothek als jene, die von der TSE verwendet wird) validiert.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt. Der Prüfwert lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren (inklusive der genannten Hashfunktion und Domain-Parametern), jedoch in einer anderen Implementierung des Signaturverfahrens als jenem, das von der TSE verwendet wird, validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

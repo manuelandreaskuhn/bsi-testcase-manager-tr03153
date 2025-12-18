@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_DLM_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Log-Nachrichten löschen: nicht exportierte Daten schützen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob nach dem Aufruf der Funktionalität zum Löschen der Log-Nachrichten 
+• keine Daten gelöscht werden, die noch nicht exportiert wurden und
+• die Fehlermeldung ErrorUnexportedLogMessages ausgelöst wird, 
+wenn sich Daten im Speichermedium befinden, die noch nicht exportiert wurden. </Purpose>
+  <RefFunction>exportLogMessages</RefFunction>
+  <RefFunction>authenticateUser</RefFunction>
+  <RefFunction>deleteLogMessages</RefFunction>
+  <RefUser>logger</RefUser>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_DELETELOGS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Löschen der Log-Nachrichten.</Command>
+      <RefFunction>deleteLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUnexportedStoredData  ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der TAR-Container, der in Schritt 4 exportiert wurde, alle Log-Nachrichten enthält, die im TAR-Container enthalten sind, der in Schritt 1 exportiert wurde. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container, der in Schritt 4 exportiert wurde, enthält alle Log-Nachrichten, die im TAR-Container enthalten sind, der in Schritt 1 exportiert wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

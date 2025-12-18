@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UBP_02_B" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>PIN entsperren mit falscher PUK: admin</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Entsperren der PIN-Eingabe eines autorisierten Nutzers fehlschlägt, wenn die Funktionalität zum Entsperren der PIN eines autorisierten Nutzers mit
+• einer gültigen User-ID und
+• der falschen PUK 
+aufgerufen wird.
+Es wird der Nutzer admin getestet.</Purpose>
+  <RefFunction>unblockPin</RefFunction>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Die PIN-Eingabe für die Authentifizierung des Nutzers admin ist blockiert (Wert für den Wiederholungszähler ist 0).</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers admin. Es wird die alte PIN, die blockiert ist, übergeben.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorPinBlocked ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Entsperren der PIN des Nutzers admin.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht unblockPin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht integration-interface.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht unauthenticated.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds userToUnblock entspricht admin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds unblockResult entspricht incorrectPuk.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

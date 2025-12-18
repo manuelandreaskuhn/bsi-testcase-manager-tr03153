@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TME_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fortlaufende Zeit: parallele Transaktionen mit Absicherung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die vom Sicherheitsmodul bereitgestellte Zeit fortlaufend ist.
+
+Der Test betrachtet jeweils die folgenden Aktionen für mehrere parallele Transaktionen:
+• Starten der Transaktion
+• mehrere Aktualisierungen der Transaktion mit Absicherungsschritt
+• Beenden der Transaktion 
+Die Aktionen werden versetzt durchgeführt.</Purpose>
+  <Profiles>
+    <Profile>SM_MULTI</Profile>
+    <Profile>SM_NOAGG</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1.1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1.2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1.3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2.1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2.2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2.3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig3.1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig3.2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig3.3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $starttime1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $starttime2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $starttime2 liegt zeitlich nach dem Zeitpunkt $starttime1.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $starttime2 und $starttime1 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $starttime3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $starttime3 liegt zeitlich nach dem Zeitpunkt $starttime2.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $starttime3 und $starttime2 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime1.1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime1.1 liegt zeitlich nach dem Zeitpunkt $starttime3.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime1.1 und $starttime3 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime1.2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime1.2 liegt zeitlich nach dem Zeitpunkt $updatetime1.1.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime1.2 und $updatetime1.1 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig1.3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime1.3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime1.3 liegt zeitlich nach dem Zeitpunkt $updatetime1.2.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime1.3 und $updatetime1.2 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime2.1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime2.1 liegt zeitlich nach dem Zeitpunkt $updatetime1.3.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime2.1 und $updatetime1.3 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime2.2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime2.2 liegt zeitlich nach dem Zeitpunkt $updatetime2.1.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime2.2 und $updatetime2.1 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig2.3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime2.3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime2.3 liegt zeitlich nach dem Zeitpunkt $updatetime2.2.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime2.3 und $updatetime2.2 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime3.1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime3.1 liegt zeitlich nach dem Zeitpunkt $updatetime2.3.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime3.1 und $updatetime2.3 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime3.2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime3.2 liegt zeitlich nach dem Zeitpunkt $updatetime3.1.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime3.2 und $updatetime3.1 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit SIGNATURE-COUNTER=$sig3.3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $updatetime3.3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $updatetime3.3 liegt zeitlich nach dem Zeitpunkt $updatetime3.2.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $updatetime3.3 und $updatetime3.2 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $finishtime1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $finishtime1 liegt zeitlich nach dem Zeitpunkt $updatetime3.3.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $finishtime1 und $updatetime3.3 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $finishtime2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $finishtime2 liegt zeitlich nach dem Zeitpunkt $finishtime1.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $finishtime2 und $finishtime1 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime entspricht dem zuvor als $finishtime2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $finishtime3 liegt zeitlich nach dem Zeitpunkt $finishtime2.</ExpectedResult>
+        <ExpectedResult>Der zeitliche Versatz zwischen den als $finishtime3 und $finishtime2 festgehaltenen Werten ist plausibel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

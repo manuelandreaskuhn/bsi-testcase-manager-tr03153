@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_INF_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Format info.csv mit Herstellerbeschreibung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung der exportierten Datei info.csv. Der Test prüft das Format der Datei. Die Beschreibung der TSE wurde durch den Hersteller gesetzt und durch den Nutzer nicht geändert.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+    <Profile>DESCRIPTION_SET</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Die Beschreibung der TSE wurde durch den Nutzer nicht gesetzt.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Datei info.csv im TAR-Container anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Datei mit dem Dateinamen info.csv.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung des Formats der im TAR-Container enthaltenern Datei info.csv.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Datei info.csv enthält alle notwendigen Informationen, in Reihenfolge und Format gemäß den Vorgaben der TR 03151-1.</ExpectedResult>
+        <ExpectedResult>Die Datei info.csv enthält in jeder Zeile zehn in Anführungszeichen eingebettete, durch Kommas getrennte Einträge. Ist einer der Einträge leer, werden keine Anführungszeichen gesetzt. Enthält ein Eintrag Anführungszeichem ist diesen ein zusätzliches Anführungszeichen vorangestellt.</ExpectedResult>
+        <ExpectedResult>In der Datei info.csv wird ein Komma (, / 0x2C) als Trennzeichen zwischen den Informationen verwendet.</ExpectedResult>
+        <ExpectedResult>Zeilenenden werden im UNIX-Stil (LF / 0x0A) kodiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

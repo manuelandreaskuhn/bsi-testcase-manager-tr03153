@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_32" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Korrektes Tag für processData (definite length)</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das korrekte Tag für das Element processData verwendet wird, wenn kein indefinite length encoding verwendet wird.</Purpose>
+  <Profiles>
+    <Profile>SM_INDEF</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Der Hersteller der TSE hat eine Dokumentation bereitgestellt, welche erklärt, wann die TSE indefinite length encoding und wann nicht verwendet und wie diese Zustände durch die Prüfstelle provoziert werden können.</Precondition>
+    <Precondition>Es wurde die Situtation hergestellt in der die TSE kein indefinite length encoding verwendet und Aktualisierungen aggregiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben. Es werden Daten übergeben und diese als $data1 festgehalten.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben. Es werden Daten übergeben und diese als $data2 festgehalten.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container mit der zuvor zuvor als $tn1 festgehaltenen Transaktionsnummer. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Kodierung der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container mit der zuvor zuvor als $tn1 festgehaltenen Transaktionsnummer, ob kein indefinite length encoding zur Kodierung der processData entsprechend der BSI TR 03151-1 verwendet wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es wird indefinite kein length encoding zu Kodierung der processData verwendet.</ExpectedResult>
+        <ExpectedResult>Als Tag des Elements processData wird 0x82 verwendet.</ExpectedResult>
+        <ExpectedResult>Als Längen-Byte des Elements processData ist nicht im indefinite length encoding, sondern als reguläre Längen-Bytes mit einer konkrete Länge kodiert.</ExpectedResult>
+        <ExpectedResult>Es gibt keine Unterelemente des Elements processData.</ExpectedResult>
+        <ExpectedResult>Value des Elements processData ist die Konkatenation von $data1 und $data2.</ExpectedResult>
+        <ExpectedResult>Value des zweiten OctetStrings entspricht $data2.</ExpectedResult>
+        <ExpectedResult>Das Elements processData hat keine indefinite length-Endmarkierung bestehend aus den Bytes 0x0000.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

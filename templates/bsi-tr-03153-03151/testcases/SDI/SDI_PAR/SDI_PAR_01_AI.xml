@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SDI_PAR_01_AI" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Parameter getTransactionState</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktion getTransactionState die in der BSI TR-03151-1 definierte Reihenfolge und Anzahl für die Eingabe- und Ausgabeparameter einhält und ob die in BSI TR-03151-2 definierten Datentypen verwendet werden.</Purpose>
+  <RefFunction>getTransactionState</RefFunction>
+  <Profiles>
+    <Profile>SDI</Profile>
+    <Profile>II_TRANSACTIONSTATE</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine API-Definition (z. B. eine Header oder Interface Datei) vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der API-Definition, ob die Funktion getTransactionState die in der BSI TR-03151-1 definierte Reihenfolge und Anzahl für die Eingabe- und Ausgabeparameter einhält und ob die in BSI TR-03151-2 definierten Datentypen verwendet werden.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Funktion getTransactionState hält die in der BSI TR-03151-1 definierte Reihenfolge und Anzahl für die Eingabe- und Ausgabeparameter ein und verwendet die in BSI TR-03151-2 definierten Datentypen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

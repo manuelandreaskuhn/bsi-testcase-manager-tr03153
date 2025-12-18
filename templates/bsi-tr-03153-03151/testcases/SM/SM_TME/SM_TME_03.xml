@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TME_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fehlerhafte Zeitaktualisierung: Zeitwert-Format inkorrekt</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Sicherheitsmodul bei einer Aktualisierung der internen Zeit mit einem fehlerhaften Zeitwert 
+• eine gültige Fehlermeldung auslöst und
+• den Wert für die interne Zeit nicht aktualisiert.
+Das Format des neuen Zeitwerts ist nicht korrekt.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+    <Profile>NO_TIME_SYNC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Zeitaktualisierungsfunktion.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Zeitaktualisierungsfunktion. Es wird ein fehlerhafter Zeitwert übergeben. Ein Beispiel für einen ungültigen Zeitpunkt ist ein Zeitpunkt im UTC-Format, der die Angabe einer Zeitzone enthält (z. B. 201901291645+0100) und nicht in Zulu-Zeit dargestellt wird.  Der übergebene Zeitwert unterscheidet sich merklich vom in Testschritt 1 übergebenen Zeitwert.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorInvalidTime ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime ist plausibel zur in Testschritt 1 eingestellten Uhrzeit.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist ein Stellung der Zeit mit einem nach den Vorgaben nichtzulässigem Wert (hierbei ist explizit nicht der Zeitpunkt gemeint, welcher eine "Nicht-Stellung" der Uhrzeit eindeutig erkennbar macht) nicht möglich, können alternativ Herstellerdokumentationen und Quellcode zur Plausibilitätsprüfung, dass keine falschen Werte der TSE übergeben werden können, herangezogen werden. Die der Prüfung zugrundeliegenden Unterlagen und die Herleitung der Plausibilität, sowie das Ergebnis der Prüfung sind im Prüfbericht explizit und gesondert aufzuführen.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

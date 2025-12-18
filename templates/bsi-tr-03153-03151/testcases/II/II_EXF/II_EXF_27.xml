@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_27" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export Filter: Zeitraum + Client-ID, Client-ID nicht gefunden</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Der Test betrachtet einen Aufruf der Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten mit Werten für die Eingabeparameter:
+• startDate
+• endDate
+• clientId
+• maximumNumberRecords mit dem Wert 0.
+
+Es wird geprüft, ob die Fehlermeldung ErrorClientIdNotFound ausgelöst wird, wenn keine Transaktions-Log-Nachricht zu der übergebenen clientId gefunden wird, die in dem Zeitraum zwischen startDate und endDate liegt.</Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $starttime1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert firstLogSignatureCreationTime wird ein Wert zurückgegeben. Dieser wird als $finishtime1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+      <RefFunction>deregisterClient</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client2 festgehalten.</Command>
+      <RefFunction>registerClient</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für startDate wird der zuvor festgehaltene Wert $starttime1 übergeben. Für endDate wird der zuvor festgehaltene Wert $finishtime1 übergeben. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben. Für maximumNumberRecords wird 0 übergeben.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientIdNotFound ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

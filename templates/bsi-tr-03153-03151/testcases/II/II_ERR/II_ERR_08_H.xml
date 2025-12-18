@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ERR_08_H" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorSignatureCounterOverflow: Sicherheitsmodul außer Betrieb nehmen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorSignatureCounterOverflow ausgeben, wenn der Signaturzähler seinen maximalen Wert erreicht hat und eine weitere Signatur erstellt werden soll.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten ohne Fehlermeldung beendet werden würden, wenn der Signaturzähler niedriger wäre.
+Es wird die Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE getestet.</Purpose>
+  <RefFunction>disableSecureElement</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Der Signaturzähler hat seinen maximalen Wert erreicht.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE.</Command>
+      <RefFunction>disableSecureElement</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSignatureCounterOverflow ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorSignatureCounterOverflow von der Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE ausgelöst wird, wenn der Signaturzähler seinen maximalen Wert erreicht hat und eine weitere Signatur erstellt werden soll.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

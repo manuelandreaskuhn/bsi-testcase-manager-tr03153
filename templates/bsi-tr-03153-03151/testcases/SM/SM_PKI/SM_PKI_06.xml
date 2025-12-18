@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>PKI-Übergangsregelung: Verzeichnisdienst</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Anforderung und Empfehlungen im Rahmen der PKI-Übergangsregelung an den Verzeichnisdienst eingehalten werden.</Purpose>
+  <Profiles>
+    <Profile>INTERIM_PKI_RULING</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob das PKI-Konzept mit dem BSI abgestimmt wurde und eine PKI verwendet wird, die über eine Zertifizierung nach Teil 1 der BSI TR-03145 verfügt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das PKI-Konzept wurde mit dem BSI abgestimmt und es wird eine  PKI verwendet, die über eine Zertifizierung nach Teil 1 der BSI TR-03145 verfügt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

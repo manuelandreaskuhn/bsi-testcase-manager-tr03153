@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_AUT_18_D" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Parallele Authentifizierung: logger -> timeadmin</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob zuvor angemeldete Nutzer abgemeldet werden, wenn sich ein neuer Nutzer über die Funktionalität zur Authentifizierung von Nutzern anmeldet.
+Nachdem logger angemeldet war, meldet sich ein timeadmin an.</Purpose>
+  <RefFunction>authenticateUser</RefFunction>
+  <RefUser>logger</RefUser>
+  <RefUser>admin</RefUser>
+  <RefUser>timeadmin</RefUser>
+  <Profiles>
+    <Profile>II_UPDATETIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>admin</RefUser>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Abmelden von Nutzern. Für den Aufruf wird der Funktionsname logOut verwendet.</Command>
+      <RefFunction>logOut</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der aktuelle Nutzer ist der Nutzer unauthenticated.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Abmeldung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Abmeldung des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Abmeldung des Nutzers logger in dem TAR-Container.</Command>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht device oder SMA.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds loggedOutUserId entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds logOutCase entspricht differentUserLoggedIn.</ExpectedResult>
+        <ExpectedResult>Das Element eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers in dem TAR-Container.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht integration-interface.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds userId entspricht timeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds role entspricht timeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds authenticationResult entspricht success.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Externe Verifizierung der Zertifikate</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung der Zertifikate durch externe Verifizierung bzgl.:
+• Aussteller (Issuer) ist korrekt, 
+• Zertifikatskette bis zur Root-CA ist korrekt,
+• Gültigkeit (Validity) ist plausibel,
+• Zertifikat ist nicht zurückgezogen (Revocation List),
+• Signaturverfahren ist korrekt,
+• Signatur ist valide.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Herstellerdokumentation zur Public-Key-Infrastuktur liegt vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Auslesen der Zertifikate aus dem TAR-Container des Exports. </Command>
+      <ExpectedResults>
+        <ExpectedResult>In dem TAR-Container sind das Zertifikat der TSE und alle Zertifikate der zugehörigen Zertifikatskette vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Validieren der Zertifikatskette der in Step 2 ausgelesenen Zertifikate.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die in Step 2 ausgelesenen Zertifikate bilden eine lückenlose Zertifikatskette. D.h. für alle Zertifikate der Zertifikatskette (außer dem Wurzelzertifikat) ist der Aussteller (Issuer) des Zertifikats gleich dem Zertifikatsinhaber (Subject) der ausstellenden Zertifizierungsstelle.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Validieren der Zertifikatssignaturen der Zertifikatskette.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Für alle Zertifikate der Zertifikatskette (außer dem Wurzelzertifikat) lässt sich die Zertifikatssignatur des Zertifikats mit dem öffentlichen Schlüssel der ausstellenden Zertifizierungsstelle verifizieren.</ExpectedResult>
+        <ExpectedResult>Die Zertifikatssignatur des Wurzelzertifikats lässt sich mit dem im Wurzelzertifikat enthaltenen öffentlichen Schlüssel verifizieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Verifizieren der Zertifikatsgültigkeiten für die Zertifikate der Zertifikatskette.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Für alle Zertifikate der Zertifikatskette liegt das Startdatum der Zertifikatsgültigkeit (NotBefore) vor dem Ende der Zertifikatsgültigkeit (NotAfter).</ExpectedResult>
+        <ExpectedResult>Für alle Zertifikate der Zertifikatskette ist das Startdatum der Zertifikatsgültigkeit (NotBefore) größer oder gleich dem Startdatum der Zertifikatsgültigkeit des Zertifikats der ausstellenden Zertifizierungsstelle.</ExpectedResult>
+        <ExpectedResult>Für alle Zertifikate der Zertifikatskette ist das Enddatum der Zertifikatsgültigkeit (NotAfter) kleiner oder gleich dem Enddatum der Zertifikatsgültigkeit des Zertifikats der ausstellenden Zertifizierungsstelle.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung , ob die Zertifikate zurückgezogen wurden.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Für alle ausstellenden Zertifizierungsstellen der Zertifikatskette liegen Sperrlisten vor.</ExpectedResult>
+        <ExpectedResult>Die herangezogenen Sperrlisten sind aktuell.</ExpectedResult>
+        <ExpectedResult>Die herangezogenen Sperrlisten sind gültig, d.h. sie sind mit dem privaten Schlüssel der ausstellenden Zertifizierungsstelle signiert.</ExpectedResult>
+        <ExpectedResult>Kein Zertifikat der Zertifikatskette ist in der Sperrliste der ausstellenden Zertifizierungsstelle enthalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Verifizieren der Angaben zum Signaturverfahren.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Zertifikate sind mit dem im ICS genannten Signaturverfahren signiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_13" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export Filter: Intervall + Client-ID, Client-ID nicht gefunden</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Der Test betrachtet einen Aufruf der Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten mit den Eingabeparametern 
+• firstTransactionNumber
+• lastTransactionNumber 
+• clientId und
+• maximumNumberRecords mit dem Wert 0.
+
+Es wird geprüft, ob die Fehlermeldung ErrorClientIdNotFound ausgelöst wird, wenn keine Log-Nachricht zu der übergebenen Client-ID gefunden wird, die im Intervall aus firstTransactionNumber und lastTransactionNumber enthalten ist.</Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Auf dem Speichermedium sind Log-Nachrichten für mindestens zwei beendete Transaktion gespeichert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Über die Parameter firstTransactionNumber und lastTransactionNumber wird ein Intervall existierender Transaktionsnummern übergeben. Für die Seriennummer des Aufzeichnungssystems wird ein Name übergeben, der nicht bei den Transaktionen beteiligt war.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction><RefUser>logger</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

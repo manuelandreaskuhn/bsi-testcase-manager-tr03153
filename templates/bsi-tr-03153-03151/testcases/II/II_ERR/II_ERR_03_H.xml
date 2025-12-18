@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_ERR_03_H" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorTimeNotSet nach Stromlosigkeit: Transaktion starten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorTimeNotSet ausgeben, wenn der folgende Zustand gilt: Nach einer Phase der Stromlosigkeit für die Technische Sicherheitseinrichtung, wurde die Zeit innerhalb des Sicherheitsmoduls nicht aktualisiert.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten bei aktualisierter Zeit ohne Fehlermeldung beendet werden würden.
+Es wird die Funktionalität für das Starten einer Transaktion getestet.</Purpose>
+  <RefFunction>startTransaction</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Nach einer Phase der Stromlosigkeit für die Technische Sicherheitseinrichtung wurde die Zeit innerhalb des Sicherheitsmoduls nicht aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTimeNotSet ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

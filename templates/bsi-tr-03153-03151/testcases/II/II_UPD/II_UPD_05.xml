@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UPD_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Transaktion aktualisieren: bis zu 100 Zeichen Vorgangsart</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität für die Aktualisierung einer Transaktion bis zu 100 Zeichen für die Art des Vorgangs akzeptiert.
+Zusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>updateTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.</Command>
+        <RefFunction>startTransaction</RefFunction>
+        <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Für forceSignature wird TRUE übergeben. Es wird die Art des Vorgangs mit 100 Zeichen übergeben. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.</Command>
+        <RefFunction>updateTransaction</RefFunction>
+        <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+        <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht updateTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht dem zuvor als $client1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht dem zuvor als $data2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht dem zuvor als $type2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

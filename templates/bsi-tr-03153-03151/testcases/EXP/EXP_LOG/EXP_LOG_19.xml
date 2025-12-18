@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_19" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Audit-Event-Verarbeitung bei Remote-Komponenten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob bei Auftritt eines Audit-Events der CSP-Einheit beziehungsweise des CSPs für jede angeschlossene TSE unverzüglich eine zugehörige Audit-Log-Nachricht erstellt wird und diese mit den jeweiligen privaten Schlüsseln der Technischen Sicherheitseinrichtungen signiert und durch diese gespeichert werden.</Purpose>
+  <Profiles>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es werden vom CSP mindestens zwei TSE parallel betrieben.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Provozierung eines Audit-Events des CSP.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der CSP erstellt für jede TSE deren privaten Schlüssel er verwaltet, unverzüglich eine zugehörige Audit-Log-Nachricht.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien. Jeweils ein Export für jede TSE deren privaten Schlüsse der CSP verwaltet.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+        <ExpectedResult>Es wird für jede  TSE, deren privaten Schlüsse der CSP verwaltet, ein TAR-Container erzeugt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das provozierte Ereignis.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In den TAR-Containern jeder  TSE, deren privaten Schlüsse der CSP verwaltet, existiert eine Audit-Log-Nachricht für das provozierte Ereignis.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

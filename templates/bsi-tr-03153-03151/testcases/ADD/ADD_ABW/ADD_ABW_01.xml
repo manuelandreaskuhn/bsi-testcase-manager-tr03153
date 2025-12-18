@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="ADD_ABW_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Kompatibilität und Fehlerverhalten von Zusatzfunktionen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob zusätzlichen Funktionalitäten der Einbindungsschnittstelle, die eine Abwandlungen von Standardfunktionen darstellen gleich den Standardfunktionen funktionieren. Insbesondere wird das Verhalten im Fehlerfall untersucht.</Purpose>
+  <Profiles>
+    <Profile>ADDITIONAL_FUNCTIONALITIES</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Für zusätzliche Funktionalitäten der Einbindungsschnittstelle stellt der Hersteller eine hinreichende Dokumentation zur Verfügung.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob zusätzlichen Funktionalitäten der Einbindungsschnittstelle, die eine Abwandlungen von Standardfunktionen darstellen gleich den Standardfunktionen funktionieren. Insbesondere wird das Verhalten im Fehlerfall untersucht.
+Es werden die Angaben in der Herstellerdokumentation verwendet und es werden praktische Prüfungen vorgenommen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Abwandlungen zur Standardfunktion sind allenfalls Erweiterungen, müssen wie die Standardfunktionen funktionieren und dürfen ihnen nicht entgegenwirken.</ExpectedResult>
+        <ExpectedResult>Das Verhalten im Fehlerfall ist idenisch.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

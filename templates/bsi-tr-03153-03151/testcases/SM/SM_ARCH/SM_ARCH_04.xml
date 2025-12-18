@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_ARCH_04" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>SMAERS-Einheit mit Transaktionszähler</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Sicherheitsmodulanwendung des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer SMAERS-Einheit besteht, welche über genau einen eindeutigen Transaktionszähler verfügt.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Sicherheitsmodulanwendung des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer SMAERS-Einheit besteht, welche über genau einen eindeutigen Transaktionszähler verfügt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass die Sicherheitsmodulanwendung des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer SMAERS-Einheit besteht, welche über genau einen eindeutigen Transaktionszähler verfügt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_LOG_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Log-Nachricht Verlassen sicherer Zustand mit leerer eventData</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Log-Nachricht, die erstellt wird, wenn der sichere Zustand verlassen wird, als eventData eine leere ASN.1-Sequenz enthält.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Sicherheitsmodulanwendung ist in einem sicheren Zustand.</Precondition>
+    <Precondition>Der Hersteller gibt eine Erklärung ab, wie der sichere Zustand verlassen werden kann.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Es wird den Erklärungen des Herstellers,wie der sichere Zustand verlassen werden kann, gefolgt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der sichere Zustand wird verlassen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Austritt der Sicherheitsmodulanwendung aus dem sicheren Zustand in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für den Austritt der Sicherheitsmodulanwendung aus dem sicheren Zustand.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Austritt der Sicherheitsmodulanwendung aus dem sicheren Zustand in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht exitSecureState.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht SMA.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventData entspricht einer leeren ASN.1-Sequenz.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

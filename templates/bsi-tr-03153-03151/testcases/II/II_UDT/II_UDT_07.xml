@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UDT_07" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zentrale Zeitstellung: Nutzer centraltimeadmin in Log-Nachrichten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob bei zentraler Zeitstellung der Nutzer centraltimeadmin als Auslöser in Log-Nachrichten für die Aktualisierung der Zeit genannt wird.</Purpose>
+  <RefFunction>updateTime</RefFunction>
+  <RefUser>timeadmin</RefUser>
+  <Profiles>
+    <Profile>CENTRAL_TIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur zentralen Zeitstellung durch eine zentrale Funktionalität als centraltimeadmin.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht updateTime.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht CSP.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventTriggeredByUser entspricht centraltimeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds seTimeBeforeUpdate entspricht einem plausiblen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds seTimeAfterUpdate entspricht dem Zeitpunkt, zu dem die Funktionalität gestartet wurde oder der in Schritt 1 übergeben wurde.</ExpectedResult>
+        <ExpectedResult>Falls clock slewing verwendet wird, sind die Datenfelder slewStepMicroSeconds und slewRateMicroSecondsPerSecond in slewSettings vorhanden und enthalten plausible Werte.</ExpectedResult>
+        <ExpectedResult>Falls clock slewing nicht verwendet wird, ist das Datenfelde slewSettings nicht vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

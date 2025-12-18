@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TME_08_B" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fortlaufende Zeit: Nutzer-Authentifizierung admin</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die vom Sicherheitsmodul bereitgestellte Zeit fortlaufend ist.
+
+Der Test betrachtet jeweils die folgenden Aktionen: 
+
+• erfolgreiche Entsperrung der PIN-Eingabe für einen autorisierten Nutzer
+• erfolgreiche Authentifizierung eines autorisierten Nutzers
+• erfolgreiche Abmeldung eines authentifizierten Nutzers
+Es wird der Nutzer admin betrachtet.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Die PIN-Eingabe für die Authentifizierung eines Nutzers admin ist blockiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Entsperren der PIN des Nutzers admin.</Command>
+      <RefFunction>unblockPin</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Abmelden des Nutzers admin.</Command>
+      <RefFunction>logOut</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Entsperren der PIN des Nutzers admin.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers admin.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Abmeldung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Abmeldung des Nutzers admin.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $time1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $time2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $time2 liegt zeitlich nach dem Zeitpunkt $time1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Abmeldung des Nutzers admin in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Datenfeld signatureCreationTime enthält ein Wert. Dieser wird als $time3 festgehalten.</ExpectedResult>
+        <ExpectedResult>Der Zeitpunkt $time3 liegt zeitlich nach dem Zeitpunkt $time2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

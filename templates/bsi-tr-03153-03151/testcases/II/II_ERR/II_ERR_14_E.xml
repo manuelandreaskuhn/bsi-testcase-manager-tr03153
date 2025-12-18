@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_ERR_14_E" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorSecureElementPartsDisconnected: Beschreibung der TSE erstellen oder ändern</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorSecureElementPartsDisconnected ausgeben, wenn logische oder physische Teile des Sicherheitsmoduls nicht mehr verbunden sind.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten ohne Fehlermeldung beendet werden würden, wenn alle logischen und physischen Teile des Sicherheitsmoduls verbunden wären.
+Es wird die Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE getestet.</Purpose>
+  <Profiles>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Logische oder physische Teile des Sicherheitsmoduls sind nicht mehr verbunden.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementPartsDisconnected ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

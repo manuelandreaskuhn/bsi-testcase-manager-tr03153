@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TME_09" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>System-Log-Nachrichten bei Zeitstellung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob als Reaktion auf jedes Stellen der Zeitführung einer CSP-Einheit bzw. des CSPs unmittelbar korrekte System-Log-Nachrichten des Typs updateTime nach BSI TR-03151-1 erstellt werden und diese mit den jeweiligen privaten Schlüsseln der Technischen Sicherheitseinrichtungen signiert und durch diese gespeichert werden.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+    <Profile>CENTRAL_TIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist die im ICS genannte, maximale Anzahl an Technische Sicherheitseinrichtungen mit dem (sicherheitseinrichtungsübergreifenden) CSP verbunden (ggf. eine).</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der zentralen Zeitaktualisierungsfunktion.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Die Identifikation wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE durchgeführt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Prüfung wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE durchgeführt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime ist plausibel zur eingestellten Uhrzeit.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime weicht maximal 50 ms multipliziert mit der Anzahl der mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSEn von den entsprechenden Werten der Logs der anderen TSEn ab.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurde für jede TSE der richtige Signaturschlüssel verwendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Die Identifikation wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE durchgeführt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der Signaturzähler der Authentifizierung bei jeder mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE höher ist als der Signaturzähler der Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Signaturzähler der Authentifizierung ist bei jeder mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE höher ist als der Signaturzähler der Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_EXC_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export der Zertifikatskette</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob nach einem Aufruf der Funktionalität zur Ausgabe des Zertifikats der TSE und der zugehörigen Zertifikatskette ein TAR-Container mit den korrekten Zertifikaten exportiert wird.
+Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getCertificate</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des Zertifikats der TSE und der zugehörigen Zertifikatskette.</Command>
+      <RefFunction>getCertificate</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+        <ExpectedResult>Die Funktion gibt einen Dateinamen für einen TAR-Container zurück, der den Vorgaben der BSI TR-03151-1 entspricht.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der TAR-Container alle Zertifikate der betreffenden Zertifikatskette enthält. Diese Zertifikate gehören zu den öffentlichen Schlüsseln von Schlüsselpaaren, die für die Prüfwertvalidierung in den verschiedenen Typen von Log-Nachrichten verwendet werden.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält alle Zertifikate der Zertifikatskette.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Dateinamen von allen exportierten Zertifikaten.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Struktur der Dateinamen entspricht der Definition in der BSI TR-03151.</ExpectedResult>
+        <ExpectedResult>Die Information zur Seriennummer (SERIAL) in den jeweiligen Dateinamen der Zertifikate entspricht den Werten der Seriennummern in den Zertifikaten.</ExpectedResult>
+        <ExpectedResult>Die Information zu den Typen der Zertifikate (TYPE) in den jeweiligen Dateinamen entspricht den Typen der Zertifikate (X.509).</ExpectedResult>
+        <ExpectedResult>Die Dateiendung der Zertifikate ist cer, CER, crt, CRT, pem, PEM, der oder DER.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung des Formats von allen exportierten Zertifikaten.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Zertifikate sind als X.509-Zertifikate kodiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der TAR-Container die Datei info.csv enthält.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält die Datei info.csv.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob der TAR-Container neben der Datei info.csv und den Zertifikaten zu den öffentlichen Schlüsseln von Schlüsselpaaren, die für die Prüfwertervalidierung in den verschiedenen Typen von Log-Nachrichten verwendet werden, weitere Dateien enthält.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält neben der Datei info.csv und den Zertifikaten zu den öffentlichen Schlüsseln von Schlüsselpaaren, die für die Prüfwertvalidierung in den verschiedenen Typen von Log-Nachrichten verwendet werden, keine weiteren Dateien.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

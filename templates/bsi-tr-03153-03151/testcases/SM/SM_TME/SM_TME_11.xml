@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_TME_11" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Einheitliches Zeitformat in allen Aufzeichnungen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob in allen Aufzeichnungen und Logs, die im Rahmen der Konformitätsprüfung erstellt wurden, nicht mehr als eines der zulässigen Zeitformate verwendet.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung des Zeitformats in allen Aufzeichnungen und Logs, die im Rahmen der Konformitätsprüfung erstellt wurden.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In allen Aufzeichnungen und Logs, die im Rahmen der Konformitätsprüfung erstellt wurden, sind die verwendeten Zeitformate identisch und zulässig.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UDD_07" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Externes Update mit vollständigem Logging</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob ein Update durch eine externe Funktionalität angestoßen werden kann. Zusätzlich werden die beiden zu erstellenden Log-Nachrichten geprüft. Es wird geprüft, ob die Log-Nachricht updateDevice die geforderten Informationen über den aktuellen Versionsstand jeder Komponente enthält und ob die Log-Nachricht updateDeviceCompleted die geforderten Informationen über den neuen Versionsstand jeder Komponente enthält.</Purpose>
+  <Profiles>
+    <Profile>UPDATE_EXTERNAL</Profile>
+    <Profile>UPDATE_EXTERNAL_LOGGED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität  zur Installation von Updates durch eine externe Funktionalität.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Start des Updates für die TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für den Start des Updates für die TSE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Start des Updates für die TSE in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht updateDevice.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht dem Ursprung des Events (device, storage, integration-interface, CSP oder SMA).</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert im Datenfeld eventData entspricht der vorgegebenen ASN.1 Definition. Es wird eine DER Kodierung verwendet.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder componentName entsprechen jeweils dem Namen der Komponente (device, storage, integration-interface, CSP oder SMA).</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder manufacturer entsprechen jeweils dem Hersteller der Komponente.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder model entsprechen jeweils dem Modell der Komponente.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder version entsprechen jeweils der Version der Komponente vor dem Update.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Abschluss des Updates für die TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für den Abschluss des Updates für die TSE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Abschluss des Updates für die TSE in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht updateDeviceCompleted.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht dem Ursprung des Events (device, storage, integration-interface, CSP oder SMA).</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds updateOutcome entspricht success.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld reasonForFailure ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert im Datenfeld eventData entspricht der vorgegebenen ASN.1 Definition. Es wird eine DER Kodierung verwendet.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder componentName entsprechen jeweils dem Namen der Komponente (device, storage, integration-interface, CSP oder SMA).</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder manufacturer entsprechen jeweils dem Hersteller der Komponente.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder model entsprechen jeweils dem Modell der Komponente.</ExpectedResult>
+        <ExpectedResult>Die Werte der Datenfelder version entsprechen jeweils der Version der Komponente nach dem Update.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

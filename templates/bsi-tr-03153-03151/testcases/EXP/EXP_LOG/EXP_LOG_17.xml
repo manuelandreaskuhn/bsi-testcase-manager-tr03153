@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_17" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>seAuditData-Feld Prüfung für Audit-Log-Nachrichten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die funktionsspezifischen Inhalte für die Protokollierung von Audit-Daten, die vom Sicherheitsmodul erzeugt werden, im Datenfeld seAuditData protokolliert werden und den Vorgaben der Herstellerdokumentation entsprechen.
+Es werden alle Log-Nachrichten für die Protokollierung von Audit-Daten betrachtet, die vom Sicherheitsmodul erzeugt werden können.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Das Sicherheitsmodul in der Technischen Sicherheitseinrichtung wurde nicht deaktiviert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Es werden alle Audit-Log-Nachrichten erzeugt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Alle Audit-Log-Nachrichten wurden erzeugt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die funktionsspezifischen Inhalte für die Protokollierung von Audit-Daten, die vom Sicherheitsmodul erzeugt werden, im Datenfeld seAuditData protokolliert werden und den Vorgaben der Herstellerdokumentation entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die funktionsspezifischen Inhalte für die Protokollierung von Audit-Daten werden im Datenfeld seAuditData protokolliert und entsprechen der Herstellerdokumentation.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

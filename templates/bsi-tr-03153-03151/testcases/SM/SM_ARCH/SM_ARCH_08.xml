@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_ARCH_08" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Aufzeichnungssystem-Zuordnung bei sicherheitsübergreifendem CSP</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob ein Aufzeichnungssystem immer nur genau einer TSE zugeordnet wird, wenn die CSP-Einheit der TSE mit anderen logischen Einheiten zu einem sicherheitseinrichtungsübergreifenden CSP zusammengefasst wird.</Purpose>
+  <Profiles>
+    <Profile>CSP_ENTITY</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technischen Sicherheitseinrichtungen wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von den Technischen Sicherheitseinrichtungen authentifiziert.</Precondition>
+    <Precondition>Es stehen zwei Aufzeichnungssystene zur Verfügung, die zwei verschiedene TSEn ansprechen. Die TSE verwenden logische CSP-Einheiten eines sicherheitseinrichtungsübergreifenden CSP.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am ersten Aufzeichnungssystem.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1.1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1.1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1.1 übergeben. Aufruf der Funktion am ersten Aufzeichnungssystem.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am ersten Aufzeichnungssystem.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1.2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig1.2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am zweiten Aufzeichnungssystem.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2.1 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2.1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2.1 übergeben. Aufruf der Funktion am zweiten Aufzeichnungssystem.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am zweiten Aufzeichnungssystem.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2.2 festgehalten.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert signatureCounter wird ein Wert zurückgegeben. Dieser wird als $sig2.2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die zurückgegebenen Signaturzähler der beiden TSEn fortlaufend und voneinander unabhängig sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der festgehaltene Wert $sig1.2 ist größert ist als der festgehaltene Wert $sig1.1.</ExpectedResult>
+        <ExpectedResult>Der festgehaltene Wert $sig2.2 ist größert ist als der festgehaltene Wert $sig2.1.</ExpectedResult>
+        <ExpectedResult>Die festgehaltenen Werte $sig1.1 und $sig1.2 stehen in keinem erkennbaren Abhängigkeitsverhältnis zu den festgehaltenen Werten $sig2.1 und $sig2.2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die zurückgegebenen Transaktionszähler der beiden TSEn fortlaufend und voneinander unabhängig sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der festgehaltene Wert $tn1.2 ist um 1 größert ist als der festgehaltene Wert $tn1.1.</ExpectedResult>
+        <ExpectedResult>Der festgehaltene Wert $tn2.2 ist um 1 größert ist als der festgehaltene Wert $tn2.1.</ExpectedResult>
+        <ExpectedResult>Die festgehaltenen Werte $tn1.1 und $tn1.2 stehen in keinem erkennbaren Abhängigkeitsverhältnis zu den festgehaltenen Werte $tn2.1 und $tn2.2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

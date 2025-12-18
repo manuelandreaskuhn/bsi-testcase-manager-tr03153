@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_CNT_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Anzahl offener Transaktionen: mehrere unter Maximum</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Wert, den die Funktionalität zur Ausgabe der Anzahl von offenen Transaktionen zurückgibt, der aktuellen Anzahl von parallel geöffneten Transaktionen entspricht, die im Sicherheitsmodul verwaltet werden.
+Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.
+
+Es werden mehrere offene Transaktionen im Sicherheitsmodul verwaltet. Die Anzahl der Transaktionen ist kleiner als die maximale Anzahl von Transaktionen, die im ICS angegeben wird.</Purpose>
+  <RefFunction>getCurrentNumberOfTransactions</RefFunction>
+  <Profiles>
+    <Profile>II_CURNOTRANSACTIONS</Profile>
+    <Profile>SM_MULTI</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Im Sicherheitsmodul werden mehrere offene Transaktionen verwaltet. Die Anzahl der offenen Transaktionen ist kleiner als die maximale Anzahl von Transaktionen, die im ICS angegeben wird und wird als $count festgehalten.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Anzahl von offenen Transaktionen.</Command>
+      <RefFunction>getCurrentNumberOfTransactions</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert currentNumberTransactions entspricht dem zuvor als $count festgehaltenen Wert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

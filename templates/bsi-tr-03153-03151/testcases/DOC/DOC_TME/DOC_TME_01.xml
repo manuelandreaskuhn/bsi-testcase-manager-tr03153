@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_TME_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Eindeutige Zeitformat-Unterstützung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob genau eins der definierten Zeitformate laut ICS von der TSE unterstützt wird.</Purpose>
+  <Profiles>
+    <Profile>II_UPDATETIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Das ICS liegt vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob genau eins der definierten Zeitformate laut ICS von der TSE unterstützt wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Herstellerdokumente und Ergebnisse aus den durchgeführten praktischen Prüfungen belegen, dass  genau eins der definierten Zeitformate laut ICS von der TSE unterstützt wird.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

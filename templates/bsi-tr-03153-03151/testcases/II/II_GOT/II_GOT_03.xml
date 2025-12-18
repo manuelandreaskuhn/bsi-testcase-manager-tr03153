@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GOT_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Offene Transaktionen abfragen: mehrere offene Transaktionen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der Transaktionsnummern aller nicht beendeten Transaktionen die Transaktionsnummern aller offenen Transaktionen ausgibt, wenn die Anzahl der offenen Transaktionen der maximalen Anzahl der parallel geöffneten Transaktionen entspricht, die das Sicherheitsmodul verwalten kann. Zusätzlich wird geprüft ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getOpenTransactions</RefFunction>
+  <Profiles>
+    <Profile>II_OPENTRANSACTIONS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Die Anzahl der offenen Transaktionen entspricht der maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Transaktionsnummern aller nicht beendeten Transaktionen.</Command>
+      <RefFunction>getOpenTransactions</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabeparameter openTransactions enthält die eine SEQUENCE mit einem Element TransactionInfo für jede offene Funktion.</ExpectedResult>
+        <ExpectedResult>Die Elemente transactionNumber entsprechen den Transaktionsnummern der offenen Transaktionen.</ExpectedResult>
+        <ExpectedResult>Der Rückgabeparameter openTransactions listet keine Transaktionen auf, die  von der TSE als verwaist gewertet werden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

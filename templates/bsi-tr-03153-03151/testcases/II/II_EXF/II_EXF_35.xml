@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_35" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Gefilterter Export mit exakter Anzahl</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Der Test betrachtet einen Aufruf der Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten mit einem Wert größer 0 für den Eingabeparameter maxi-mumNumberRecords.
+
+Die Anzahl der angeforderten Log-Nachrichten ist gleich dem Wert für maximumNumberRecords.
+
+Es wird geprüft, ob alle Log-Nachrichten, die sich im Speichermedium befinden, exportiert werden. </Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Auf dem Speichermedium sind Log-Nachrichten für mehrere beendete Transaktionen gespeichert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Der Wert, der in maximumNumberRecords übergeben wird, entspricht der Anzahl der Log-Nachrichten, die in Testschritt 1 exportiert wurden.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung ob alle Dateien, die in dem TAR-Container enthalten sind, der in Testschritt 1 exportiert wurde, auch in dem TAR-Container enthalten sind, der in Testschritt 2 exportiert wurde.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Alle Dateien, die in dem TAR-Container enthalten sind, der in Testschritt 1 exportiert wurde, sind auch in dem TAR-Container enthalten, der in Testschritt 2 exportiert wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_MNT_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Fehlerfall maximale Transaktionsanzahl</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der maximalen Anzahl von offenen Transaktionen, die gleichzeitig von der Technischen Sicherheitseinrichtung verwaltet werden können, die Fehlermeldung ErrorGetMaxNumberTransactionsFailed ausgibt, wenn die maximalen Anzahl von parallel geöffneten Transaktionen, die im Sicherheitsmodul verwaltet werden, nicht festgestellt werden kann.</Purpose>
+  <RefFunction>getMaxNumberOfTransactions</RefFunction>
+  <Profiles>
+    <Profile>II_MAXNOTRANSACTIONS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der maximalen Anzahl von offenen Transaktionen, die gleichzeitig von der Technischen Sicherheitseinrichtung verwaltet werden können. Es wird ein Fehler provoziert, der bewirkt, dass die maximalen Anzahl von parallel geöffneten Transaktionen, die im Sicherheitsmodul verwaltet werden, nicht festgestellt werden kann.</Command>
+      <RefFunction>getMaxNumberOfTransactions</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetMaxNumberTransactionsFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorGetMaxNumberTransactionsFailed ausgelöst wird, wenn die maximalen Anzahl von parallel geöffneten Transaktionen, die im Sicherheitsmodul verwaltet werden, nicht festgestellt werden kann.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

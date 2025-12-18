@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="ADD_DOC_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Einhaltung der TR-Vorgaben durch Zusatzfunktionen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die zusätzlichen Funktionalitäten der Einbindungsschnittstelle den in den Technischen Richtlinien und Schutzprofilen vorgegeben Methoden, Abläufen, Grundideen und Sicherheitsvorgaben entsprechen.</Purpose>
+  <Profiles>
+    <Profile>ADDITIONAL_FUNCTIONALITIES</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob die zusätzlichen Funktionalitäten der Einbindungsschnittstelle den in den Technischen Richtlinien und Schutzprofilen vorgegeben Methoden, Abläufen, Grundideen und Sicherheitsvorgaben entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die zusätzlichen Funktionalitäten der Einbindungsschnittstelle ensprechen den in den Technischen Richtlinien und Schutzprofilen vorgegeben Methoden, Abläufen, Grundideen und stehen den Sicherheitsvorgaben nicht entgegen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

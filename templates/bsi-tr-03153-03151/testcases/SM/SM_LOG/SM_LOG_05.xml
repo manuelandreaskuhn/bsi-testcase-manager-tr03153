@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_LOG_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Log-Nachricht sicherer Zustand mit korrekter Zeit (sofort)</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Log-Nachricht, die erstellt wird, wenn die Sicherheitsmodulanwendung beim Vorherrschen von Fehlern in einen sicheren Zustand eintritt, die korrekte Zeit enthält, wenn diese Log-Nachricht beim Auftreten des Events erstellt wird.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller gibt eine Erklärung ab, wie der sichere Zustand erreicht werden kann.</Precondition>
+    <Precondition>Der Hersteller gibt eine Erklärung ab, wie verhindert werden kann, dass die Nachricht zum Zeitpunkt des Auftretens des Events nicht erstellt wird.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Es wird eine Situation hergestellt, bei der die Sicherheitsmodulanwendung in einen sicheren Zustand eintritt und dies durch eine Log-Nachricht belegt werden kann.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Sicherheitsmodulanwendung tritt in einen sicheren Zustand ein.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Eintritt der Sicherheitsmodulanwendung in einen sicheren Zustand in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für den Eintritt der Sicherheitsmodulanwendung in einen sicheren Zustand.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Eintritt der Sicherheitsmodulanwendung in einen sicheren Zustand in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht enterSecureState.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht SMA.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Falls das Datenfeld timeOfEvent vorhanden ist, entspricht der Wert des Datenfelds timeOfEvent dem Zeitpunkt zu dem Testschritt 1 durchgeführt wurde.</ExpectedResult>
+        <ExpectedResult>Falls das Datenfeld timeOfEvent vorhanden ist, wird das gleiche Format verwendet wie für das Datenfeld signatureCreationTime. Insbesondere wird - falls vorhanden - die gleiche Zeitzone verwendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

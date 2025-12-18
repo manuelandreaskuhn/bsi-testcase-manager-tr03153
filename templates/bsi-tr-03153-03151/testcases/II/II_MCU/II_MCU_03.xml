@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_MCU_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Maximale Anzahl Aufzeichnungssysteme mit Absicherungsschritt</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die maximale Anzahl von Aufzeichnungssystemen parallel jeweils eine Transaktion starten, einmalig mit Absicherungsschritt aktualisieren und beenden können.</Purpose>
+  <RefFunction>startTransaction</RefFunction>
+  <RefFunction>updateTransaction</RefFunction>
+  <RefFunction>finishTransaction</RefFunction>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>MULTI_CLIENT</Profile>
+    <Profile>SM_NOAGG</Profile>
+    <Profile>SM_MULTI</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist die maximale Anzahl von Aufzeichnungssysteme registriert.</Precondition>
+    <Precondition>Es wird keine geöffnete Transaktion vom Sicherheitsmodul verwaltet.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird durch alle angemeldeten Aufzeichnungssysteme oder alternativ bis zur maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann, wiederholt. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Seriennummer des Aufzeichnungssystems und die Parameter processData, processType und additionalExternalData übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Der Aufruf wird für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Seriennummer des Aufzeichnungssystems und die Parameter processData, processType und additionalExternalData übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachrichten für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand der Dateinamen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält für jedes Aufzeichnungssystem eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachrichten für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand der Dateinamen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält für jedes Aufzeichnungssystem eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachrichten für das Beenden der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand der Dateinamen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält für jedes Aufzeichnungssystem eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für das Starten der Transaktion in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht jeweils startTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht jeweils der übergebenen Seriennummer des Aufzeichnungssystems.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht jeweils den übergebenen Daten des Vorgangs.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht jeweils der übergebenen Art des Vorgangs.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für die Aktualisierung der Transaktion in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht jeweils updateTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht jeweils der übergebenen Seriennummer des Aufzeichnungssystems.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht jeweils den übergebenen Daten des Vorgangs.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht jeweils der übergebenen Art des Vorgangs.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für das Beenden der Transaktion in dem TAR-Container. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds operationType entspricht jeweils finishTransaction.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds clientId entspricht jeweils der übergebenen Seriennummer des Aufzeichnungssystems.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht jeweils den übergebenen Daten des Vorgangs.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processType entspricht jeweils der übergebenen Art des Vorgangs.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

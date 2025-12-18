@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_AUD_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Deaktivierung bei Änderung der Audit-Einstellungen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob das Sicherheitsmodul deaktiviert wird, wenn die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden.</Purpose>
+  <Profiles>
+    <Profile>AUDIT_MODIFY</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden können.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Veränderung der Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Kommando zur Veränderung der Einstellung wurde erfolgreich ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementDisabled ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Statt der aktiven Veränderung der Einstellungen in Testschritt 1 kann eine Situation provoziert werden, in der die TSE selbstständig eine Veränderung der Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung vornimmt.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

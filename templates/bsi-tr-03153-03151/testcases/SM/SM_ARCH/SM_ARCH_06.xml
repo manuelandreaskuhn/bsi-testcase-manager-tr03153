@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_ARCH_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Eineindeutige Zuordnung SMAERS-Einheit zu CSP-Einheit</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die SMAERS-Einheit einer Technischen Sicherheitseinrichtung immer eineindeutig der CSP-Einheit der jeweiligen Technischen Sicherheitseinrichtung zugeordnet ist und umgekehrt. Insbesondere ist jedem Signaturschlüssel einer CSP-Einheit eines CSPs genau ein Transaktionszähler einer SMAERS-Einheit eines SMAERS zugeordnet und umgekehrt.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die SMAERS-Einheit einer Technischen Sicherheitseinrichtung immer eineindeutig der CSP-Einheit der jeweiligen Technischen Sicherheitseinrichtung zugeordnet ist und umgekehrt. Insbesondere ist jedem Signaturschlüssel einer CSP-Einheit eines CSPs genau ein Transaktionszähler einer SMAERS-Einheit eines SMAERS zugeordnet und umgekehrt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass die SMAERS-Einheit einer Technischen Sicherheitseinrichtung immer eineindeutig der CSP-Einheit der jeweiligen Technischen Sicherheitseinrichtung zugeordnet ist und umgekehrt. Insbesondere ist jedem Signaturschlüssel einer CSP-Einheit eines CSPs genau ein Transaktionszähler einer SMAERS-Einheit eines SMAERS zugeordnet und umgekehrt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zertifikate entsprechen BSI TR-03116 Vorgaben</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die verwendeten Zertifikate aus dem Sicherheitsmodul den Vorgaben der BSI TR-03116 entsprechen bzgl.:
+• Signaturverfahren,
+• Verwendung elliptischer Kurven,
+• Schlüssellänge,
+• Hashfunktion,
+• Hashwertlänge,
+• EC-Domainparameter.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Herstellerdokumentation zur Public-Key-Infrastuktur liegt vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob die verwendeten Signaturverfahren für die Zertifikate den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die im ICS deklarierten Angaben entprechen den Vorgaben der BSI TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Angaben zu den verwendeten Schlüssellängen den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die im ICS deklarierten Angaben entprechen den Vorgaben der BSI TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Angaben zu den verwendeten Hashfunktionen den Vorgaben der BSI TR- 03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die im ICS deklarierten Angaben entprechen den Vorgaben der BSI TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Angaben zu den verwendeten Hashwertlängen den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die im ICS deklarierten Angaben entprechen den Vorgaben der BSI TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Angaben zu den verwendeten Domain-Parametern den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die im ICS deklarierten Angaben entprechen den Vorgaben der BSI TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Auslesen der Zertifikate der gesamten Zertifikatskette aus dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In dem TAR-Container sind Zertifikate für die gesamte Zertifikatskette vorhanden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die tatsächlich in den Zertifikaten verwendeten Signaturverfahren jenen aus dem ICS entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es werden die Signaturverfahren verwendet, die im ICS genannt sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die tatsächlich in den Zertifikaten verwendeten Schlüssellängen jenen aus dem ICS entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es werden die Schlüssellängen verwendet, die im ICS genannt sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die tatsächlich in den Zertifikaten verwendeten Hashfunktionen jenen aus dem ICS entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es werden die Hashfunktionen verwendet, die im ICS genannt sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die tatsächlich in den Zertifikaten verwendeten Hashwertlängen jenen aus dem ICS entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es werden die Hashwertlängen verwendet, die im ICS genannt sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die tatsächlich in den Zertifikaten verwendeten Domain-Parameter jenen aus dem ICS entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es werden die Domain-Parameter verwendet, die im ICS genannt sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

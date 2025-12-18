@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_08" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Inhalts-Prüfung Transaktions-Log-Nachrichten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die nicht funktionsspezifischen Inhalte der Log-Nachricht für die Protokollierung von Transaktionen den Vorgaben der BSI TR-03151-1 entsprechen.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert für das Datenfeld version der Log-Nachricht entspricht dem definierten Wert in der BSI BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld certifiedDataType der Log-Nachricht entspricht dem Object Identifier, der die ASN.1-Struktur für die zu zertifizierenden Daten referenziert.Hierbei handelt es sich um die ASN.1-Struktur für zu zertifizierende Daten, die in Log-Nachrichten zur Protokollierung von Transaktionen enthalten ist.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld operationType der Log-Nachricht entspricht dem Namen der aufgerufenen Funktionalität zum Starten einer Transaktion.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds serialNumber der Log-Nachricht entspricht dem Hashwert über den öffentlichen Schlüssel, der zum Schlüsselpaar gehört, das für die Erzeugung von Prüfwerten in System-Log-Nachrichten verwendet wird.</ExpectedResult>
+        <ExpectedResult>Die Werte für die Datenfelder algorithm und parameters der Log-Nachricht korrespondieren zu den Angaben zum verwendeten Signaturalgorithmus im Implementation Conformance Statement.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld seAuditData ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter enthält einen plausiblen Zählerstand für den Signaturzähler.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime enthält einen validen und plausiblen Zeitpunkt für die Signaturerstellung.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert für das Datenfeld version der Log-Nachricht entspricht dem definierten Wert in der BSI BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld certifiedDataType der Log-Nachricht entspricht dem Object Identifier, der die ASN.1-Struktur für die zu zertifizierenden Daten referenziert.Hierbei handelt es sich um die ASN.1-Struktur für zu zertifizierende Daten, die in Log-Nachrichten zur Protokollierung von Transaktionen enthalten ist.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld operationType der Log-Nachricht entspricht dem Namen der aufgerufenen Funktionalität zur Aktualisierung einer Transaktion.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds serialNumber der Log-Nachricht entspricht dem Hashwert über den öffentlichen Schlüssel, der zum Schlüsselpaar gehört, das für die Erzeugung von Prüfwerten in System-Log-Nachrichten verwendet wird.</ExpectedResult>
+        <ExpectedResult>Die Werte für die Datenfelder algorithm und parameters der Log-Nachricht korrespondieren zu den Angaben zum verwendeten Signaturalgorithmus im Implementation Conformance Statement.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld seAuditData ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter enthält einen plausiblen Zählerstand für den Signaturzähler.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime enthält einen validen und plausiblen Zeitpunkt für die Signaturerstellung.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert für das Datenfeld version der Log-Nachricht entspricht dem definierten Wert in der BSI BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld certifiedDataType der Log-Nachricht entspricht dem Object Identifier, der die ASN.1-Struktur für die zu zertifizierenden Daten referenziert.Hierbei handelt es sich um die ASN.1-Struktur für zu zertifizierende Daten, die in Log-Nachrichten zur Protokollierung von Transaktionen enthalten ist.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld operationType der Log-Nachricht entspricht dem Namen der aufgerufenen Funktionalität zum Beenden einer Transaktion.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds serialNumber der Log-Nachricht entspricht dem Hashwert über den öffentlichen Schlüssel, der zum Schlüsselpaar gehört, das für die Erzeugung von Prüfwerten in System-Log-Nachrichten verwendet wird.</ExpectedResult>
+        <ExpectedResult>Die Werte für die Datenfelder algorithm und parameters der Log-Nachricht korrespondieren zu den Angaben zum verwendeten Signaturalgorithmus im Implementation Conformance Statement.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld seAuditData ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter enthält einen plausiblen Zählerstand für den Signaturzähler.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime enthält einen validen und plausiblen Zeitpunkt für die Signaturerstellung.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

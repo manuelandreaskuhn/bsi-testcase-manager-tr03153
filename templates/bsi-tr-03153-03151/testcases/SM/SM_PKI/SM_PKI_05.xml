@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Zertifikatssuche über Verzeichnisdienst</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller eine korrekte Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können. Insbesondere wird geprüft, ob Technischen Sicherheitseinrichtungen über ihre Seriennummern gesucht werden können.</Purpose>
+  <Profiles>
+    <Profile>DIRECTORY_SERVICES</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller stellt Informationen über den Verzeichnisdienst bereit.</Precondition>
+    <Precondition>Der Hersteller betreibt einen Test-Verzeichnisdienst, der funktional dem für den Einsatz geplanten Verzeichnisdienst gleicht.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob der Hersteller eine korrekte Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können. Praktisch wird insbesondere geprüft, ob Technische Sicherheitseinrichtungen über ihre Seriennummern gesucht werden können.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Angaben in der Herstellererklärung, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können, sind korrekt.</ExpectedResult>
+        <ExpectedResult>Zertifikate von Technischen Sicherheitseinrichtungen können über ihre Seriennummern gesucht und heruntergeladen werden.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

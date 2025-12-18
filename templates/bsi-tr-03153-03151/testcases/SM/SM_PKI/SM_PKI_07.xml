@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_PKI_07" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Voraussetzungen für Übergangs-PKI</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Voraussetzungen für die Inanspruchnahme zum Betrieb einer Übergangs-PKI gemäß [BSI TR-03153-1] vorliegen.</Purpose>
+  <Profiles>
+    <Profile>INTERIM_PKI_RULING</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob Voraussetzungen für die Inanspruchnahme zum Betrieb einer Übergangs-PKI gemäß [BSI TR-03153-1] vorliegen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die in der BSI TR-03153-1 genannten Voraussetzungen für die Inanspruchnahme der PKI-Übergangsregelung liegen vor.</ExpectedResult>
+        <ExpectedResult>Die PKI verfügt über eine Zertifizierung nach Teil 1 der [BSI TR-03145].</ExpectedResult>
+        <ExpectedResult>Für die PKI liegt ein mit dem BSI abgestimmtes PKI-Konzept vor.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

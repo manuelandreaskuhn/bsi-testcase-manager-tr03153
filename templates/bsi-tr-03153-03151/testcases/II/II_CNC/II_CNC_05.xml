@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_CNC_05" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Anzahl Aufzeichnungssysteme: unbegrenzt, nicht nachgehalten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der Anzahl von Aufzeichnungssystemen, die aktuell an nicht beendeten Transaktionen beteiligt sind, die Fehlermeldung ErrorCurrentNumberOfClientsNotTracked ausgibt, wenn eine unbegrenzte Anzahl an Aufzeichnungssystemen unterstützt aber die aktuelle Anzahl der Aufzeichnungssysteme nicht nachgehalten wird.</Purpose>
+  <RefFunction>getCurrentNumberOfClients</RefFunction>
+  <Profiles>
+    <Profile>II_CURNOCLIENTS</Profile>
+    <Profile>MULTI_CLIENT</Profile>
+    <Profile>UNLIMITED_CLIENTS_NOT_TRACKED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Anzahl von Aufzeichnungssystemen, die aktuell an nicht beendeten Transaktionen beteiligt sind.</Command>
+      <RefFunction>getCurrentNumberOfClients</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorCurrentNumberOfClientsNotTracked ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_FUN_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Nachweis TR-konformer Funktionsumfang</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die TSE zusätzliche Funktionen unterstützt, die nicht in der BSI TR-03153-1 oder einer dort referenzierten Technischen Richtlinie beschrieben sind.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob die TSE zusätzliche Funktionen unterstützt, die nicht in der BSI TR-03153-1 oder einer dort referenzierten Technischen Richtlinie beschrieben sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Falls die TSE zusätzliche Funktionen unterstützt, die nicht in der BSI TR-03153-1 oder einer dort referenzierten Technischen Richtlinie beschrieben sind, sind diese hinreichend dokumentiert.</ExpectedResult>
+        <ExpectedResult>Falls die TSE keine zusätzliche Funktionen unterstützt, die nicht in der BSI TR-03153-1 oder einer dort referenzierten Technischen Richtlinie beschrieben sind, sind in der Dokumentation keine Hinweise auf solche Funktionen dokumentiert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

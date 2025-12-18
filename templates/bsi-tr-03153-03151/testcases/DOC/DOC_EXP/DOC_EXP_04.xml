@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_EXP_04" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Funktionsprüfung der Export-Werkzeuge</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller eine korrekte Anleitung bereitstellt, wie die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems, mit den bereitgestellten Hilfstools aus der TSE exportiert werden können.</Purpose>
+  <Profiles>
+    <Profile>EXPORTTOOL</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+    <Precondition>Die bereitgestellten Hilfstools sind eindeutig identifizierbar.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Export der abgesicherten Daten, ohne Hilfe eines Aufzeichnungssystems. Es wird der bereitgestellten Anleitung gefolgt und es werden die bereitgestellten Hilfstools verwendet.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Es wird ein TAR-Container exportiert.</ExpectedResult>
+        <ExpectedResult>Für den Aufruf werden keine Informationen benötigt, die nur ein angeschlossenes Aufzeichnungssystem kennt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien. Für den Aufruf wird ein angeschlossenes Aufzeichnungssystem verwendet.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die TAR-Container, die in den Testschritten 1 und 2 exportiert wurden, identisch sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die TAR-Container, die in den Testschritten 1 und 2 exportiert wurden, sind, abgesehen von Log-Nachrichten, die zeitlich zwischen der Durchführung der beiden Testschritte erstellt wurden, identisch.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

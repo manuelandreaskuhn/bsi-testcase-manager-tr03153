@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_ERR_17_A" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorStorageMemoryFull: Authentifizierung von Nutzern</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorStorageMemoryFull ausgeben, wenn die aktuell nicht verwendete Speicherkapazität nicht ausreicht, um die abzulegenden Daten zu speichern.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten ohne Fehlermeldung beendet werden würden, wenn die aktuell nicht verwendete Speicherkapazität ausreichen würde, um die abzulegenden Daten zu speichern.
+Es wird die Funktionalität zur Authentifizierung von Nutzern getestet.</Purpose>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als logger von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Der Wert für den Fehlbedienungszähler der PIN-Eingabe für den Nutzer logger ist größer 0.</Precondition>
+    <Precondition>Die aktuelle freie Speicherkapazität reicht nicht aus, um die abzulegenden Daten zu speichern.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger. Beim Aufruf der Funktion werden korrekte Werte für die User-ID und die PIN übergeben. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird nach der regulären Durchführung der Funktionalität beendet und es wird die Fehlermeldung ErrorStorageMemoryFull ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers logger.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds userId entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds role entspricht logger.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds authenticationResult entspricht success.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds remainingRetries entspricht dem definierten Maximalwert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

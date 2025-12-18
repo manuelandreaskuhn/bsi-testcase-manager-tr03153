@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ERR_05_A" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorSecureElementDisabled: Nutzer authentifizieren</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorSecureElementDisabled ausgeben, wenn das Sicherheitsmodul der Technischen Sicherheitseinrichtung deaktiviert wurde.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten bei nicht deaktivierten Sicherheitsmodul ohne Fehlermeldung beendet werden würden.
+Es wird die Funktionalität zur Authentifizierung von Nutzern getestet.</Purpose>
+  <RefFunction>authenticateUser</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Das Sicherheitsmodul in der Technischen Sicherheitseinrichtung wurde deaktiviert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung von Nutzern.</Command>
+      <RefFunction>authenticateUser</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementDisabled oder eine andere plausible Fehlermeldung ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

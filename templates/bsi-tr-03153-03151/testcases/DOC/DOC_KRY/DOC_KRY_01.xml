@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_KRY_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>TR-02102-Konformität weiterer Kryptoverfahren</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die allgemeinen Empfehlungen der BSI TR-02102 eingehalten werden, wenn in der Technischen Sicherheitseinrichtung bzw. der Verarbeitung der aufzuzeichnenden Daten, neben der Berechnung von Prüfwerten, weitere kryptographische Verfahren zum Einsatz kommen, zu denen keine konkreten Vorgaben in BSI TR-03116 enthalten sind.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob die allgemeinen Empfehlungen der BSI TR-02102 eingehalten werden, wenn in der Technischen Sicherheitseinrichtung bzw. der Verarbeitung der aufzuzeichnenden Daten, neben der Berechnung von Prüfwerten, weitere kryptographische Verfahren zum Einsatz kommen, zu denen keine konkreten Vorgaben in BSI TR-03116 enthalten sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die allgemeinen Empfehlungen der BSI TR-02102 werden eingehalten, wenn in der Technischen Sicherheitseinrichtung bzw. der Verarbeitung der aufzuzeichnenden Daten, neben der Berechnung von Prüfwerten, weitere kryptographische Verfahren zum Einsatz kommen, zu denen keine konkreten Vorgaben in BSI TR-03116 enthalten sind.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

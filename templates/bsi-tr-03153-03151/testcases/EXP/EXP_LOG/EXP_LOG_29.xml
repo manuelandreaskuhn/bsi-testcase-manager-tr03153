@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_29" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Korrektes Tag für processData (ohne indefinite length)</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob in allen Transaktions-Logs-Nachrichten, die im Rahmen der Konformitätsprüfung erstellt wurden, das korrekte Tag für das Log-Nachrichten-Element processData verwendet wird.</Purpose>
+  <Profiles>
+    <Profile>SM_NO_INDEF</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung aller Transaktions-Log-Nachrichten, die im Rahmen der Konformitätsprüfung erstellt wurden, ob jeweils das korrekte Tag 0x82 für das Log-Nachrichten-Element processData verwendet wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In allen Transaktions-Log-Nachrichten, die im Rahmen der Konformitätsprüfung erstellt wurden, wird jeweils das korrekte Tag 0x82 für das Log-Nachrichten-Element processData verwendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung aller Transaktions-Log-Nachrichten, die im Rahmen der Konformitätsprüfung erstellt wurden, ob das Log-Nachrichten-Element processData keine Unterelemente hat und keine Terminierung mit 0x0000 enthält.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Log-Nachrichten-Element hat keine Unterelemente.</ExpectedResult>
+        <ExpectedResult>Das Log-Nachrichten-Element processData hat keine Terminierung mit 0x0000.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

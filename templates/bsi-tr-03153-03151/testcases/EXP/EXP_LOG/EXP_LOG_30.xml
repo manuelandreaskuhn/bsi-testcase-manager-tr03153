@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_30" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Indefinite length encoding nur bei processData</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die TSE in Aufzeichnungen indefinite length encoding nur für das Element processData von Aktualisierungen von Transaktionen verwendet.</Purpose>
+  <Profiles>
+    <Profile>SM_INDEF</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Kodierung in allen Log-Nachrichten, die im Rahmen der Konformitätsprüfung erstellt wurden, ausgenommen Log-Nachrichten zur Aktualisierungen von Transaktionen, ob indefinite length encoding an einer Stelle in den Log-Nachrichten verwendet wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In allen Aufzeichnungen und Logs, die im Rahmen der Konformitätsprüfung erstellt wurden, ausgenommen Log-Nachrichten zur Aktualisierungen von Transaktionen, wird an keiner Stelle indefinite length encoding verwendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Kodierung aller Log-Nachrichten zur Aktualisierungen von Transaktionen, die im Rahmen der Konformitätsprüfung erstellt wurden, ob indefinite length encoding an keiner Stelle außerhalb des Elements processData in den Log-Nachrichten verwendet wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>In Log-Nachrichten zur Aktualisierungen von Transaktionen wird indefinite length encoding an keiner Stelle außerhalb des Elements processData verwendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_RFB_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Backup-Wiedereinspielung mit Dateinamenskonflikten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob nach einem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten die Daten aus dem übergebenen TAR-Container nach den vorgegebenen Regeln wiederhergestellt werden.
+
+Der TAR-Container enthält Log-Nachrichten, zu denen bereits Log-Nachrichten mit gleichem Dateinamen im Speichermedium gespeichert sind.
+Das Backup enthält Zertifikate, zu denen bereits Zertifikate mit gleichem Dateinamen in der TSE verwaltet werden.
+Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>restoreFromBackup</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_RESTOREBACKUP</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Der TAR-Container für die Übergabe an die  Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält Log-Nachrichten zu den Absicherungsschritten für mindestens vier beendete Transaktionen. Die Dateinamen der Log-Nachrichten für mindestens zwei Tranaktionen entsprechen keinen Dateinamen von Log-Nachrichten, die im Speichermedium vorhanden sind. Für die Log-Nachrichten von mindestens zwei anderen Transaktionen stimmen deren Dateinamen mit den Dateinamen von Log-Nachrichten im Speichermedium überein.</Precondition>
+    <Precondition>Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält ausschließlich Zertifikate mit Dateinamen, zu denen Zertifikate mit gleichen Dateinamen in der Technischen Sicherheitseinrichtung verwaltet werden.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten.</Command>
+      <RefFunction>restoreFromBackup</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Log-Nachrichten in dem exportierten TAR-Container auf Vollständigkeit.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält alle wiederhergestellten Log-Nachrichten, die beim Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden, in unveränderter Weise.</ExpectedResult>
+        <ExpectedResult>Der TAR-Container enthält alle Log-Nachrichten, die vor dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten im Speichermedium gespeichert waren, in unveränderter Weise.</ExpectedResult>
+        <ExpectedResult>Die Log-Nachrichten, die der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden und für die keine Log-Nachrichten mit gleichen Namen im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen.</ExpectedResult>
+        <ExpectedResult>Die Log-Nachrichten, die der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden und für die Log-Nachrichten mit gleichen Namen im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen mit einem Zähler ergänzt.</ExpectedResult>
+        <ExpectedResult>Die Log-Nachrichten, die im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Zertifikate in dem exportierten TAR-Container auf Vollständigkeit.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält alle Zertifikate, die bei dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden.</ExpectedResult>
+        <ExpectedResult>Der TAR-Container enthält alle Zertifikate, die vor dem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten in der Technischen Sicherheitseinrichtung verwaltet wurden.</ExpectedResult>
+        <ExpectedResult>Die Zertifikate, die der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten übergeben wurden, besitzen ihre ursprünglichen Dateinamen mit einm Zähler ergänzt.</ExpectedResult>
+        <ExpectedResult>Die Zertifikate, die im Speichermedium gespeichert waren, besitzen ihre ursprünglichen Dateinamen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

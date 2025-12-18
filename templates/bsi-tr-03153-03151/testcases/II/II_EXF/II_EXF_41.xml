@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_41" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Export Filter: ohne gestellte Zeit</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten für einen gefilterten Export erfolgreich aufgerufen werden kann, wenn die Zeit nicht gestellt ist.</Purpose>
+  <RefFunction>exportFilteredTransactionLogs</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+    <Profile>II_UPDATETIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde nicht aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer $tn1 gespeichert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für den Wert transactionNumber wird $tn1 übergeben. Für maximumNumberRecords wird 0 übergeben.</Command>
+      <RefFunction>exportFilteredTransactionLogs</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

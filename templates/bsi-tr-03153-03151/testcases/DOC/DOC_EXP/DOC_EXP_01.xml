@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="DOC_EXP_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Datenexport unabhängig vom Aufzeichnungssystem</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Hersteller eine schlüssige Anleitung bereitstellt, wie die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE exportiert werden können.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung, ob der Hersteller eine schlüssige Anleitung bereitstellt, wie die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE exportiert werden können.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Hersteller stellt eine schlüssige Anleitung bereit, wie die abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems aus der TSE exportiert werden können.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

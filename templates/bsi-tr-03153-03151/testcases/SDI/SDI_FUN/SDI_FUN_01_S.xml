@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SDI_FUN_01_S" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>SDI: Funktion configureLogging</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE unter dem Funktionsnamen configureLogging bereitgestellt wird.</Purpose>
+  <RefFunction>configureLogging</RefFunction>
+  <Profiles>
+    <Profile>SDI</Profile>
+    <Profile>II_CONFIGLOGGING</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es liegt eine API-Definition (z. B. eine Header oder Interface Datei) vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der API-Definition, ob die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE unter dem Funktionsnamen configureLogging bereitgestellt wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE wird unter dem Funktionsnamen configureLogging bereitgestellt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Für den Aufruf wird der Funktionsname configureLogging verwendet.</Command>
+      <RefFunction>configureLogging</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

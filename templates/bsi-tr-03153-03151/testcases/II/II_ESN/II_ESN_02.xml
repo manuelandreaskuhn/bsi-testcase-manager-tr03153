@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ESN_02" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Seriennummer ausgeben: genau eine</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob nach einem Aufruf der Funktionalität zur Ausgabe der Seriennummern genau eine Seriennummer zurückgegeben wird. Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.</Purpose>
+  <RefFunction>getSerialNumbers</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der Seriennummern.</Command>
+      <RefFunction>getSerialNumbers</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die Funktionanlität gibt eine ASN.1-Struktur über den Ausgabeparameter serialNumbers zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Anzahl für die Seriennummer in der zurückgegebenen ASN.1-Struktur korrekt, d.h. genau 1 ist.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die TLV-Struktur enthält genau eine SEQUENCE serialNumberRecord.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung, ob die Daten der Datenfelder in der SEQUENCE LogMessageUsageTypes für die zurückgegebene Seriennummer korrekt sind.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Daten der Datenfelder systemLog, auditLog und transactionLog enthalten TRUE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

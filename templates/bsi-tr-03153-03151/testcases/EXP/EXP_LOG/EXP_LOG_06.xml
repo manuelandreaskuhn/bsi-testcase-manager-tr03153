@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_06" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Dateiname-Prüfung Audit-Log-Nachrichten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Dateiname der Log-Nachricht für die Protokollierung von Audit-Daten, die vom Sicherheitsmodul erzeugt werden, den Vorgaben der BSI TR-03151-1 entsprechen.
+Es werden alle Log-Nachrichten für die Protokollierung von Audit-Daten betrachtet, die vom Sicherheitsmodul erzeugt werden können.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller dokumentiert alle verwendeten Audit-Log-Nachrichten und beschreibt herstellerspezifische Inhalte.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Es wird die Erstellung aller Log-Nachrichten für die Protokollierung von Audit-Daten, die vom Sicherheitsmodul erzeugt werden können, provoziert.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Audit-Log-Nachricht wurden erstellt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Audit-Log-Nachrichten in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die TAR-Containeren enthalten jeweils eine passende Audit-Log-Nachricht.</ExpectedResult>
+        <ExpectedResult>Der Dateiname der Log-Nachricht entspricht jeweils den Vorgaben der BSI TR-03151-1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_04_T" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ASN.1-Struktur Log-Nachricht für Selbsttest-Fehlschlag</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die ASN.1-Struktur nicht funktionsspezifischer Anteile der Log-Nachricht für den Fehlschlag eines Selbsttest des Sicherheitsmoduls den Vorgaben der TR-03151-1 entspricht.
+Es dürfen nur die vorgegebenen Elemente in den Log-Nachrichten enthalten sein.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Es wird eine Situation hergestellt, die den Fehlschlag eines Selbsttest des Sicherheitsmoduls auslöst.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Ursache für den fehlgeschlagenen Selbsttest des Sicherheitsmoduls wird behoben.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Das Sicherheitsmodul hat den Fehlerzustand verlassen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Fehlschlag eines Selbsttest des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für den Fehlschlag eines Selbsttest des Sicherheitsmoduls.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Fehlschlag eines Selbsttest des Sicherheitsmoduls im TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die ASN.1-Struktur der Log-Nachricht entspricht den Vorgaben der BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Es sind nur die vorgegebenen Elemente in der Log-Nachricht enthalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

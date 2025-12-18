@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_AUT_23" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Centraltimeadmin nur für zentrale Zeitstellung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob bei zentraler Zeitstellung der Nutzer centraltimeadmin keine weiteren Funktionalitäten als die Zeitstellung ausführen kann.</Purpose>
+  <RefUser>centraltimeadmin</RefUser>
+  <Profiles>
+    <Profile>CENTRAL_TIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Der Hersteller stellt eine Dokumentation über die durch den centraltimeadmin ausführbaren Funktionen zur Verfügung.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Überprüfung in der Herstellerdokumentation, welche Funktionen der Nutzer centraltimeadmin ausführen kann.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Nutzer centraltimeadmin darf nur zur zentralen Zeiteinstellung genutzt werden können.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

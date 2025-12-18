@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_AUT_05_C" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Authentifizierung bei gesperrter PIN: timeadmin</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Authentifizierung eines Nutzers fehlschlägt, wenn die PIN-Eingabe zu einer User-ID gesperrt ist, obwohl beim Aufruf der Funktion 
+• eine gültige User-ID und
+• eine korrekte zugehörige PIN 
+übergeben werden.
+</Purpose>
+  <RefFunction>authenticateUser</RefFunction>
+  <RefUser>timeadmin</RefUser>
+  <Profiles>
+    <Profile>II_UPDATETIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der aktuelle Nutzer ist der Nutzer unauthenticated.</Precondition>
+    <Precondition>Die PIN-Eingabe für die Authentifizierung des Nutzers timeadmin ist gesperrt (Wert für den Fehlbedienungszähler ist 0).</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin. Beim Aufruf der Funktion werden korrekte Werte für die User-ID und PIN übergeben. </Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorPinBlocked ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUserNotAuthenticated  ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers timeadmin.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds userId entspricht timeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds role entspricht timeadmin.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds authenticationResult entspricht pinBlocked.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds remainingRetries entspricht 0.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

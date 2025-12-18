@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_CLG_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Konfiguration der Logging-Einstellungen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Protokolldaten für die Konfiguration von Ereignissen korrekt erstellt werden.</Purpose>
+  <RefFunction>configureLogging</RefFunction>
+  <RefFunction>exportLogMessages</RefFunction>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die TSE ist in einem Stadium in dem die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE durchgeführt werden kann.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für ein Ereignis, welches standardmäßig protokolliert wird, wird deaktiviert.</Command>
+      <RefFunction>configureLogging</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für das Ereignis, dessen Protokollierung im vorherigen Schritt deaktiviert wurde, wird aktiviert.</Command>
+      <RefFunction>configureLogging</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird die Log-Nachricht für die Deaktivierung der Protokollierung betrachtet.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE in dem TAR-Container. Es wird die Log-Nachricht für die Deaktivierung der Protokollierung betrachtet.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht configureLogging.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht SMA.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventData entspricht einem Element vom Typ ConfigureLoggingEventData.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds componentName entspricht dem Namen der Komponente, der im Funktionsaufruf übergeben wurde.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds configurationWasSuccessful entspricht TRUE.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld LoggingParameter ist für jedes konfigurierbare Ereignis der Komponente vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventEnabled entspricht FALSE für das Ereignis, dessen Protokollierung deaktiviert wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird die Log-Nachricht für die Aktivierung der Protokollierung betrachtet.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE.</ExpectedResult>
+        <ExpectedResult>Es wird die Log-Nachricht für die Aktivierung der Protokollierung betrachtet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Konfiguration der Logging-Einstellungen der TSE in dem TAR-Container. Es wird die Log-Nachricht für die Aktivierung der Protokollierung betrachtet.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds eventType entspricht configureLogging.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventOrigin entspricht SMA.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventData entspricht einem Element vom Typ ConfigureLoggingEventData.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds componentName entspricht dem Namen der Komponente, der im Funktionsaufruf übergeben wurde.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds configurationWasSuccessful entspricht TRUE.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld eventTriggeredByUser ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld LoggingParameter ist für jedes konfigurierbare Ereignis der Komponente vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds eventEnabled entspricht TRUE für das Ereignis, dessen Protokollierung aktiviert wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Falls die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE während der Produktion der TSE durchgeführt wird und anschließend nicht mehr aufrufbar ist, ist dies zu plausibel darzulegen. In diesem Fall können die Schritte 1 und 2 übersprungen werden. Stattdessen führt der Hersteller die beschriebenen Schritte während der Produktion durch.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

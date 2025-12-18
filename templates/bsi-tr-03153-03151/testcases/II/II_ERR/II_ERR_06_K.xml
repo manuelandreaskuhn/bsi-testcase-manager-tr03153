@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TestCase xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_ERR_06_K" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>ErrorParameterTooLong: Transaktions-Export mit Transaktionsfilter</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob Funktionalitäten beendet werden und die Fehlermeldung ErrorParameterTooLong ausgeben, wenn beim Aufruf der Funktionalitäten die maximale Inputlänge überschritten wird.
+Es werden Parameter in der Form übergeben, dass die Funktionalitäten ohne Fehlermeldung beendet werden würden, wenn beim Aufruf der Funktionalitäten die maximale Inputlänge nicht überschritten wäre.
+Die maximale Inputlänge ist dem ICS zu entnehmen.
+Es wird die Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie Zertifikate und Zusatzdateien getestet.</Purpose>
+  <RefFunction>exportLogMessagesByFilter</RefFunction>
+  <RefUser>admin</RefUser>
+  <Profiles>
+    <Profile>II_EXPORTFILTERED</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie Zertifikate und Zusatzdateien. Beim Aufruf der Funktionalität ist die im ICS angegebene maximale Inputlänge für den Parameter clientId überschritten.</Command>
+      <RefFunction>exportLogMessagesByFilter</RefFunction><RefUser>admin</RefUser><ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterTooLong ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

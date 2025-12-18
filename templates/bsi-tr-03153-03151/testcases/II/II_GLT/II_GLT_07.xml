@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GLT_07" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Letzte Transaktions-Log-Nachricht: ErrorRetrievingLogMessageFailed</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht beendet wird und die Fehlermeldung ErrorReadingLogMessage ausgibt, wenn die zuletzt erzeugte Transaktions-Log-Nachricht nicht ausgegeben werden kann.</Purpose>
+  <RefFunction>getLastTransactionLogMessage</RefFunction>
+  <RefUser>unauthenticated</RefUser>
+  <Profiles>
+    <Profile>II_LASTTRANSLOG</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Es wird ein Fehler provoziert, der bewirkt, dass die zuletzt erzeugte Transaktions-Log-Nachricht nicht ausgegeben werden kann.</Command>
+      <RefFunction>getLastTransactionLogMessage</RefFunction>
+      <RefUser>unauthenticated</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorReadingLogMessage ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorReadingLogMessage ausgelöst wird, wenn die zuletzt erzeugte Transaktions-Log-Nachricht nicht ausgegeben werden kann.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

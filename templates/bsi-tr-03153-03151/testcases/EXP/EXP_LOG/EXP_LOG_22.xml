@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_22" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Übertragungsfehler-Prüfung Zählerstände</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob durch Fehler bei der Übertragung zwischen SMAERS-Einheit und CSP-Einheit keine Lücken in der Sequenz der Transaktions- und Signaturzählerstände entstehen können.</Purpose>
+  <Profiles>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Transaktionszählers.</Command>
+      <RefFunction>getCurrentTransactionCounter</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers.</Command>
+      <RefFunction>getCurrentLoggingSignatureCounters</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert counterValue wird ein Wert zurückgegeben. Dieser wird als $sig1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Direkt nach dem Aufruf zum Starten der Transaktion wird die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit so unterbrochen, dass die Anfrage der SMAERS-Einheit an die CSP-Einheit versandt aber von der CSP-Einheit nicht empfangen werden kann.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSigningEventDataFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit wird wieder hergestellt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit ist wieder hergestellt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Transaktionszählers.</Command>
+      <RefFunction>getCurrentTransactionCounter</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert plus 1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers.</Command>
+      <RefFunction>getCurrentLoggingSignatureCounters</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert counterValue ist größer als der zuvor als $sig2 festgehaltenen Wert. Dieser wird als $sig3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion, welche im vorherigen Testablauf gestartet wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Transaktionsnummer entspricht dem zuvor als $tn1 festgehaltenen Wert plus 1.</ExpectedResult>
+        <ExpectedResult>Der Signaturzähler entspricht dem zuvor als $sig1 festgehaltenen Wert plus 1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung aller weiteren nachfolgenden Lognachrichten des Exports auf Vollzähligkeit.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Für jeden Wert größer $sig1 und kleiner/gleich $sig2 liegt eine Log-Nachricht mit einem entsprechend gleichen Signaturzähler vor.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion. Direkt nach dem Aufruf zum Starten der Transaktion wird die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit so unterbrochen, dass die Antwort von der CSP-Einheit an die SMAERS-Einheit, nach der Erstellung der Signatur, an die SMAERS-Einheit versandt aber nicht von der SMAERS-Einheit empfangen werden kann.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorRetrieveLogMessageFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit wird wieder hergestellt.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Verbindung zwischen der CSP-Einheit und der SMAERS-Einheit ist wieder hergestellt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Transaktionszählers.</Command>
+      <RefFunction>getCurrentTransactionCounter</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert plus 2.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers.</Command>
+      <RefFunction>getCurrentLoggingSignatureCounters</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert counterValue ist größer als der zuvor als $sig2 festgehaltenen Wert. Dieser wird als $sig3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion, welche im vorherigen Testablauf zuletzt gestartet wurde.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion in dem TAR-Container, welche zuletzt identifiziert wurde.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Transaktionsnummer entspricht dem zuvor als $tn1 festgehaltenen Wert plus 2.</ExpectedResult>
+        <ExpectedResult>Der Signaturzähler entspricht dem zuvor als $sig2 festgehaltenen Wert plus 1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung aller weiteren nachfolgenden Lognachrichten des Exports auf Vollzähligkeit.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Für jeden Wert größer $sig2 und kleiner/gleich $sig3 liegt eine Log-Nachricht mit einem entsprechend gleichen Signaturzähler vor.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

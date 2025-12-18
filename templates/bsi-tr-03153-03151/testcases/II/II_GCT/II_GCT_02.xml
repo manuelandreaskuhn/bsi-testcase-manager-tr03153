@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_GCT_02" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Aktuelle CSP-Zeit: Fehler bei Abfrage</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst wird, wenn die Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit die aktuelle Zeit nicht vom Sicherheitsmodul beziehen kann.</Purpose>
+  <RefFunction>getCurrentSeTime</RefFunction>
+  <Profiles>
+    <Profile>II_CURRENTTIME</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit. Es wird ein Fehler provoziert, der bewirkt, dass die aktuelle Zeit nicht vom Sicherheitsmodul bezogen werden kann.</Command>
+      <RefFunction>getCurrentSeTime</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Ist eine praktische Durchführung der beschriebenen Testschritte nicht möglich, ist dies plausibel zu begründen. In diesem Fall erfolgt alternativ eine formale Prüfung aufgrund geeigneter Auszüge aus dem Quellcode und - falls zum Verständnis notwendig - weiterer Herstellerdokumentation. Es ist ein geeigneter Nachweis zu erbringen, dass die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst wird, wenn die aktuelle Zeit nicht vom Sicherheitsmodul bezogen werden kann.</AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

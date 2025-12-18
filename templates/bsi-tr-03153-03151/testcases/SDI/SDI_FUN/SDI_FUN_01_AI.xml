@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SDI_FUN_01_AI" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>SDI: Funktion getMaxNumberOfClients</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zur Ausgabe der maximalen Anzahl von Aufzeichnungssystemen, die gleichzeitig Transaktionen protokollieren können, unter dem Funktionsnamen getMaxNumberOfClients bereitgestellt wird.</Purpose>
+  <RefFunction>getCurrentNumberOfClients</RefFunction>
+  <RefFunction>getMaxNumberOfClients</RefFunction>
+  <Profiles>
+    <Profile>SDI</Profile>
+    <Profile>II_MAXNOCLIENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es liegt eine API-Definition (z. B. eine Header oder Interface Datei) vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der API-Definition, ob die Funktionalität zur Ausgabe der maximalen Anzahl von Aufzeichnungssystemen, die gleichzeitig Transaktionen protokollieren können, unter dem Funktionsnamen getMaxNumberOfClients bereitgestellt wird.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Funktionalität zur Ausgabe der maximalen Anzahl von Aufzeichnungssystemen, die gleichzeitig Transaktionen protokollieren können, wird unter dem Funktionsnamen getMaxNumberOfClients bereitgestellt.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Ausgabe der maximalen Anzahl von Aufzeichnungssystemen, die gleichzeitig Transaktionen protokollieren können. Für den Aufruf wird der Funktionsname getMaxNumberOfClients verwendet.</Command>
+      <RefFunction>getMaxNumberOfClients</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="STO_REM_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Gesicherte Kommunikation mit Fernspeicher</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Kommunikation zwischen der Einbindungsschnittstelle und dem fernverbundenen Speichermedium über einen abgesicherten Kanal (Secure Channel) stattfindet. Die Prüfung erfolgt auf Grundlage einer Herstellerdokumentation.</Purpose>
+  <Profiles>
+    <Profile>STORAGE_REMOTE</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Herstellererklärung zur Technischen Sicherheitseinrichtung enthält Angaben zur Kommunikation zwischen der Einbindungsschnittstelle und dem fernverbundenen Speichermedium.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Herstellererklärung auf vollständige und plausible Angaben zur Kommunikation zwischen der Einbindungsschnittstelle und dem fernverbundenen Speichermedium.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Kommunikation zwischen der Einbindungsschnittstelle und dem fernverbundenen Speichermedium erfolgt über einen abgesicherten Kanal.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

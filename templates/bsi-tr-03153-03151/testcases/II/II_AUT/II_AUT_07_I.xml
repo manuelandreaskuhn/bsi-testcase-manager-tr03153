@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_AUT_07_I" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Falsche Nutzerrolle: Backup wiedereinspielen</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob der Nutzer "logger" Funktionen aufrufen kann, die von ihm nicht verwendet werden dürfen.
+Es werden Parameter in der Form übergeben, dass ein berechtigter Nutzer die Funktion erfolgreich durchführen könnte.
+Es wird die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten getestet und ErrorUserNotAuthorized erwartet.</Purpose>
+  <RefUser>logger</RefUser>
+  <Profiles>
+    <Profile>II_RESTOREBACKUP</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUserNotAuthorized ausgelöst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_26_G" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>additionalInternalData-Prüfung Update-Installation</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Log-Nachricht für die Protokollierung der Systemfunktionalität zur Installation von Updates für die TSE das Feld additionalInternalData nicht enthält.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+    <Profile>II_UPDATEDEVICE</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Installation von Updates für die TSE.</Command>
+      <RefFunction>updateDevice</RefFunction>
+      <RefUser>admin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für den Start des Updates der TSE. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container sollte eine Log-Nachricht für den Start des Updates der TSE enthalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für den Start des Updates der TSE im TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert für das Datenfeld version der Log-Nachricht entspricht dem definierten Wert in der BSI BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld certifiedDataType der Log-Nachricht entspricht dem Object Identifier, der die ASN.1-Struktur für die zu zertifizierenden Daten referenziert. Hierbei handelt es sich um die ASN.1-Struktur für zu zertifizierende Daten die in System-Log-Nachrichten enthalten ist.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds serialNumber der Log-Nachricht entspricht dem Hashwert über den öffentlichen Schlüssel, der zum Schlüsselpaar gehört, das für die Erzeugung von Prüfwerten in System-Log-Nachrichten verwendet wird.</ExpectedResult>
+        <ExpectedResult>Die Werte für die Datenfelder algorithm und parameters der Log-Nachricht korrespondieren zu den Angaben zum verwendeten Signaturalgorithmus im Implementation Conformance Statement.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld seAuditData ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter enthält einen plausiblen Zählerstand für den Signaturzähler.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime enthält einen validen und plausiblen Zeitpunkt für die Signaturerstellung.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden des Updates der TSE. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden des Updates der TSE.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden des Updates der TSE im TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert für das Datenfeld version der Log-Nachricht entspricht dem definierten Wert in der BSI BSI TR-03151-1.</ExpectedResult>
+        <ExpectedResult>Der Wert für das Datenfeld certifiedDataType der Log-Nachricht entspricht dem Object Identifier, der die ASN.1-Struktur für die zu zertifizierenden Daten referenziert. Hierbei handelt es sich um die ASN.1-Struktur für zu zertifizierende Daten die in System-Log-Nachrichten enthalten ist.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds serialNumber der Log-Nachricht entspricht dem Hashwert über den öffentlichen Schlüssel, der zum Schlüsselpaar gehört, das für die Erzeugung von Prüfwerten in System-Log-Nachrichten verwendet wird.</ExpectedResult>
+        <ExpectedResult>Die Werte für die Datenfelder algorithm und parameters der Log-Nachricht korrespondieren zu den Angaben zum verwendeten Signaturalgorithmus im Implementation Conformance Statement.</ExpectedResult>
+        <ExpectedResult>Das Datenfeld seAuditData ist nicht vorhanden.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCounter enthält einen plausiblen Zählerstand für den Signaturzähler.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds signatureCreationTime enthält einen validen und plausiblen Zeitpunkt für die Signaturerstellung.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem im Implementation Conformance Statement genannten Signaturverfahren validieren.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_CON_11" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Konkatenation: Parallele Transaktionen mit Zeitaktualisierung (Aggregation)</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Protokolldaten korrekt erstellt und die zu signierenden Elemente der Log-Nachricht korrekt konkateniert werden, wenn zwischen den verschiedenen Phasen zur Absicherung von Transaktionen vereinzelte Aktualisierungen der Zeit innerhalb des Sicherheitsmoduls stattfinden.
+
+Es werden die Absicherungen von mehreren parallelen Transaktionen betrachtet, wobei die Aktualisierungen der Transaktionen ohne Absicherungsschritte erfolgen.</Purpose>
+  <Profiles>
+    <Profile>SM_MULTI</Profile>
+    <Profile>SM_AGG</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+    <Precondition>Es ist ein Aufzeichnungssystem registriert.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn2 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für das Starten einer Transaktion.</Command>
+      <RefFunction>startTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn3 festgehalten.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben. Für forceSignature wird FALSE übergeben.</Command>
+      <RefFunction>updateTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Der Rückgabewert performedUpdateProtection entspricht prevAndPassedInMem.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.</Command>
+      <RefFunction>updateTime</RefFunction>
+      <RefUser>timeadmin</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.</Command>
+      <RefFunction>authenticateUser</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.</Command>
+      <RefFunction>finishTransaction</RefFunction>
+      <RefUser>logger</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Aufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.</Command>
+      <RefFunction>exportLogMessages</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+        <ExpectedResult>Die TSE-Schnittstelle gibt einen TAR-Container zurück.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Starten der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Starten der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Zusätzlich erfolgt eine Prüfung der Konkatenation der Daten für die Erzeugung des Prüfwerts.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht der Konkatenation der Daten des Vorgangs, die bei den Aktualisierungen der Transaktion übergeben wurden.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Zusätzlich erfolgt eine Prüfung der Konkatenation der Daten für die Erzeugung des Prüfwerts.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht der Konkatenation der Daten des Vorgangs, die bei den Aktualisierungen der Transaktion übergeben wurden.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Zusätzlich erfolgt eine Prüfung der Konkatenation der Daten für die Erzeugung des Prüfwerts.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Wert des Datenfelds processData entspricht der Konkatenation der Daten des Vorgangs, die bei den Aktualisierungen der Transaktion übergeben wurden.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn1 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn1 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn2 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn2 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Identifikation der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der TAR-Container enthält eine Log-Nachricht für das Beenden der Transaktion.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Beenden der Transaktion mit der Transaktionsnummer $tn3 in dem TAR-Container.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Der Wert des Datenfelds transactionNumber entspricht dem zuvor als $tn3 festgehaltenen Wert.</ExpectedResult>
+        <ExpectedResult>Der Prüfwert wurde entsprechend den Vorgaben der BSI TR-03151-1 erstellt und lässt sich mit dem zugehörigen öffentlichen Schlüssel und dem genannten Signaturverfahren validieren. Insbesondere wurden die zu signierenden Elemente der Log-Nachricht für die Erstellung des Prüfwerts korrekt konkateniert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+  <AlternativeTestProcedures>
+    <AlternativeTestProcedure>Erfolgt die Zeitstellung nicht über die Einbindungsschnittelle der Technischen Sicherheitseinrichtung, ist der Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls über den implementierten Weg aufzurufen. Die Aufrufe zur Authentifizierung des Nutzers timeadmin und die darauf folgende Authentifizierung des Nutzers logger könnnen damit ausgelassen werden.
+        </AlternativeTestProcedure>
+  </AlternativeTestProcedures>
+</TestCase>

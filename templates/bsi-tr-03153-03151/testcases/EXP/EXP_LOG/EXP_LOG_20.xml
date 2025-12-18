@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="EXP_LOG_20" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Verbindungsunterbrechung CSP-SMAERS Prüfung</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob bei einer Unterbrechung der oder Fehler in der Verbindung zwischen den CSP-Einheit und SMAERS-Einheit keine Log-Nachrichtenteile verloren gehen können.</Purpose>
+  <Profiles>
+    <Profile>SM_REMOTE_COMPONENTS</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <TestSteps>
+    <TestStep>
+      <Command>Formale Prüfung der Herstellerdokumentation. </Command>
+      <ExpectedResults>
+        <ExpectedResult>Es existiert eine Beschreibung des Herstellers, wie verhindert wird, dass bei einer Unterbrechung der oder Fehler in der Verbindung zwischen den CSP-Einheit und SMAERS-Einheit Log-Nachrichtenteile verloren gehen.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

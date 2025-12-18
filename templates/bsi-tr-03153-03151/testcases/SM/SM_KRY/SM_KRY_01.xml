@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_KRY_01" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Kryptographische Vorgaben gemäß BSI TR-03116</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die kryptographischen Angaben aus der Herstellererklärung und dem ICS den Vorgaben der [BSI TR-03116] entsprechen bzgl.:
+• Signaturverfahren,
+• Signaturformat,
+• Verwendung elliptischer Kurven,
+• Schlüssellänge
+• Hashfunktion,
+• Hashwertlänge,
+• EC-Domainparameter,
+• Klasse des Zufallzahlengenerators.</Purpose>
+  <Profiles>
+    <Profile>SM_BASIC</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Kryptographische Details sind aus dem ICS und den Herstellerdokumenten bekannt.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zum verwendeten Signaturverfahren den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zum verwendeten Signaturformat den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zur verwendeten Hashfunktion den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zur verwendeten Outputlänge der Hashfunktion den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zu den verwendeten Domain-Parametern den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob die Angaben zum verwendeten Zufallszahlengenerator (bzgl. Klasse) den Vorgaben der BSI TR-03116-5 entsprechen.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Die deklarierten Angaben entprechen den Vorgaben der TR-03116-5.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

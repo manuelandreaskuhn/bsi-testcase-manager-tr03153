@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="II_UBP_03" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>PIN entsperren: Gegenmaßnahmen gegen PUK-Erraten</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob die Funktionalität zum Entsperren der PIN eines autorisierten Nutzers Gegenmaßnahmen gegen Angriffe in Bezug auf das Erraten der PUK implementiert.</Purpose>
+  <RefFunction>unblockPin</RefFunction>
+  <Profiles>
+    <Profile>II</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+    <Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+    <Precondition>Die PIN-Eingabe für die Authentifizierung eines Nutzers ist blockiert (Wert für den Wiederholungszähler ist 0).</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Wiederholter Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Der Funktionsaufruf wird so oft wiederholt, dass sicher darauf geschlossen werden kann, dass die Maßnahme den Erfolg von andauernden Rateversuchen verhindert bzw. erkennbar ist, dass das Erraten der PUK unterbunden wird.</Command>
+      <RefFunction>unblockPin</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Die korrekte Gegenmaßnahmen kann eindeutig als vorhanden und korrekt funktionierend erkannt werden.</ExpectedResult>
+        <ExpectedResult>Das Erraten der PUK wird durch die im ICS genannten Gegenmaßnahmen effektiv verhindert.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bsi.bund.de/TR03153" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Definition eines einfachen Typs für den Teststatus (Enum-Restriktion) -->
+  <xs:simpleType name="TestStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PASSED"/>
+      <xs:enumeration value="FAILED"/>
+      <xs:enumeration value="SKIPPED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="TestCase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Title" type="xs:string" />
+        <xs:element name="Version" type="xs:string" />
+        <xs:element name="Purpose" type="xs:string"/>
+        <xs:element name="RefFunction" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="RefUser" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="Profiles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Profile" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="References">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Reference" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Preconditions" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Precondition" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TestSteps">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TestStep" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Command" type="xs:string" />
+                    <xs:element name="RefFunction" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="RefUser" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="ExpectedResults">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ExpectedResult" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <!-- NEU: Attribute für erwartetes Ergebnis -->
+                                  <xs:attribute name="status" type="TestStatusType" use="optional" />
+                                  <xs:attribute name="actualResult" type="xs:string" use="optional" />
+                                  <xs:attribute name="variables" type="xs:string" use="optional" />
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <!-- NEU: Optionales Element für Fehlermeldungen auf Step-Ebene -->
+                    <xs:element name="ErrorMessage" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <!-- NEU: Attribute für TestStep -->
+                  <xs:attribute name="id" type="xs:string" use="optional" />
+                  <xs:attribute name="status" type="TestStatusType" use="optional" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="AlternativeTestProcedures" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AlternativeTestProcedure" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Result" type="xs:string" minOccurs="0" />
+        <xs:element name="Notes" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Note" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="timestamp" type="xs:dateTime" use="optional" />
+                      <xs:attribute name="author" type="xs:string" use="optional" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Attachments" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Attachment" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="originalName" type="xs:string" use="optional" />
+                  <xs:attribute name="timestamp" type="xs:dateTime" use="optional" />
+                  <xs:attribute name="description" type="xs:string" use="optional" />
+                  <xs:attribute name="mimeType" type="xs:string" use="optional" />
+                  <xs:attribute name="size" type="xs:long" use="optional" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <!-- Attribute für TestCase -->
+      <xs:attribute name="id" type="xs:string" use="required" />
+      <!-- NEU: Attribute für den gesamten Testfall -->
+      <xs:attribute name="status" type="TestStatusType" use="optional" />
+      <xs:attribute name="timestamp" type="xs:dateTime" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

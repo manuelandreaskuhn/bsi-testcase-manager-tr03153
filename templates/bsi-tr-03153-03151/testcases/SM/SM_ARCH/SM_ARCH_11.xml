@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="../../schema/TR-03153-1-TS.css"?>
+<TestCase id="SM_ARCH_11" xmlns="http://bsi.bund.de/TR03153" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03153 ../../schema/TR-03153-1-TS_version-1-2-0.xsd">
+  <Title>Master-CSP-Einheit und Signaturzähler-Synchronisation im Cluster</Title>
+  <Version>1.2.0</Version>
+  <Purpose>Prüfung, ob zu jeder Zeit genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv verwendet und ob die anderen CSP-Einheiten den Signaturzähler des jeweiligen Masters für den Signaturschlüssel synchronisieren.</Purpose>
+  <Profiles>
+    <Profile>CSP_CLUSTER</Profile>
+  </Profiles>
+  <References>
+    <Reference>BSI TR-03153-1</Reference>
+    <Reference>BSI TR-03151-1</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor.</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep>
+      <Command>Prüfung der Herstellerdokumentation, ob zu jeder Zeit genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv verwendet und ob die anderen CSP-Einheiten den Signaturzähler des jeweiligen Masters für den Signaturschlüssel synchronisieren.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Zu jeder Zeit verwendet genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv.</ExpectedResult>
+        <ExpectedResult>Die CSP-Einheiten, die nicht als Master den Signaturschlüssel aktiv verwenden, synchronisieren den Signaturzähler des Masters für den Signaturschlüssel.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>
