@@ -1,0 +1,47 @@
+{
+  "name": "tr-03153-03151-testcase-and-interfacedesign-manager",
+  "version": "1.1.0",
+  "description": "BSI TR-03153-1 and TR-03151 Testcase and Interface Design Management Application",
+  "main": "src/server.js",
+  "bin": "src/server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "build": "pkg . --out-path dist",
+    "build:win": "pkg . --targets node22-win-x64 --out-path dist",
+    "build:linux": "pkg . --targets node22-linux-x64 --out-path dist",
+    "build:mac": "pkg . --targets node22-macos-x64 --out-path dist",
+    "build:all": "pkg . --targets node22-win-x64,node22-linux-x64,node22-macos-x64 --out-path dist"
+  },
+  "pkg": {
+    "scripts": [
+      "src/**/*.js"
+    ],
+    "assets": [
+      "public/**/*"
+    ],
+    "targets": [
+      "node22-win-x64",
+      "node22-linux-x64",
+      "node22-macos-x64"
+    ],
+    "outputPath": "dist"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "docx": "^9.5.1",
+    "express": "^5.0.0",
+    "multer": "^2.0.0",
+    "pdfkit": "^0.17.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

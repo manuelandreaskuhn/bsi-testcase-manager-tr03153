@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProfileConfiguration version="1.0" completed="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="_schema/profiles.xsd">
+  
+  <!-- Template Information - wird bei Instanz-Erstellung entfernt -->
+  <TemplateInfo>
+    <Id>example</Id>
+    <Name>Example</Name>
+    <Description>Beispiel Template</Description>
+  </TemplateInfo>
+
+  <Metadata>
+    <Manufacturer></Manufacturer>
+    <ProductName></ProductName>
+    <ProductVersion></ProductVersion>
+    <Description>Implementation Conformance Statement gemäß Beispiel</Description>
+  </Metadata>
+
+  <!-- ============================================ -->
+  <!-- Template-Konfiguration -->
+  <!-- ============================================ -->
+  <TemplateConfiguration>
+    <!-- 
+      ProfileFilterMode: Bestimmt wie die Profil-Filterung auf TestCases angewendet wird
+      - "OR":  TestCase wird angezeigt wenn MINDESTENS EIN Profil des TestCases aktiv ist
+      - "AND": TestCase wird nur angezeigt wenn ALLE Profile des TestCases durch aktive Profile abgedeckt sind
+    -->
+    <ProfileFilterMode>OR</ProfileFilterMode>
+  </TemplateConfiguration>
+
+  <!-- ============================================ -->
+  <!-- Profildefinitionen gemäß Beispiel -->
+  <!-- ============================================ -->
+  <ProfileDefinitions>
+    
+    <ProfileCategory id="example">
+      <Title>Beispiel Profil</Title>
+      <TableReference>Tabelle 1 vom Beispieldokument</TableReference>
+      <Profile id="I_INITIALIZATION">
+        <Description>Beispiel Tests für die Initialisierung</Description>
+      </Profile>
+      <Profile id="II_EXPORT">
+        <Description>Beispiel Tests für den Export über Schnittstelle</Description>
+      </Profile>
+      <Profile id="II_EXPORTFILTERED">
+        <Description>Beispiel Tests für den gefilterten Export über Schnittstelle</Description>
+      </Profile>
+      <Profile id="III_TRANSACTION">
+        <Description>Beispiel Tests für Transaktionen</Description>
+      </Profile>
+      <Profile id="P_TSE">
+        <Description>Beispiel Tests für Technische Sicherheitseinrichtungen, die Transaktionen unterstützen.</Description>
+      </Profile>
+    </ProfileCategory>
+
+  </ProfileDefinitions>
+
+  <ChecklistSections>
+    
+    <!-- ============================================ -->
+    <!-- Abschnitt 1: Export über Schnittstelle -->
+    <!-- ============================================ -->
+    <Section id="export">
+      <Title>Beispiel Export</Title>
+      <Description>Angaben über Exports</Description>
+      
+      <Question id="export_basic" type="boolean" required="true">
+        <Text>Das Programm hat ein Export über Schnittstelle</Text>
+        <HelpText>Beispiel Tests für Exports</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>II_EXPORT</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="export_filtered" type="boolean">
+        <Text>Das Programm hat ein gefilterten Export über Schnittstelle</Text>
+        <HelpText>Beispiel Tests für gefilterten Export</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="export_basic">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>II_EXPORTFILTERED</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 2: Verfügbare Funktionen  -->
+    <!-- ============================================ -->
+    <Section id="functions">
+      <Title>Optionale Funktionen</Title>
+      <Description>Welche optionalen Funktionen werden von dem Programm unterstützt?</Description>
+      
+      <Question id="fn_init" type="choice" group="init">
+        <Text>Unterstützt das Programm die Initialisierung?</Text>
+        <HelpText>Funktion zur Initialisierung des Programms.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>I_INITIALIZATION</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>I_NO_INITIALIZATION</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_transaction" type="choice" group="transaction">
+        <Text>Unterstützt das Programm Transaktionen?</Text>
+        <HelpText>Funktion zur Unterstützung von Transaktionen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>III_TRANSACTION</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>III_NO_TRANSACTION</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_tse" type="choice" group="tse">
+        <Text>Unterstützt das Programm spezielle Transaktionen?</Text>
+        <HelpText>Funktion zur Unterstützung spezieller Transaktionen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>P_TSE</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>P_NO_TSE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+    </Section>
+
+  </ChecklistSections>
+
+  <DerivedProfiles>
+    <!-- Wird automatisch basierend auf den Antworten gefüllt -->
+  </DerivedProfiles>
+
+</ProfileConfiguration>

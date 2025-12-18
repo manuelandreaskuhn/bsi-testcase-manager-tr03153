@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCase xmlns="http://www.bsi.bund.de/TR-03153-1/TS/TestCase" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="II_EXF_04">
+  <Title>Export mit speziellen Funktionen</Title>
+  <Version>1.0</Version>
+  <Purpose>Testet den Export mit speziellen Funktionen und Benutzern</Purpose>
+  <RefFunction>exportData</RefFunction>
+  <RefFunction>validateFormat</RefFunction>
+  <RefUser>AdminUser</RefUser>
+  <RefUser>TestUser</RefUser>
+  <Profiles>
+    <Profile>P_TSE</Profile>
+    <Profile>P_ERS</Profile>
+  </Profiles>
+  <References>
+    <Reference>TR-03153-1 Kapitel 4</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>System ist initialisiert</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep id="step-1">
+      <Command>Führe Export aus</Command>
+      <RefFunction>runExport</RefFunction>
+      <RefUser>Operator</RefUser>
+      <ExpectedResults>
+        <ExpectedResult>Export erfolgreich</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep id="step-2">
+      <Command>Validiere Exportdaten</Command>
+      <RefFunction>checkData</RefFunction>
+      <ExpectedResults>
+        <ExpectedResult>Daten sind gültig</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

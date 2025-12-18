@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCase xmlns="http://www.bsi.bund.de/TR-03153-1/TS/TestCase" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="III_TRX_02">
+  <Title>Transaktionstest mit Variablen</Title>
+  <Version>1.0</Version>
+  <Purpose>Testet die Transaktionsverarbeitung mit mehreren Variablen</Purpose>
+  <Profiles>
+    <Profile>P_TSE</Profile>
+  </Profiles>
+  <References>
+    <Reference>TR-03153-1 Kapitel 5</Reference>
+  </References>
+  <Preconditions>
+    <Precondition>TSE ist initialisiert</Precondition>
+  </Preconditions>
+  <TestSteps>
+    <TestStep id="step-1">
+      <Command>Starte eine neue Transaktion. Speichere die zurückgegebene Transaktionsnummer als $tn1.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Transaktion wurde erfolgreich gestartet. Die Transaktionsnummer $tn1 wurde zurückgegeben.</ExpectedResult>
+        <ExpectedResult>Der Startzeitpunkt $starttime1 wurde erfasst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep id="step-2">
+      <Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Transaktion $tn1 wurde erfolgreich beendet.</ExpectedResult>
+        <ExpectedResult>Der Endzeitpunkt $finishtime1 wurde erfasst.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+    <TestStep id="step-3">
+      <Command>Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion. Für startDate wird der zuvor festgehaltene Wert $starttime1 übergeben. Für endDate wird der zuvor festgehaltene Wert $finishtime1 übergeben.</Command>
+      <ExpectedResults>
+        <ExpectedResult>Export für Zeitraum von $starttime1 bis $finishtime1 war erfolgreich.</ExpectedResult>
+        <ExpectedResult>Die exportierten Daten enthalten die Transaktion $tn1.</ExpectedResult>
+      </ExpectedResults>
+    </TestStep>
+  </TestSteps>
+</TestCase>

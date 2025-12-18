@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProfileConfiguration version="1.0" completed="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="_schema/profiles.xsd">
+  
+  <Metadata>
+    <Manufacturer></Manufacturer>
+    <ProductName></ProductName>
+    <ProductVersion></ProductVersion>
+    <Description>Implementation Conformance Statement gemäß BSI TR-03153-TS Kapitel 5.1</Description>
+  </Metadata>
+
+  <!-- ============================================ -->
+  <!-- Template-Konfiguration -->
+  <!-- ============================================ -->
+  <TemplateConfiguration>
+    <!-- 
+      ProfileFilterMode: Bestimmt wie die Profil-Filterung auf TestCases angewendet wird
+      - "OR":  TestCase wird angezeigt wenn MINDESTENS EIN Profil des TestCases aktiv ist
+      - "AND": TestCase wird nur angezeigt wenn ALLE Profile des TestCases durch aktive Profile abgedeckt sind
+    -->
+    <ProfileFilterMode>OR</ProfileFilterMode>
+  </TemplateConfiguration>
+
+  <!-- ============================================ -->
+  <!-- Profildefinitionen gemäß TR-03153-TS Kapitel 4 -->
+  <!-- ============================================ -->
+  <ProfileDefinitions>
+    
+    <!-- Tabelle 1: Speichermedium-Profile -->
+    <ProfileCategory id="storage">
+      <Title>Speichermedium-Profile</Title>
+      <TableReference>Tabelle 1 der TR-03153-TS</TableReference>
+      <Profile id="STORAGE_BASIC">
+        <Description>Tests und formelle Prüfungen, die von allen Speichermedien von Technischen Sicherheitseinrichtungen erfüllt werden müssen.</Description>
+      </Profile>
+      <Profile id="STORAGE_REMOTE">
+        <Description>Formelle Prüfungen, die sich ausschließlich auf fernverbundene Speichermedien beziehen.</Description>
+      </Profile>
+    </ProfileCategory>
+
+    <!-- Tabelle 2: Sicherheitsmodul-Profile -->
+    <ProfileCategory id="security_module">
+      <Title>Sicherheitsmodul-Profile</Title>
+      <TableReference>Tabelle 2 der TR-03153-TS</TableReference>
+      <Profile id="SM_BASIC">
+        <Description>Tests und formelle Prüfungen, die von allen Sicherheitsmodulen von Technischen Sicherheitseinrichtungen erfüllt werden müssen.</Description>
+      </Profile>
+      <Profile id="SM_NOAGG">
+        <Description>Tests für Sicherheitsmodule welche Aktualisierungen (Updates) immer direkt signieren und nicht aggregieren.</Description>
+      </Profile>
+      <Profile id="SM_AGG">
+        <Description>Tests für Sicherheitsmodule, welche Aktualisierungen (Updates) aggregieren und zusammengefasst absichern (signieren) können.</Description>
+      </Profile>
+      <Profile id="SM_INDEF">
+        <Description>Tests für TSEn, welche Log-Nachrichten für aggregierte Aktualisierungen erzeugen können, in denen indefinite length encoding verwendet wird.</Description>
+      </Profile>
+      <Profile id="SM_NO_INDEF">
+        <Description>Tests für TSEn, welche keine Log-Nachrichten erzeugen können, in denen indefinite length encoding verwendet wird.</Description>
+      </Profile>
+      <Profile id="SM_MULTI">
+        <Description>Tests für Sicherheitsmodule, welche mehrere Transaktionen parallel verwalten können.</Description>
+      </Profile>
+      <Profile id="SM_REMOTE">
+        <Description>Tests für fernverbundene Sicherheitsmodule.</Description>
+      </Profile>
+      <Profile id="SM_REMOTE_COMPONENTS">
+        <Description>Tests für Sicherheitsmodule mit fernverbundenen Komponenten.</Description>
+      </Profile>
+      <Profile id="CSP_ENTITY">
+        <Description>Tests für TSEn deren CSP-Einheiten zu einem sicherheitseinrichtungsübergreifenden CSP zusammengefasst werden.</Description>
+      </Profile>
+      <Profile id="CSP_CLUSTER">
+        <Description>Tests für TSEn deren Krypto-Kern als Cluster betrieben wird.</Description>
+      </Profile>
+      <Profile id="CSP_LIGHT">
+        <Description>Tests für TSEn die einen CSP-Light als Krypto-Kern verwenden.</Description>
+      </Profile>
+      <Profile id="SMAADMIN_AVAILABLE">
+        <Description>Test, wenn ein Administrator an der Sicherheitsmodulanwendung angemeldet werden kann.</Description>
+      </Profile>
+    </ProfileCategory>
+
+    <!-- Tabelle 3: Schnittstellen-Profile -->
+    <ProfileCategory id="interfaces">
+      <Title>Schnittstellen-Profile</Title>
+      <TableReference>Tabelle 3 der TR-03153-TS</TableReference>
+      <Profile id="II">
+        <Description>Tests für alle Einbindungsschnittstellen. Die Tests umfassen alle Funktionen und Eigenschaften der Einbindungsschnittstelle gemäß BSI TR-03153-1 und BSI TR-03151-1.</Description>
+      </Profile>
+      <Profile id="SDI">
+        <Description>Tests für Implementierungen der Einbindungsschnittstelle nach BSI TR-03151-2.</Description>
+      </Profile>
+      <Profile id="AUDIT_MODIFY">
+        <Description>Tests, wenn die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden können.</Description>
+      </Profile>
+      <Profile id="MULTI_CLIENT">
+        <Description>Tests für Technische Sicherheitseinrichtungen, die eine gleichzeitige Protokollierung von Transaktionen durch mehrere Aufzeichnungssysteme ermöglichen.</Description>
+      </Profile>
+      <Profile id="NO_MULTI_CLIENT">
+        <Description>Tests für Technische Sicherheitseinrichtungen, die nur eine Protokollierung von Transaktionen durch ein Aufzeichnungssystem ermöglichen.</Description>
+      </Profile>
+      <Profile id="LIMITED_CLIENTS_TRACKED">
+        <Description>Tests, wenn die TSE eine begrenzte Anzahl an Aufzeichnungssystemen unterstützt und die aktuelle Anzahl der Aufzeichnungssysteme nachgehalten wird.</Description>
+      </Profile>
+      <Profile id="UNLIMITED_CLIENTS_NOT_TRACKED">
+        <Description>Tests, wenn die TSE eine unbegrenzte Anzahl an Aufzeichnungssystemen unterstützt aber die aktuelle Anzahl der Aufzeichnungssysteme nicht nachgehalten wird.</Description>
+      </Profile>
+    </ProfileCategory>
+
+    <!-- Tabelle 4: Herstellerspezifische Funktionalitäten -->
+    <ProfileCategory id="additional">
+      <Title>Herstellerspezifische Funktionalitäten</Title>
+      <TableReference>Tabelle 4 der TR-03153-TS</TableReference>
+      <Profile id="ADDITIONAL_FUNCTIONALITIES">
+        <Description>Tests, wenn die Einbindungsschnittstelle Funktionalitäten bereitstellt, die nicht in der BSI TR-03153-1 beschrieben sind.</Description>
+      </Profile>
+      <Profile id="NO_ADDITIONAL_FUNCTIONALITIES">
+        <Description>Tests, wenn die Einbindungsschnittstelle keine Funktionalitäten bereitstellt, die nicht in der BSI TR-03153-1 beschrieben sind.</Description>
+      </Profile>
+    </ProfileCategory>
+
+    <!-- Tabelle 5: Optionale Funktionen der Einbindungsschnittstelle -->
+    <ProfileCategory id="optional_functions">
+      <Title>Optionale Funktionen der Einbindungsschnittstelle</Title>
+      <TableReference>Tabelle 5 der TR-03153-TS</TableReference>
+      <Profile id="II_UPDATEDEVICE">
+        <Description>Tests für die optionale Funktion updateDevice (Aktualisierung der Gerätesoftware).</Description>
+      </Profile>
+      <Profile id="II_NO_UPDATEDEVICE">
+        <Description>Tests, wenn die Funktion updateDevice nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_TOTALMEMORY">
+        <Description>Tests für die optionale Funktion getTotalMemory (Abfrage des Gesamtspeichers).</Description>
+      </Profile>
+      <Profile id="II_NO_TOTALMEMORY">
+        <Description>Tests, wenn die Funktion getTotalMemory nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_USEDMEMORY">
+        <Description>Tests für die optionale Funktion getUsedMemory (Abfrage des belegten Speichers).</Description>
+      </Profile>
+      <Profile id="II_NO_USEDMEMORY">
+        <Description>Tests, wenn die Funktion getUsedMemory nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_FREEMEMORY">
+        <Description>Tests für die optionale Funktion getFreeMemory (Abfrage des freien Speichers).</Description>
+      </Profile>
+      <Profile id="II_NO_FREEMEMORY">
+        <Description>Tests, wenn die Funktion getFreeMemory nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_DEVICEHEALTH">
+        <Description>Tests für die optionale Funktion getDeviceHealth (Abfrage des Gerätezustands).</Description>
+      </Profile>
+      <Profile id="II_NO_DEVICEHEALTH">
+        <Description>Tests, wenn die Funktion getDeviceHealth nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_GETVERSIONS">
+        <Description>Tests für die optionale Funktion getComponentVersions (Abfrage der Komponentenversionen).</Description>
+      </Profile>
+      <Profile id="II_NO_GETVERSIONS">
+        <Description>Tests, wenn die Funktion getComponentVersions nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_ENDOFUSAGEDATE">
+        <Description>Tests für die optionale Funktion getEndOfUsageDate (Abfrage des Enddatums der Nutzbarkeit).</Description>
+      </Profile>
+      <Profile id="II_NO_ENDOFUSAGEDATE">
+        <Description>Tests, wenn die Funktion getEndOfUsageDate nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_UPDATETIME">
+        <Description>Tests für die optionale Funktion updateTime (Aktualisierung der Zeit des Sicherheitsmoduls).</Description>
+      </Profile>
+      <Profile id="II_NO_UPDATETIME">
+        <Description>Tests, wenn die Funktion updateTime nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_CURRENTTIME">
+        <Description>Tests für die optionale Funktion getCurrentSeTime (Abfrage der aktuellen Zeit des Sicherheitselements).</Description>
+      </Profile>
+      <Profile id="II_NO_CURRENTTIME">
+        <Description>Tests, wenn die Funktion getCurrentSeTime nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_CONFIGLOGGING">
+        <Description>Tests für die optionale Funktion configureLogging (Konfiguration des Loggings).</Description>
+      </Profile>
+      <Profile id="II_NO_CONFIGLOGGING">
+        <Description>Tests, wenn die Funktion configureLogging nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_DELETELOGS">
+        <Description>Tests für die optionale Funktion deleteLogMessages (Löschen von Log-Nachrichten).</Description>
+      </Profile>
+      <Profile id="II_NO_DELETELOGS">
+        <Description>Tests, wenn die Funktion deleteLogMessages nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_RESTOREBACKUP">
+        <Description>Tests für die optionale Funktion restoreLogsFromBackup (Wiederherstellung von Logs aus Backup).</Description>
+      </Profile>
+      <Profile id="II_NO_RESTOREBACKUP">
+        <Description>Tests, wenn die Funktion restoreLogsFromBackup nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_EXPORTFILTERED">
+        <Description>Tests für die optionale Funktion exportFilteredTransactionLogs (gefilterter Export von Transaktions-Logs).</Description>
+      </Profile>
+      <Profile id="II_NO_EXPORTFILTERED">
+        <Description>Tests, wenn die Funktion exportFilteredTransactionLogs nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_CURNOCLIENTS">
+        <Description>Tests für die optionale Funktion getCurrentNumberOfClients (Abfrage der aktuellen Anzahl registrierter Clients).</Description>
+      </Profile>
+      <Profile id="II_NO_CURNOCLIENTS">
+        <Description>Tests, wenn die Funktion getCurrentNumberOfClients nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_MAXNOCLIENTS">
+        <Description>Tests für die optionale Funktion getMaxNumberOfClients (Abfrage der maximalen Anzahl registrierbarer Clients).</Description>
+      </Profile>
+      <Profile id="II_NO_MAXNOCLIENTS">
+        <Description>Tests, wenn die Funktion getMaxNumberOfClients nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_REGISTEREDCLIENTS">
+        <Description>Tests für die optionale Funktion getRegisteredClients (Abfrage der registrierten Aufzeichnungssysteme).</Description>
+      </Profile>
+      <Profile id="II_NO_REGISTEREDCLIENTS">
+        <Description>Tests, wenn die Funktion getRegisteredClients nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_CURNOTRANSACTIONS">
+        <Description>Tests für die optionale Funktion getCurrentNumberOfTransactions (Abfrage der aktuellen Anzahl offener Transaktionen).</Description>
+      </Profile>
+      <Profile id="II_NO_CURNOTRANSACTIONS">
+        <Description>Tests, wenn die Funktion getCurrentNumberOfTransactions nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_MAXNOTRANSACTIONS">
+        <Description>Tests für die optionale Funktion getMaxNumberOfTransactions (Abfrage der maximalen Anzahl offener Transaktionen).</Description>
+      </Profile>
+      <Profile id="II_NO_MAXNOTRANSACTIONS">
+        <Description>Tests, wenn die Funktion getMaxNumberOfTransactions nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_TRANSACTIONSTATE">
+        <Description>Tests für die optionale Funktion getTransactionState (Abfrage des Status einer Transaktion).</Description>
+      </Profile>
+      <Profile id="II_NO_TRANSACTIONSTATE">
+        <Description>Tests, wenn die Funktion getTransactionState nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_OPENTRANSACTIONS">
+        <Description>Tests für die optionale Funktion getOpenTransactions (Abfrage aller offenen Transaktionen).</Description>
+      </Profile>
+      <Profile id="II_NO_OPENTRANSACTIONS">
+        <Description>Tests, wenn die Funktion getOpenTransactions nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_LASTTRANSLOG">
+        <Description>Tests für die optionale Funktion getLastTransactionLogMessage (Abfrage der letzten Transaktions-Log-Nachricht).</Description>
+      </Profile>
+      <Profile id="II_NO_LASTTRANSLOG">
+        <Description>Tests, wenn die Funktion getLastTransactionLogMessage nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_LOCKTRANSLOGGING">
+        <Description>Tests für die optionale Funktion lockTransactionLogging (Sperren des Transaktions-Loggings).</Description>
+      </Profile>
+      <Profile id="II_NO_LOCKTRANSLOGGING">
+        <Description>Tests, wenn die Funktion lockTransactionLogging nicht unterstützt wird.</Description>
+      </Profile>
+      <Profile id="II_UNLOCKTRANSLOGGING">
+        <Description>Tests für die optionale Funktion unlockTransactionLogging (Entsperren des Transaktions-Loggings).</Description>
+      </Profile>
+      <Profile id="II_NO_UNLOCKTRANSLOGGING">
+        <Description>Tests, wenn die Funktion unlockTransactionLogging nicht unterstützt wird.</Description>
+      </Profile>
+    </ProfileCategory>
+
+    <!-- Tabelle 6: Allgemeine Profile -->
+    <ProfileCategory id="general">
+      <Title>Allgemeine Profile</Title>
+      <TableReference>Tabelle 6 der TR-03153-TS</TableReference>
+      <Profile id="TIME_SYNC">
+        <Description>Tests für Technische Sicherheitseinrichtungen, die über einen Mechanismus zum eigenständigen Stellen der Zeit des Sicherheitsmoduls (ohne Übergabe eines Zeitwerts) verfügen.</Description>
+      </Profile>
+      <Profile id="NO_TIME_SYNC">
+        <Description>Tests für Technische Sicherheitseinrichtungen, die über keinen Mechanismus zum eigenständigen Stellen der Zeit des Sicherheitsmoduls (ohne Übergabe eines Zeitwerts) verfügen.</Description>
+      </Profile>
+      <Profile id="CENTRAL_TIME">
+        <Description>Tests, wenn die Zeit zentral im fernverbundenen Sicherheitsmodul eingestellt wird.</Description>
+      </Profile>
+      <Profile id="NO_CENTRAL_TIME">
+        <Description>Tests, wenn die Zeit nicht zentral im fernverbundenen Sicherheitsmodul eingestellt wird.</Description>
+      </Profile>
+      <Profile id="DESCRIPTION_SET">
+        <Description>Tests, wenn bei der Produktion eine Beschreibung eingebracht wurde.</Description>
+      </Profile>
+      <Profile id="DESCRIPTION_NOT_SET">
+        <Description>Tests, wenn bei der Produktion keine Beschreibung eingebracht wurde.</Description>
+      </Profile>
+      <Profile id="RECERT">
+        <Description>Tests, wenn eine neue Version einer bereits zertifizierten TSE geprüft wird und die Beibehaltung der bereits verwendeten Signaturschlüssel geplant ist.</Description>
+      </Profile>
+      <Profile id="INTERIM_PKI_RULING">
+        <Description>Test, wenn die TSE bereits nach Version 1.0.1 der BSI TR-03153 zertifiziert wurde, wobei das PKI-Konzept mit dem BSI abgestimmt wurde und eine PKI verwendet wird, die über eine Zertifizierung nach Teil 1 der BSI TR-03145 verfügt.</Description>
+      </Profile>
+      <Profile id="NO_INTERIM_PKI_RULING">
+        <Description>Test, wenn die TSE nicht bereits nach Version 1.0.1 der BSI TR-03153 zertifiziert wurde oder keine PKI verwendet wird, die über eine Zertifizierung nach Teil 1 der BSI TR-03145 verfügt.</Description>
+      </Profile>
+      <Profile id="DIRECTORY_SERVICES">
+        <Description>Tests, wenn ein Verzeichnisdienst implementiert ist, über den die Zertifikate der TSE abgerufen werden können.</Description>
+      </Profile>
+      <Profile id="UPDATE_EXTERNAL">
+        <Description>Tests, wenn die TSE durch ein externes Programm aktualisiert werden kann.</Description>
+      </Profile>
+      <Profile id="UPDATE_EXTERNAL_LOGGED">
+        <Description>Tests, wenn eine Log-Nachricht für den Start einer Aktualisierung erstellt wird, wenn die Aktualisierung nicht über die Einbindungsschnittstelle ausgelöst wurde.</Description>
+      </Profile>
+      <Profile id="UPDATE_EXTERNAL_NOT_LOGGED">
+        <Description>Tests, wenn keine Log-Nachricht für den Start einer Aktualisierung erstellt wird, wenn die Aktualisierung nicht über die Einbindungsschnittstelle ausgelöst wurde.</Description>
+      </Profile>
+      <Profile id="EXPORTTOOL">
+        <Description>Tests, wenn für den Export der abgesicherten Daten (TAR-Container) ohne Hilfe des Aufzeichnungssystems zusätzliche Hilfstools benötigt werden.</Description>
+      </Profile>
+      <Profile id="NO_EXPORTTOOL">
+        <Description>Tests, wenn für den Export der abgesicherten Daten (TAR-Container) ohne Hilfe des Aufzeichnungssystems keine zusätzlichen Hilfstools benötigt werden.</Description>
+      </Profile>
+      <Profile id="PUK_BLOCKABLE">
+        <Description>Tests, wenn als Gegenmaßnahmen gegen Angriffe in Bezug auf das Erraten der PUK dieser zeitweise gesperrt wird.</Description>
+      </Profile>
+    </ProfileCategory>
+
+  </ProfileDefinitions>
+
+  <ChecklistSections>
+    
+    <!-- ============================================ -->
+    <!-- Abschnitt 1: Speichermedium -->
+    <!-- ============================================ -->
+    <Section id="storage">
+      <Title>Speichermedium</Title>
+      <Description>Angaben zum Speichermedium der Technischen Sicherheitseinrichtung (Tabelle 1 der TR-03153-TS)</Description>
+      
+      <Question id="storage_basic" type="boolean" required="true">
+        <Text>Die TSE verfügt über ein Speichermedium.</Text>
+        <HelpText>Tests und formelle Prüfungen, die von allen Speichermedien von Technischen Sicherheitseinrichtungen erfüllt werden müssen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>STORAGE_BASIC</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="storage_remote" type="boolean">
+        <Text>Die TSE hat ein fernverbundenes Speichermedium.</Text>
+        <HelpText>Formelle Prüfungen, die sich ausschließlich auf fernverbundene Speichermedien beziehen. Das Speichermedium ist nicht lokal, sondern über eine Netzwerkverbindung angebunden.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="storage_basic">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>STORAGE_REMOTE</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 2: Sicherheitsmodul - Architektur -->
+    <!-- ============================================ -->
+    <Section id="sm_arch">
+      <Title>Sicherheitsmodul - Architektur</Title>
+      <Description>Angaben zur Architektur des Sicherheitsmoduls (Tabelle 2 der TR-03153-TS)</Description>
+      
+      <Question id="sm_basic" type="boolean" required="true">
+        <Text>Die TSE verfügt über ein Sicherheitsmodul.</Text>
+        <HelpText>Tests und formelle Prüfungen, die von allen Sicherheitsmodulen von Technischen Sicherheitseinrichtungen erfüllt werden müssen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SM_BASIC</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="sm_remote" type="boolean">
+        <Text>Die TSE hat ein fernverbundenes Sicherheitsmodul.</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen, deren Sicherheitsmodul über ein Netzwerk angebunden ist (Cloud-TSE).</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="sm_basic">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SM_REMOTE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="sm_remote_components" type="boolean">
+        <Text>Die TSE hat ein Sicherheitsmodul mit fernverbundenen Komponenten.</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen, bei denen Teile des Sicherheitsmoduls über ein Netzwerk angebunden sind.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="sm_basic">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SM_REMOTE_COMPONENTS</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 3: Krypto-Kern (CSP) -->
+    <!-- ============================================ -->
+    <Section id="csp">
+      <Title>Krypto-Kern (CSP) Konfiguration</Title>
+      <Description>Angaben zur Konfiguration des Cryptographic Service Providers (Tabelle 2 der TR-03153-TS)</Description>
+      
+      <Question id="csp_entity" type="boolean">
+        <Text>CSP-Einheiten der TSE werden mit anderen logischen Einheiten zu einem sicherheitseinrichtungsübergreifenden CSP zusammengefasst.</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen, deren CSP-Einheiten mit anderen logischen Einheiten zusammengefasst werden.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>CSP_ENTITY</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="csp_cluster" type="boolean">
+        <Text>Die TSE enthält einen Krypto-Kern der als Cluster betrieben wird.</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen mit einem Krypto-Kern im Cluster-Betrieb.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>CSP_CLUSTER</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="csp_light" type="boolean">
+        <Text>Die TSE verwendet einen CSP-Light als Krypto-Kern.</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen mit CSP-Light (reduzierter Funktionsumfang).</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>CSP_LIGHT</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 4: Sicherheitsmodul - Verhalten -->
+    <!-- ============================================ -->
+    <Section id="sm_behavior">
+      <Title>Sicherheitsmodul - Verhalten</Title>
+      <Description>Angaben zum Verhalten des Sicherheitsmoduls bei Signaturen und Transaktionen</Description>
+      
+      <Question id="sm_aggregation" type="choice" group="aggregation">
+        <Text>Wie werden Aktualisierungen (Updates) von der TSE signiert?</Text>
+        <HelpText>Wählen Sie, ob Updates direkt signiert oder aggregiert (zusammengefasst) abgesichert werden.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="noagg">
+          <Profile>SM_NOAGG</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="agg">
+          <Profile>SM_AGG</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="both">
+          <Profile>SM_NOAGG</Profile>
+          <Profile>SM_AGG</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="sm_indef" type="choice" group="indef">
+        <Text>Kann die TSE Log-Nachrichten mit indefinite length encoding erzeugen?</Text>
+        <HelpText>Betrifft die ASN.1-Kodierung von Log-Nachrichten für aggregierte Aktualisierungen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>SM_INDEF</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>SM_NO_INDEF</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="sm_multi" type="boolean">
+        <Text>Die TSE kann mehrere Transaktionen parallel verwalten.</Text>
+        <HelpText>Tests für Sicherheitsmodule, die mehrere parallele Transaktionen verwalten können.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SM_MULTI</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="smaadmin_available" type="boolean">
+        <Text>Es kann ein Administrator an der Sicherheitsmodulanwendung angemeldet werden.</Text>
+        <HelpText>Tests, wenn ein Administrator-Konto an der Sicherheitsmodulanwendung verfügbar ist.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SMAADMIN_AVAILABLE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="audit_modify" type="boolean">
+        <Text>Die Einstellungen der Audit-Funktionalität können nach der initialen Einstellung verändert werden.</Text>
+        <HelpText>Tests, wenn die Audit-Einstellungen der Sicherheitsmodulanwendung nach der Erstkonfiguration noch geändert werden können.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>AUDIT_MODIFY</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 5: Schnittstellen -->
+    <!-- ============================================ -->
+    <Section id="interfaces">
+      <Title>Schnittstellen</Title>
+      <Description>Angaben zu den implementierten Schnittstellen (Tabelle 3 der TR-03153-TS)</Description>
+      
+      <Question id="ii_basic" type="boolean" required="true">
+        <Text>Alle Schnittstellen der TSE implementieren alle verpflichtenden Funktionen und Eigenschaften gemäß BSI TR-03153-1 und BSI TR-03151-1.</Text>
+        <HelpText>Grundlegende Schnittstellenkonformität nach den technischen Richtlinien.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>II</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="sdi" type="boolean" required="true">
+        <Text>Die TSE implementiert mindestens eine Schnittstelle gemäß BSI TR-03151-2 (Standardisierte Digitale Schnittstelle).</Text>
+        <HelpText>Die TSE muss mindestens eine standardisierte Digitale Schnittstelle implementieren.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>SDI</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="additional_functions" type="choice" group="additional">
+        <Text>Implementiert die Schnittstelle zusätzliche Funktionen neben der Einheitlichen Digitalen Schnittstelle?</Text>
+        <HelpText>Wählen Sie, ob die Schnittstellen neben den Funktionen der Einheitlichen Digitalen Schnittstelle gemäß BSI TR-03153-1 weitere Funktionen implementieren.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="sdi">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="no">
+          <Profile>NO_ADDITIONAL_FUNCTIONALITIES</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="yes">
+          <Profile>ADDITIONAL_FUNCTIONALITIES</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 6: Client-Verwaltung -->
+    <!-- ============================================ -->
+    <Section id="clients">
+      <Title>Client-Verwaltung (Aufzeichnungssysteme)</Title>
+      <Description>Angaben zur Verwaltung von Aufzeichnungssystemen</Description>
+      
+      <Question id="multi_client" type="choice" group="client">
+        <Text>Kann die TSE von mehreren Aufzeichnungssystemen gleichzeitig verwendet werden?</Text>
+        <HelpText>Wählen Sie, ob die TSE gleichzeitig von mehreren Aufzeichnungssystemen für die Protokollierung von Transaktionen verwendet werden kann.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="no">
+          <Profile>NO_MULTI_CLIENT</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="yes">
+          <Profile>MULTI_CLIENT</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="client_tracking" type="choice" group="tracking">
+        <Text>Wie werden Aufzeichnungssysteme von der TSE nachgehalten?</Text>
+        <HelpText>Nur relevant wenn mehrere Clients unterstützt werden. Wählen Sie, ob die TSE eine begrenzte oder unbegrenzte Anzahl an Aufzeichnungssystemen unterstützt.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="multi_client">
+            <Value>yes</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="limited_tracked">
+          <Profile>LIMITED_CLIENTS_TRACKED</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="unlimited_not_tracked">
+          <Profile>UNLIMITED_CLIENTS_NOT_TRACKED</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 7: Zeitführung -->
+    <!-- ============================================ -->
+    <Section id="time">
+      <Title>Zeitführung</Title>
+      <Description>Angaben zur Zeitführung der TSE (Tabelle 6 der TR-03153-TS)</Description>
+      
+      <Question id="time_sync" type="choice" group="timesync">
+        <Text>Verfügt die TSE über einen Mechanismus zum eigenständigen Stellen der Zeit?</Text>
+        <HelpText>Tests für Technische Sicherheitseinrichtungen, die über einen Mechanismus zum eigenständigen Stellen der Zeit des Sicherheitsmoduls (ohne Übergabe eines Zeitwerts durch ein Aufzeichnungssystem) verfügen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>TIME_SYNC</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>NO_TIME_SYNC</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="central_time" type="choice" group="centraltime">
+        <Text>Wird die Zeit zentral im fernverbundenen Sicherheitsmodul eingestellt?</Text>
+        <HelpText>Nur relevant bei fernverbundenem Sicherheitsmodul oder fernverbundenen Komponenten. Tests, wenn die Zeit zentral im fernverbundenen Sicherheitsmodul eingestellt wird.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="sm_remote">
+            <Value>true</Value>
+          </Condition>
+          <Condition questionId="sm_remote_components">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>CENTRAL_TIME</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>NO_CENTRAL_TIME</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 8: Verfügbare Funktionen (Tabelle 8) -->
+    <!-- ============================================ -->
+    <Section id="functions">
+      <Title>Optionale Funktionen der Einbindungsschnittstelle</Title>
+      <Description>Angaben zu den optionalen Funktionen gemäß BSI TR-03153-1, Tabelle 8. Für jede Funktion muss angegeben werden, ob sie von der TSE unterstützt wird.</Description>
+      
+      <Question id="fn_updatedevice" type="choice" group="updatedevice">
+        <Text>Unterstützt die TSE die Funktion updateDevice?</Text>
+        <HelpText>Funktion zur Aktualisierung der Gerätesoftware über die Einbindungsschnittstelle.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_UPDATEDEVICE</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_UPDATEDEVICE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_gettotalmemory" type="choice" group="gettotalmemory">
+        <Text>Unterstützt die TSE die Funktion getTotalMemory?</Text>
+        <HelpText>Funktion zur Abfrage des Gesamtspeichers der TSE.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_TOTALMEMORY</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_TOTALMEMORY</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getusedmemory" type="choice" group="getusedmemory">
+        <Text>Unterstützt die TSE die Funktion getUsedMemory?</Text>
+        <HelpText>Funktion zur Abfrage des belegten Speichers der TSE.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_USEDMEMORY</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_USEDMEMORY</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getfreememory" type="choice" group="getfreememory">
+        <Text>Unterstützt die TSE die Funktion getFreeMemory?</Text>
+        <HelpText>Funktion zur Abfrage des freien Speichers der TSE.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_FREEMEMORY</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_FREEMEMORY</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getdevicehealth" type="choice" group="getdevicehealth">
+        <Text>Unterstützt die TSE die Funktion getDeviceHealth?</Text>
+        <HelpText>Funktion zur Abfrage des Gerätezustands.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_DEVICEHEALTH</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_DEVICEHEALTH</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getcomponentversions" type="choice" group="getcomponentversions">
+        <Text>Unterstützt die TSE die Funktion getComponentVersions?</Text>
+        <HelpText>Funktion zur Abfrage der Versionen aller Komponenten der TSE.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_GETVERSIONS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_GETVERSIONS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getendofusagedate" type="choice" group="getendofusagedate">
+        <Text>Unterstützt die TSE die Funktion getEndOfUsageDate?</Text>
+        <HelpText>Funktion zur Abfrage des Enddatums der Nutzbarkeit der TSE.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_ENDOFUSAGEDATE</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_ENDOFUSAGEDATE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_updatetime" type="choice" group="updatetime">
+        <Text>Unterstützt die TSE die Funktion updateTime?</Text>
+        <HelpText>Funktion zur Aktualisierung der Zeit des Sicherheitsmoduls.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_UPDATETIME</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_UPDATETIME</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getcurrentsetime" type="choice" group="getcurrentsetime">
+        <Text>Unterstützt die TSE die Funktion getCurrentSeTime?</Text>
+        <HelpText>Funktion zur Abfrage der aktuellen Zeit des Sicherheitselements.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_CURRENTTIME</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_CURRENTTIME</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_configurelogging" type="choice" group="configurelogging">
+        <Text>Unterstützt die TSE die Funktion configureLogging?</Text>
+        <HelpText>Funktion zur Konfiguration des Loggings der Sicherheitsmodulanwendung.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_CONFIGLOGGING</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_CONFIGLOGGING</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_deletelogmessages" type="choice" group="deletelogmessages">
+        <Text>Unterstützt die TSE die Funktion deleteLogMessages?</Text>
+        <HelpText>Funktion zum Löschen von Log-Nachrichten aus dem Speicher.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_DELETELOGS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_DELETELOGS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_restorelogsfrombackup" type="choice" group="restorelogsfrombackup">
+        <Text>Unterstützt die TSE die Funktion restoreLogsFromBackup?</Text>
+        <HelpText>Funktion zur Wiederherstellung von Logs aus einem Backup.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_RESTOREBACKUP</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_RESTOREBACKUP</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_exportfilteredtransactionlogs" type="choice" group="exportfilteredtransactionlogs">
+        <Text>Unterstützt die TSE die Funktion exportFilteredTransactionLogs?</Text>
+        <HelpText>Funktion zum gefilterten Export von Transaktions-Logs.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_EXPORTFILTERED</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_EXPORTFILTERED</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getcurrentnumberofclients" type="choice" group="getcurrentnumberofclients">
+        <Text>Unterstützt die TSE die Funktion getCurrentNumberOfClients?</Text>
+        <HelpText>Funktion zur Abfrage der aktuellen Anzahl registrierter Aufzeichnungssysteme.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_CURNOCLIENTS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_CURNOCLIENTS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getmaxnumberofclients" type="choice" group="getmaxnumberofclients">
+        <Text>Unterstützt die TSE die Funktion getMaxNumberOfClients?</Text>
+        <HelpText>Funktion zur Abfrage der maximalen Anzahl registrierbarer Aufzeichnungssysteme.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_MAXNOCLIENTS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_MAXNOCLIENTS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getregisteredclients" type="choice" group="getregisteredclients">
+        <Text>Unterstützt die TSE die Funktion getRegisteredClients?</Text>
+        <HelpText>Funktion zur Abfrage der Liste aller registrierten Aufzeichnungssysteme.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_REGISTEREDCLIENTS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_REGISTEREDCLIENTS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getcurrentnumberoftransactions" type="choice" group="getcurrentnumberoftransactions">
+        <Text>Unterstützt die TSE die Funktion getCurrentNumberOfTransactions?</Text>
+        <HelpText>Funktion zur Abfrage der aktuellen Anzahl offener Transaktionen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_CURNOTRANSACTIONS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_CURNOTRANSACTIONS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getmaxnumberoftransactions" type="choice" group="getmaxnumberoftransactions">
+        <Text>Unterstützt die TSE die Funktion getMaxNumberOfTransactions?</Text>
+        <HelpText>Funktion zur Abfrage der maximalen Anzahl gleichzeitig offener Transaktionen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_MAXNOTRANSACTIONS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_MAXNOTRANSACTIONS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_gettransactionstate" type="choice" group="gettransactionstate">
+        <Text>Unterstützt die TSE die Funktion getTransactionState?</Text>
+        <HelpText>Funktion zur Abfrage des Status einer bestimmten Transaktion.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_TRANSACTIONSTATE</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_TRANSACTIONSTATE</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getopentransactions" type="choice" group="getopentransactions">
+        <Text>Unterstützt die TSE die Funktion getOpenTransactions?</Text>
+        <HelpText>Funktion zur Abfrage aller offenen Transaktionen.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_OPENTRANSACTIONS</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_OPENTRANSACTIONS</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_getlasttransactionlogmessage" type="choice" group="getlasttransactionlogmessage">
+        <Text>Unterstützt die TSE die Funktion getLastTransactionLogMessage?</Text>
+        <HelpText>Funktion zur Abfrage der letzten Transaktions-Log-Nachricht.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_LASTTRANSLOG</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_LASTTRANSLOG</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_locktransactionlogging" type="choice" group="locktransactionlogging">
+        <Text>Unterstützt die TSE die Funktion lockTransactionLogging?</Text>
+        <HelpText>Funktion zum temporären Sperren des Transaktions-Loggings.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_LOCKTRANSLOGGING</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_LOCKTRANSLOGGING</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="fn_unlocktransactionlogging" type="choice" group="unlocktransactionlogging">
+        <Text>Unterstützt die TSE die Funktion unlockTransactionLogging?</Text>
+        <HelpText>Funktion zum Entsperren des Transaktions-Loggings.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>II_UNLOCKTRANSLOGGING</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>II_NO_UNLOCKTRANSLOGGING</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 9: Allgemeine Eigenschaften -->
+    <!-- ============================================ -->
+    <Section id="general">
+      <Title>Allgemeine Eigenschaften</Title>
+      <Description>Weitere allgemeine Eigenschaften der TSE (Tabelle 6 der TR-03153-TS)</Description>
+      
+      <Question id="directory_services" type="boolean">
+        <Text>Es ist ein Verzeichnisdienst implementiert, über den die Zertifikate der TSE abgerufen werden können.</Text>
+        <HelpText>Tests, wenn ein Verzeichnisdienst implementiert ist, über den die Zertifikate der TSE abgerufen werden können.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>DIRECTORY_SERVICES</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="description_set" type="choice" group="description">
+        <Text>Wurde bei der Produktion eine Beschreibung der TSE eingebracht?</Text>
+        <HelpText>Tests, wenn bei der Produktion eine Beschreibung für die TSE eingebracht wurde.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>DESCRIPTION_SET</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>DESCRIPTION_NOT_SET</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="exporttool" type="choice" group="exporttool">
+        <Text>Werden für den Export der abgesicherten Daten (TAR-Container) ohne Hilfe des Aufzeichnungssystems zusätzliche Hilfstools benötigt?</Text>
+        <HelpText>Tests, wenn für den Export der abgesicherten Daten, in Form des TAR-Containers, ohne Hilfe des Aufzeichnungssystems, zusätzliche Hilfstools benötigt werden.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>EXPORTTOOL</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>NO_EXPORTTOOL</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="puk_blockable" type="boolean">
+        <Text>Als Gegenmaßnahme gegen Angriffe in Bezug auf das Erraten der PUK wird dieser zeitweise gesperrt.</Text>
+        <HelpText>Tests, wenn als Gegenmaßnahmen gegen Angriffe in Bezug auf das Erraten der PUK dieser zeitweise gesperrt wird.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>PUK_BLOCKABLE</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 10: Aktualisierung -->
+    <!-- ============================================ -->
+    <Section id="update">
+      <Title>Aktualisierung (Updates)</Title>
+      <Description>Angaben zur Aktualisierung der TSE</Description>
+      
+      <Question id="update_external" type="boolean">
+        <Text>Die TSE kann über eine andere Schnittstelle als die Einheitliche Digitale Schnittstelle aktualisiert werden.</Text>
+        <HelpText>Tests, wenn die TSE durch ein externes Programm (nicht über die Einheitliche Digitale Schnittstelle gemäß BSI TR-03153-1) aktualisiert werden kann.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>UPDATE_EXTERNAL</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="update_external_logged" type="choice" group="updatelogged">
+        <Text>Wird eine Log-Nachricht für den Start einer Aktualisierung erstellt, wenn die Aktualisierung nicht über die Einbindungsschnittstelle ausgelöst wurde?</Text>
+        <HelpText>Nur relevant wenn externe Updates unterstützt werden. Tests, wenn eine Log-Nachricht für den Start einer Aktualisierung erstellt wird, wenn die Aktualisierung nicht über die Einbindungsschnittstelle ausgelöst wurde.</HelpText>
+        <DependsOn logic="OR">
+          <Condition questionId="update_external">
+            <Value>true</Value>
+          </Condition>
+        </DependsOn>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>UPDATE_EXTERNAL_LOGGED</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>UPDATE_EXTERNAL_NOT_LOGGED</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+    <!-- ============================================ -->
+    <!-- Abschnitt 11: Zertifizierung -->
+    <!-- ============================================ -->
+    <Section id="certification">
+      <Title>Zertifizierung</Title>
+      <Description>Angaben zur Zertifizierung der TSE</Description>
+      
+      <Question id="recert" type="boolean">
+        <Text>Es handelt sich um eine Re-Zertifizierung einer bereits zertifizierten TSE mit Beibehaltung der Signaturschlüssel.</Text>
+        <HelpText>Tests, wenn eine neue Version einer bereits zertifizierten TSE geprüft wird und die Beibehaltung der bereits verwendeten Signaturschlüssel geplant ist.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="true">
+          <Profile>RECERT</Profile>
+        </ProfileMapping>
+      </Question>
+      
+      <Question id="interim_pki_ruling" type="choice" group="interimpki">
+        <Text>Wurde die TSE bereits nach BSI TR-03153 Version 1.0.1 mit abgestimmtem PKI-Konzept zertifiziert?</Text>
+        <HelpText>Relevant für PKI-Übergangsregelung. Test, wenn die TSE bereits nach Version 1.0.1 der BSI TR-03153 zertifiziert wurde, wobei das PKI-Konzept mit dem BSI abgestimmt wurde und eine PKI verwendet wird, die über eine Zertifizierung nach Teil 1 der BSI TR-03145 verfügt.</HelpText>
+        <Answer answered="false"/>
+        <ProfileMapping condition="yes">
+          <Profile>INTERIM_PKI_RULING</Profile>
+        </ProfileMapping>
+        <ProfileMapping condition="no">
+          <Profile>NO_INTERIM_PKI_RULING</Profile>
+        </ProfileMapping>
+      </Question>
+    </Section>
+
+  </ChecklistSections>
+
+  <DerivedProfiles>
+    <!-- Wird automatisch basierend auf den Antworten gefüllt -->
+  </DerivedProfiles>
+
+</ProfileConfiguration>

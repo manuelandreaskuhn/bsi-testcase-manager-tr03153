@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase id="I_INIT_01" xmlns="http://bsi.bund.de/TR03153">
+	<Title>Test case I_INIT_01</Title>
+	<Version>1.1.0</Version>
+	<Purpose>Prüfung der korrekten Initialisierung der Technischen Sicherheitseinrichtung (TSE).</Purpose>
+	<Profiles>
+		<Profile>I_INITIALIZATION</Profile>
+	</Profiles>
+	<References>
+		<Reference>BSI TR-03153-1</Reference>
+		<Reference>BSI TR-03151-1</Reference>
+	</References>
+	<TestSteps>
+		<TestStep>
+			<Command>Aufruf der Initialisierungsfunktion der TSE.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die TSE wird erfolgreich initialisiert.</ExpectedResult>
+				<ExpectedResult>Der Initialisierungsstatus wird auf "initialisiert" gesetzt.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Abfrage des aktuellen Status der TSE.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Der Status zeigt "initialisiert" an.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+	</TestSteps>
+</TestCase>

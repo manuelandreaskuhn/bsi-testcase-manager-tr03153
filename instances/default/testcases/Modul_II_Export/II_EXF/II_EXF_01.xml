@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase id="II_EXF_01" xmlns="http://bsi.bund.de/TR03153">
+	<Title>Test case II_EXF_01</Title>
+	<Version>1.1.0</Version>
+	<Purpose>Prüfung, ob die Funktionalität zum Export aller Log-Nachrichten korrekt funktioniert.</Purpose>
+	<Profiles>
+		<Profile>II_EXPORT</Profile>
+	</Profiles>
+	<References>
+		<Reference>BSI TR-03153-1</Reference>
+	</References>
+	<Preconditions>
+		<Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+	</Preconditions>
+	<TestSteps>
+		<TestStep>
+			<Command>Aufruf der Funktionalität zum Export aller Log-Nachrichten.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+				<ExpectedResult>Es wird ein TAR-Container zurückgegeben.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Validierung des TAR-Container Formats.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Der TAR-Container entspricht dem erwarteten Format.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+	</TestSteps>
+</TestCase>

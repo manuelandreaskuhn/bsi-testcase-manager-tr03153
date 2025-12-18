@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase id="II_EXF_01_B" xmlns="http://bsi.bund.de/TR03153">
+	<Title>Test case II_EXF_01 Variante B - Export mit ID-Filter</Title>
+	<Version>1.1.0</Version>
+	<Purpose>Prüfung des Exports mit ID-Filter (Variante B).</Purpose>
+	<Profiles>
+		<Profile>II_EXPORT</Profile>
+	</Profiles>
+	<References>
+		<Reference>BSI TR-03153-1</Reference>
+	</References>
+	<Preconditions>
+		<Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+	</Preconditions>
+	<TestSteps>
+		<TestStep>
+			<Command>Aufruf der Export-Funktionalität mit ID-Filter.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+				<ExpectedResult>Nur Log-Nachrichten mit angegebener ID werden exportiert.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+	</TestSteps>
+</TestCase>

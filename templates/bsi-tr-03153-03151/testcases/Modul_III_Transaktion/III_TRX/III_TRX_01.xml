@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase id="III_TRX_01" xmlns="http://bsi.bund.de/TR03153">
+	<Title>Test case III_TRX_01</Title>
+	<Version>1.1.0</Version>
+	<Purpose>Prüfung des korrekten Startens einer Transaktion.</Purpose>
+	<Profiles>
+		<Profile>III_TRANSACTION</Profile>
+	</Profiles>
+	<References>
+		<Reference>BSI TR-03153-1</Reference>
+	</References>
+	<Preconditions>
+		<Precondition>Die TSE wurde initialisiert.</Precondition>
+		<Precondition>Ein Aufzeichnungssystem ist registriert.</Precondition>
+	</Preconditions>
+	<TestSteps>
+		<TestStep>
+			<Command>Aufruf der Funktion zum Starten einer Transaktion mit gültiger clientId.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Eine neue Transaktionsnummer wird zurückgegeben.</ExpectedResult>
+				<ExpectedResult>Die Transaktion wurde gestartet.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Abfrage des Transaktionsstatus.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Transaktion ist im Status "offen".</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+	</TestSteps>
+</TestCase>

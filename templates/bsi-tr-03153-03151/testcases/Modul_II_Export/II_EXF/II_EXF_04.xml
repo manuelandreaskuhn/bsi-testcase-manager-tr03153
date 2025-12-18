@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase id="II_EXF_04" xmlns="http://bsi.bund.de/TR03153">
+	<Title>Test case II_EXF_04</Title>
+	<Version>1.1.0</Version>
+	<Purpose>Prüfung, ob die Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten bei einem Aufruf mit den Eingabeparametern transactionNumber und clientId die folgende Aktion durchführt:
+• Export von Log-Nachrichten für die Transaktionsnummer und Client-ID.
+
+In dem Intervall von der Log-Nachricht für den Start der Transaktion und der Log-Nachricht für die Beendigung der Transaktion sind ausschließlich Transaktions-Log-Nachrichten enthalten.</Purpose>
+	<Profiles>
+		<Profile>II_EXPORTFILTERED</Profile>
+	</Profiles>
+	<References>
+		<Reference>BSI TR-03153-1</Reference>
+		<Reference>BSI TR-03151-1</Reference>
+	</References>
+	<Preconditions>
+		<Precondition>Die Technische Sicherheitseinrichtung wurde initialisiert.</Precondition>
+		<Precondition>Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert.</Precondition>
+		<Precondition>Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert.</Precondition>
+		<Precondition>Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert.</Precondition>
+	</Preconditions>
+	<TestSteps>
+		<TestStep>
+			<Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+				<ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben. Dieser wird als $tn1 festgehalten.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client2 festgehalten.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+		<TestStep>
+			<Command>Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.</Command>
+			<ExpectedResults>
+				<ExpectedResult>Die Ausführung wird ohne Fehlermeldung beendet.</ExpectedResult>
+				<ExpectedResult>Über den Rückgabewert transactionNumber wird ein Wert zurückgegeben.</ExpectedResult>
+			</ExpectedResults>
+		</TestStep>
+	</TestSteps>
+</TestCase>
