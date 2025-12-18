@@ -3,34 +3,20 @@
  * Handles listing, creating, and managing instances
  */
 
-const express = require('express');
-const router = express.Router();
 const fs = require('fs').promises;
-const fsSync = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
-const { INSTANCES_ROOT, TEMPLATES_ROOT } = require('../../config/testcases');
-const { copyDirectory } = require('../../utils/testcases');
+const { INSTANCES_ROOT, TEMPLATES_ROOT } = require('../../config');
 
 // Valid instance name pattern (URL-safe)
 const INSTANCE_NAME_PATTERN = /^[a-zA-Z0-9_-]+$/;
 
-/**
- * GET /api/instances
- * List all available instances
- */
-router.get('/', async (req, res) => {
+
+async function getInstances() {
   try {
-    // Ensure instances directory exists
-    try {
-      await fs.access(INSTANCES_ROOT);
-    } catch {
-      await fs.mkdir(INSTANCES_ROOT, { recursive: true });
-    }
-    
     const entries = await fs.readdir(INSTANCES_ROOT, { withFileTypes: true });
     const instances = [];
-    
+
     // Import utilities
     const { parseProfilesXML } = require('../../utils/testcases/xml');
     const { calculateDerivedProfiles, collectAllTestcases } = require('../../utils/testcases/testcase');
@@ -52,7 +38,9 @@ router.get('/', async (req, res) => {
           profileFilterMode: 'OR',
           moduleCount: 0,
           testcaseCount: 0,
-          filteredTestcaseCount: 0
+          filteredTestcaseCount: 0,
+          hasInterfaces: false,
+          hasTestCases: false
         };
         
         // Check for profiles - prefer profiles.xml over template (now in testcases/ subfolder)
@@ -108,6 +96,8 @@ router.get('/', async (req, res) => {
           } else {
             info.filteredTestcaseCount = info.testcaseCount;
           }
+
+          info.hasTestCases = info.testcaseCount > 0;
         } catch (err) {
           console.warn('Error counting testcases:', err.message);
         }
@@ -115,106 +105,16 @@ router.get('/', async (req, res) => {
         instances.push(info);
       }
     }
-    
-    res.json({ instances });
+    return instances;
   } catch (error) {
     console.error('Error listing instances:', error);
-    res.status(500).json({ error: error.message });
+    throw error;
   }
-});
+}
 
-/**
- * POST /api/instances
- * Create a new instance
- */
-router.post('/', async (req, res) => {
-  try {
-    const { name, templateId } = req.body;
-    
-    // Validate name
-    if (!name || !INSTANCE_NAME_PATTERN.test(name)) {
-      return res.status(400).json({ 
-        error: 'Ungültiger Instanzname. Erlaubt sind nur: a-z, A-Z, 0-9, _ und -' 
-      });
-    }
-    
-    const instancePath = path.join(INSTANCES_ROOT, name);
-    
-    // Check if already exists
-    if (fsSync.existsSync(instancePath)) {
-      return res.status(409).json({ error: `Instanz "${name}" existiert bereits` });
-    }
-    
-    // Create from template or empty
-    if (templateId) {
-      const templatePath = path.join(TEMPLATES_ROOT, templateId);
-      
-      if (!fsSync.existsSync(templatePath)) {
-        return res.status(404).json({ error: `Template "${templateId}" nicht gefunden` });
-      }
-      
-      // Copy template
-      await copyDirectory(templatePath, instancePath);
-      
-      // Remove TemplateInfo from profiles-template.xml (now in testcases/ subfolder)
-      const profilesPath = path.join(instancePath, 'testcases', 'profiles-template.xml');
-      if (fsSync.existsSync(profilesPath)) {
-        try {
-          const xmlContent = await fs.readFile(profilesPath, 'utf-8');
-          const parser = new xml2js.Parser({ explicitArray: false, attrkey: '$' });
-          const result = await parser.parseStringPromise(xmlContent);
-          
-          if (result.ProfileConfiguration?.TemplateInfo) {
-            delete result.ProfileConfiguration.TemplateInfo;
-            
-            const builder = new xml2js.Builder({ 
-              headless: false, 
-              renderOpts: { pretty: true, indent: '  ', newline: '\n' }
-            });
-            const newXml = builder.buildObject(result);
-            await fs.writeFile(profilesPath, newXml, 'utf-8');
-          }
-        } catch (err) {
-          console.warn('Could not remove TemplateInfo:', err.message);
-        }
-      }
-      
-      res.status(201).json({ 
-        success: true, 
-        message: `Instanz "${name}" aus Template "${templateId}" erstellt`,
-        instanceId: name
-      });
-    } else {
-      // Create empty instance with subfolders
-      await fs.mkdir(instancePath, { recursive: true });
-      await fs.mkdir(path.join(instancePath, 'testcases'), { recursive: true });
-      await fs.mkdir(path.join(instancePath, 'interfacedesign'), { recursive: true });
-      
-      res.status(201).json({ 
-        success: true, 
-        message: `Leere Instanz "${name}" erstellt`,
-        instanceId: name
-      });
-    }
-  } catch (error) {
-    console.error('Error creating instance:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
 
-/**
- * GET /api/templates
- * List all available templates
- */
-router.get('/templates', async (req, res) => {
+async function getTemplates() {
   try {
-    // Ensure templates directory exists
-    try {
-      await fs.access(TEMPLATES_ROOT);
-    } catch {
-      await fs.mkdir(TEMPLATES_ROOT, { recursive: true });
-    }
-    
     const entries = await fs.readdir(TEMPLATES_ROOT, { withFileTypes: true });
     const templates = [];
     
@@ -229,7 +129,9 @@ router.get('/templates', async (req, res) => {
           name: entry.name,
           description: '',
           moduleCount: 0,
-          testcaseCount: 0
+          testcaseCount: 0,
+          hasInterfaces: false,
+          hasTestCases: false
         };
         
         // Get template info (now in testcases/ subfolder)
@@ -269,44 +171,15 @@ router.get('/templates', async (req, res) => {
         templates.push(template);
       }
     }
-    
-    res.json({ templates });
+    return templates;
   } catch (error) {
     console.error('Error listing templates:', error);
-    res.status(500).json({ error: error.message });
+    throw error;
   }
-});
+}
 
-/**
- * GET /api/debug
- * Debug info for troubleshooting
- */
-router.get('/debug', async (req, res) => {
-  const debug = {
-    cwd: process.cwd(),
-    instancesRoot: INSTANCES_ROOT,
-    instancesRootResolved: path.resolve(INSTANCES_ROOT),
-    templatesRoot: TEMPLATES_ROOT,
-    templatesRootResolved: path.resolve(TEMPLATES_ROOT),
-    instances: [],
-    templates: []
-  };
-  
-  try {
-    const instanceEntries = await fs.readdir(INSTANCES_ROOT, { withFileTypes: true });
-    debug.instances = instanceEntries.filter(e => e.isDirectory() && !e.name.startsWith('.')).map(e => e.name);
-  } catch (err) {
-    debug.instancesError = err.message;
-  }
-  
-  try {
-    const templateEntries = await fs.readdir(TEMPLATES_ROOT, { withFileTypes: true });
-    debug.templates = templateEntries.filter(e => e.isDirectory() && !e.name.startsWith('.')).map(e => e.name);
-  } catch (err) {
-    debug.templatesError = err.message;
-  }
-  
-  res.json(debug);
-});
 
-module.exports = router;
+module.exports = {
+  getInstances,
+  getTemplates
+}

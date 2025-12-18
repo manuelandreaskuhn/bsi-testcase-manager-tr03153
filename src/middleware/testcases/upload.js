@@ -6,7 +6,7 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
-const { INSTANCES_ROOT, UPLOAD_CONFIG } = require('../../config/testcases');
+const { INSTANCES_ROOT, UPLOAD_CONFIG } = require('../../config');
 
 /**
  * Storage configuration for multer

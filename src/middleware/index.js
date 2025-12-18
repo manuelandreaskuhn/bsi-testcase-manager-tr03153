@@ -5,8 +5,10 @@
 
 const testcasesMiddleware = require('./testcases');
 const interfacedesignMiddleware = require('./interfacedesign');
+const globalMiddleware = require('./global');
 
 module.exports = {
   testcases: testcasesMiddleware,
-  interfacedesign: interfacedesignMiddleware
+  interfacedesign: interfacedesignMiddleware,
+  global: globalMiddleware
 };

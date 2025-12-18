@@ -8,7 +8,7 @@ const router = express.Router();
 const fs = require('fs').promises;
 const path = require('path');
 const xml2js = require('xml2js');
-const { validateInstance } = require('../../middleware/testcases');
+const { validateInstance } = require('../../middleware/global');
 const { 
   readFolderStructure, 
   searchTestcases, 

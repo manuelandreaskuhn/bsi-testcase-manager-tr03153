@@ -8,7 +8,7 @@ const router = express.Router();
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
-const { validateInstance } = require('../../middleware/testcases');
+const { validateInstance } = require('../../middleware/global');
 const { 
   getProfilesStructure, 
   getHashtagsStructure,

@@ -11,12 +11,12 @@ const getBaseDir = () => {
   if (process.pkg) {
     return path.dirname(process.execPath);
   }
-  // Now in src/config/testcases, so go up 3 levels
-  return path.join(__dirname, '..', '..', '..');
+  // Now in src/config, so go up 2 levels
+  return path.join(__dirname, '..', '..');
 };
 
 const BASE_DIR = getBaseDir();
-const SRC_DIR = __dirname.includes('snapshot') ? __dirname.replace(/src[\/\\]config[\/\\]testcases$/, '') : path.join(__dirname, '..', '..', '..');
+const SRC_DIR = __dirname.includes('snapshot') ? __dirname.replace(/src[\/\\]config[\/\\]testcases$/, '') : path.join(__dirname, '..', '..');
 
 // Directory paths
 const PUBLIC_DIR = path.join(SRC_DIR, 'public');

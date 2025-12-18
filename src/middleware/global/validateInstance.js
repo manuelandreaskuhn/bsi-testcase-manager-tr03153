@@ -5,7 +5,7 @@
 
 const path = require('path');
 const fsSync = require('fs');
-const { INSTANCES_ROOT } = require('../../config/testcases');
+const { INSTANCES_ROOT } = require('../../config');
 
 /**
  * Middleware to validate instance exists and is accessible

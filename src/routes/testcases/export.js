@@ -15,8 +15,8 @@ const {
   HeadingLevel
 } = require('docx');
 
-const { validateInstance } = require('../../middleware/testcases');
-const { REPORT_TEMPLATES_DIR, STATUS_COLORS } = require('../../config/testcases');
+const { validateInstance } = require('../../middleware/global');
+const { REPORT_TEMPLATES_DIR, STATUS_COLORS } = require('../../config');
 const { 
   collectAllTestcases, 
   collectDetailedTestcases,

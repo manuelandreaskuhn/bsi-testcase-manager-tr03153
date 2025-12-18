@@ -5,8 +5,10 @@
 
 const testcasesRoutes = require('./testcases');
 const interfacedesignRoutes = require('./interfacedesign');
+const globalRoutes = require('./global');
 
 module.exports = {
   testcases: testcasesRoutes,
-  interfacedesign: interfacedesignRoutes
+  interfacedesign: interfacedesignRoutes,
+  global: globalRoutes,
 };

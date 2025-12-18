@@ -9,14 +9,20 @@ const path = require('path');
 
 // Global configuration
 const globalConfig = require('./config');
+const globalMiddleware = require('./middleware/global');
+const globalRoutes = require('./routes/global');
 
 // Import testcases module
-const testcasesMiddleware = require('./middleware/testcases');
-const testcasesRoutes = require('./routes/testcases');
+let testcasesRoutes;
+try {
+  testcasesRoutes = require('./routes/testcases');
+} catch (err) { console.info("Testcase Module not found") }
 
 // Import interfacedesign module
-const interfacedesignMiddleware = require('./middleware/interfacedesign');
-const interfacedesignRoutes = require('./routes/interfacedesign');
+let interfacedesignRoutes;
+try {
+  interfacedesignRoutes = require('./routes/interfacedesign');
+} catch (err) { console.info("InterfaceDesign Module not found") }
 
 const app = express();
 
@@ -35,55 +41,57 @@ app.use(express.static(globalConfig.PUBLIC_DIR));
 // ============================================
 
 // Instance management (no instance prefix)
-app.use('/api/instances', testcasesRoutes.instances);
+app.use('/api/instances', globalRoutes.instances);
 app.use('/api/templates', (req, res, next) => {
   // Redirect /api/templates to instances router which handles it
   req.url = '/templates' + req.url;
-  testcasesRoutes.instances(req, res, next);
-});
-app.use('/api/debug', (req, res, next) => {
-  req.url = '/debug';
-  testcasesRoutes.instances(req, res, next);
+  globalRoutes.instances(req, res, next);
 });
 
 // Instance-specific routes for testcases
-app.use('/api', testcasesRoutes.testcases);
-app.use('/api', testcasesRoutes.profiles);
-app.use('/api', testcasesRoutes.export);
-app.use('/api', testcasesRoutes.notesAttachments);
+if(testcasesRoutes) {
+  app.use('/api', testcasesRoutes.testcases);
+  app.use('/api', testcasesRoutes.profiles);
+  app.use('/api', testcasesRoutes.export);
+  app.use('/api', testcasesRoutes.notesAttachments);
+}
 
 // ============================================
 // API Routes - InterfaceDesign Module (placeholder)
 // ============================================
 
 // InterfaceDesign API routes
-app.use('/api/interfacedesign', interfacedesignRoutes.main);
+if (interfacedesignRoutes) {
+  app.use('/api', interfacedesignRoutes.main);
+}
 
 // ============================================
 // HTML Routing - Module Selection based on URL
 // ============================================
 
 // InterfaceDesign Module HTML
-app.get('/:instance/interfacedesign', interfacedesignMiddleware.validateInstance, (req, res) => {
-  res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'interfacedesign.html'));
-});
+if (interfacedesignRoutes) {
+  app.get('/:instance/interfacedesign', globalMiddleware.validateInstance, (req, res) => {
+    res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'interfacedesign.html'));
+  });
 
-app.get('/:instance/interfacedesign/*path', interfacedesignMiddleware.validateInstance, (req, res) => {
-  res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'interfacedesign.html'));
-});
+  app.get('/:instance/interfacedesign/*path', globalMiddleware.validateInstance, (req, res) => {
+    res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'interfacedesign.html'));
+  });
+}
 
 // TestCases Module HTML (default)
-app.get('/:instance/*path', testcasesMiddleware.validateInstance, (req, res) => {
+app.get('/:instance/*path', globalMiddleware.validateInstance, (req, res) => {
   res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'testcases.html'));
 });
 
-app.get('/:instance', testcasesMiddleware.validateInstance, (req, res) => {
+app.get('/:instance', globalMiddleware.validateInstance, (req, res) => {
   res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'testcases.html'));
 });
 
-// Root - Instance Selection (served by testcases.html)
+// Root - Instance Selection (served by index.html)
 app.get('/', (req, res) => {
-  res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'testcases.html'));
+  res.sendFile(path.join(globalConfig.PUBLIC_DIR, 'index.html'));
 });
 
 // ============================================

@@ -8,8 +8,8 @@ const router = express.Router();
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
-const { validateInstance, upload } = require('../../middleware/testcases');
-const { INSTANCES_ROOT } = require('../../config/testcases');
+const { validateInstance } = require('../../middleware/global');
+const { upload } = require('../../middleware/testcases');
 const { parseTestcaseXML, saveTestcaseXML } = require('../../utils/testcases');
 
 // ============================================
