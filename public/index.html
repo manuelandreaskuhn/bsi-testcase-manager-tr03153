@@ -131,7 +131,12 @@
           });
           const data = await response.json();
           if (response.ok) {
-            window.location.href = `/${newInstanceName}`;
+            if(data.hasTestcases && data.testcaseCount > 0) {
+              window.location.href = `/${newInstanceName}`;
+            }
+            else if(data.hasInterfaces) {
+              window.location.href = `/${newInstanceName}/interfacedesign`;
+            }
           } else {
             setError(data.error);
           }
@@ -141,8 +146,12 @@
         setCreating(false);
       };
 
-      const openInstance = (instanceId) => {
-        window.location.href = `/${instanceId}`;
+      const openInstance = (instanceid, instancehastestcase, instancehasinterfaces) => {
+        if(instancehastestcase) {
+          window.location.href = `/${instanceid}`;
+        } else if(instancehasinterfaces) {
+          window.location.href = `/${instanceid}/interfacedesign`;
+        }
       };
 
       const selectedTemplate = templates.find(t => t.id === selectedTemplateId);
@@ -204,7 +213,7 @@
                   {instances.map((instance) => (
                     <button
                       key={instance.id}
-                      onClick={() => openInstance(instance.id)}
+                      onClick={() => openInstance(instance.id, instance.hasTestCases, instance.hasInterfaces)}
                       className="w-full text-left p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors group"
                     >
                       <div className="flex items-start justify-between">

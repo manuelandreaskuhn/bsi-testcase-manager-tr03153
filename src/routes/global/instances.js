@@ -90,11 +90,20 @@ router.post('/', async (req, res) => {
       
       // Copy template
       await copyDirectory(templatePath, instancePath);
+
+      const hasTestcases = fsSync.existsSync(path.join(templatePath, 'testcases'));
+      const testcaseCount = hasTestcases ? (await fs.readdir(path.join(templatePath, 'testcases'))).length : 0;
+      const hasInterfaces = fsSync.existsSync(path.join(templatePath, 'interfacedesign'));
+      const interfaceCount = hasInterfaces ? (await fs.readdir(path.join(templatePath, 'interfacedesign'))).length : 0;
       
       res.status(201).json({ 
         success: true, 
         message: `Instanz "${name}" aus Template "${templateId}" erstellt`,
-        instanceId: name
+        instanceId: name,
+        hasTestcases,
+        testcaseCount,
+        hasInterfaces,
+        interfaceCount
       });
     } else {
       // Create empty instance with subfolders
@@ -105,7 +114,11 @@ router.post('/', async (req, res) => {
       res.status(201).json({ 
         success: true, 
         message: `Leere Instanz "${name}" erstellt`,
-        instanceId: name
+        instanceId: name,
+        hasTestcases: false,
+        testcaseCount: 0,
+        hasInterfaces: true,
+        interfaceCount: 0
       });
     }
   } catch (error) {
