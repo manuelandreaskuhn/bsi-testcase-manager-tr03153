@@ -4,7 +4,6 @@
  */
 
 const fs = require('fs').promises;
-const fsSync = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
 
@@ -439,28 +438,6 @@ async function getDashboardData(rootPath) {
 }
 
 /**
- * Copy directory recursively
- * @param {string} src - Source path
- * @param {string} dest - Destination path
- */
-async function copyDirectory(src, dest) {
-  await fs.mkdir(dest, { recursive: true });
-  
-  const entries = await fs.readdir(src, { withFileTypes: true });
-  
-  for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
-    
-    if (entry.isDirectory()) {
-      await copyDirectory(srcPath, destPath);
-    } else {
-      await fs.copyFile(srcPath, destPath);
-    }
-  }
-}
-
-/**
  * Get profiles structure (testcases grouped by profile)
  * @param {string} rootPath - Root path of the instance
  * @returns {Object} Profiles with their testcases
@@ -686,7 +663,6 @@ module.exports = {
   readFolderStructure,
   searchTestcases,
   getDashboardData,
-  copyDirectory,
   getProfilesStructure,
   getHashtagsStructure
 };

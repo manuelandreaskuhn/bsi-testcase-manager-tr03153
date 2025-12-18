@@ -17,7 +17,6 @@ module.exports = {
   readFolderStructure: fileSystem.readFolderStructure,
   searchTestcases: fileSystem.searchTestcases,
   getDashboardData: fileSystem.getDashboardData,
-  copyDirectory: fileSystem.copyDirectory,
   getProfilesStructure: fileSystem.getProfilesStructure,
   getHashtagsStructure: fileSystem.getHashtagsStructure,
   

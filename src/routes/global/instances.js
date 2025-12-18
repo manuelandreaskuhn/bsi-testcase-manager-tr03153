@@ -9,7 +9,7 @@ const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
 const { INSTANCES_ROOT, TEMPLATES_ROOT } = require('../../config');
-const { copyDirectory } = require('../../utils/testcases');
+const { copyDirectory } = require('../../utils/global');
 
 // Valid instance name pattern (URL-safe)
 const INSTANCE_NAME_PATTERN = /^[a-zA-Z0-9_-]+$/;
