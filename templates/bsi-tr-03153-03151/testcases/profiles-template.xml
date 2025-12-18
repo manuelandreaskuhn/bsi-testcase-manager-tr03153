@@ -4,8 +4,8 @@
   <!-- Template Information - wird bei Instanz-Erstellung entfernt -->
   <TemplateInfo>
     <Id>bsi-tr-03153</Id>
-    <Name>BSI TR-03153-1 Komplett</Name>
-    <Description>Vollständiges Template mit allen Profildefinitionen gemäß BSI TR-03153-TS (Tabellen 1-6) und ICS-Checkliste (Kapitel 5.1). Enthält 85 Profile in 6 Kategorien und Beispiel-Testcases.</Description>
+    <Name>BSI TR-03153-1</Name>
+    <Description>Vollständiges Template mit allen Profildefinitionen gemäß BSI TR-03153-TS (Tabellen 1-6) und ICS-Checkliste (Kapitel 5.1). Enthält 85 Profile in 6 Kategorien und Testcases.</Description>
   </TemplateInfo>
 
   <Metadata>
