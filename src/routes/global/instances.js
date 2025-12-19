@@ -162,6 +162,10 @@ router.get('/templates', async (req, res) => {
             const match = templates.find(t => t.id === template.id);
             if (match) {
                 match.hasInterfaces = template.hasInterfaces;
+                match.functionCount = template.functionCount || 0;
+                match.exceptionCount = template.exceptionCount || 0;
+                match.typeCount = template.typeCount || 0;
+                match.enumCount = template.enumCount || 0;
             } else {
                 templates.push(template);
             }

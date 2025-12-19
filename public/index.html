@@ -66,6 +66,7 @@
       const [newInstanceName, setNewInstanceName] = useState('');
       const [selectedTemplateId, setSelectedTemplateId] = useState('');
       const [creating, setCreating] = useState(false);
+      const [redirecting, setRedirecting] = useState(false);
       const [loadingTemplates, setLoadingTemplates] = useState(false);
 
       const loadInstances = async () => {
@@ -131,19 +132,28 @@
           });
           const data = await response.json();
           if (response.ok) {
-            if(data.hasTestcases && data.testcaseCount > 0) {
-              window.location.href = `/${newInstanceName}`;
-            }
-            else if(data.hasInterfaces) {
-              window.location.href = `/${newInstanceName}/interfacedesign`;
-            }
+            setCreating(false);
+            setRedirecting(true);
+            // Small delay to show the redirecting state
+            setTimeout(() => {
+              if(data.hasTestcases && data.testcaseCount > 0) {
+                window.location.href = `/${newInstanceName}`;
+              }
+              else if(data.hasInterfaces) {
+                window.location.href = `/${newInstanceName}/interfacedesign`;
+              } else {
+                // Fallback: go to home
+                window.location.href = `/`;
+              }
+            }, 300);
           } else {
             setError(data.error);
+            setCreating(false);
           }
         } catch (err) {
           setError('Fehler beim Erstellen der Instanz');
+          setCreating(false);
         }
-        setCreating(false);
       };
 
       const selectedTemplate = templates.find(t => t.id === selectedTemplateId);
@@ -378,7 +388,7 @@
           {/* Create Instance Modal */}
           {showCreateModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl">
+              <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl relative overflow-hidden">
                 <h3 className="text-lg font-semibold mb-4">
                   <Icon name="plus-circle" className="mr-2 text-green-500" />
                   Neue Instanz erstellen
@@ -396,6 +406,7 @@
                     className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="meine-tse-v1"
                     pattern="[a-zA-Z0-9_-]+"
+                    disabled={creating || redirecting}
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Erlaubt: a-z, A-Z, 0-9, _ und -
@@ -417,7 +428,7 @@
                   ) : templates.length === 0 ? (
                     <div className="p-3 bg-gray-50 rounded border text-gray-500 text-sm">
                       <Icon name="info-circle" className="mr-1" />
-                      Keine Templates verfügbar. Erstellen Sie einen Ordner in <code className="bg-gray-200 px-1 rounded">templates/</code> mit einer <code className="bg-gray-200 px-1 rounded">profiles-template.xml</code>.
+                      Keine Templates verfügbar. Erstellen Sie einen Ordner in <code className="bg-gray-200 px-1 rounded">templates/</code> mit Testcases oder Schnittstellendefinitionen.
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -443,7 +454,7 @@
                           </div>
                           <div>
                             <div className="font-medium text-gray-800">Leere Instanz</div>
-                            <div className="text-xs text-gray-500">Nur Basis-Konfiguration ohne Testcases</div>
+                            <div className="text-xs text-gray-500">Basis-Konfiguration ohne Testcases und Schnittstellendefinitionen</div>
                           </div>
                         </div>
                       </label>
@@ -475,11 +486,37 @@
                               {template.description && (
                                 <div className="text-xs text-gray-500 mt-1">{template.description}</div>
                               )}
-                              <div className="flex gap-3 mt-1 text-xs text-gray-400">
-                                <span><Icon name="folder" className="mr-1" />{template.moduleCount} Module</span>
-                                <span><Icon name="file-code" className="mr-1" />{template.testcaseCount} Testcases</span>
-                                <span><Icon name="id-badge" className="mr-1" />{template.profileCount} Profile</span>
-                              </div>
+                              
+                              {/* Testcases Info */}
+                              {(template.testcaseCount > 0 || template.moduleCount > 0) && (
+                                <div className="flex gap-3 mt-2 text-xs text-blue-500">
+                                  <span className="font-medium"><Icon name="clipboard-list" className="mr-1" />Testcases:</span>
+                                  <span><Icon name="folder" className="mr-1" />{template.moduleCount} Module</span>
+                                  <span><Icon name="file-code" className="mr-1" />{template.testcaseCount} Tests</span>
+                                  {template.profileCount > 0 && (
+                                    <span><Icon name="id-badge" className="mr-1" />{template.profileCount} Profile</span>
+                                  )}
+                                </div>
+                              )}
+                              
+                              {/* InterfaceDesign Info */}
+                              {(template.functionCount > 0 || template.exceptionCount > 0 || template.typeCount > 0 || template.enumCount > 0) && (
+                                <div className="flex gap-3 mt-1 text-xs text-emerald-600">
+                                  <span className="font-medium"><Icon name="project-diagram" className="mr-1" />Schnittstelle:</span>
+                                  <span><Icon name="code" className="mr-1" />{template.functionCount} Fkt.</span>
+                                  <span><Icon name="exclamation-triangle" className="mr-1" />{template.exceptionCount} Exc.</span>
+                                  <span><Icon name="cube" className="mr-1" />{template.typeCount} Types</span>
+                                  <span><Icon name="list-ol" className="mr-1" />{template.enumCount} Enums</span>
+                                </div>
+                              )}
+                              
+                              {/* Empty template indicator */}
+                              {!template.testcaseCount && !template.functionCount && !template.exceptionCount && !template.typeCount && !template.enumCount && (
+                                <div className="mt-1 text-xs text-gray-400">
+                                  <Icon name="inbox" className="mr-1" />
+                                  Leeres Template
+                                </div>
+                              )}
                             </div>
                           </div>
                         </label>
@@ -490,27 +527,62 @@
 
                 {/* Selected Template Info */}
                 {selectedTemplate && (
-                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded text-sm">
-                    <div className="font-medium text-blue-800 mb-1">
-                      <Icon name="info-circle" className="mr-1" />
-                      Ausgewähltes Template: {selectedTemplate.name}
+                  <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-emerald-50 border border-blue-200 rounded-lg">
+                    <div className="font-medium text-gray-800 mb-3 flex items-center">
+                      <Icon name="info-circle" className="mr-2 text-blue-500" />
+                      Ausgewähltes Template: <span className="ml-1 text-blue-700">{selectedTemplate.name}</span>
                     </div>
-                    <div className="text-blue-600">
-                      Die Instanz wird mit {selectedTemplate.moduleCount} Modulen, {selectedTemplate.testcaseCount} Testcases und {selectedTemplate.profileCount} Profilen erstellt.
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {/* Testcases Summary */}
+                      <div className={`p-3 rounded-lg ${selectedTemplate.testcaseCount > 0 ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Icon name="clipboard-list" className={selectedTemplate.testcaseCount > 0 ? 'text-blue-600' : 'text-gray-400'} />
+                          <span className={`font-medium ${selectedTemplate.testcaseCount > 0 ? 'text-blue-800' : 'text-gray-500'}`}>
+                            Testcases
+                          </span>
+                        </div>
+                        {selectedTemplate.testcaseCount > 0 ? (
+                          <div className="text-sm text-blue-700">
+                            {selectedTemplate.moduleCount} Module, {selectedTemplate.testcaseCount} Testcases
+                            {selectedTemplate.profileCount > 0 && `, ${selectedTemplate.profileCount} Profile`}
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-400">Keine Testcases</div>
+                        )}
+                      </div>
+                      
+                      {/* InterfaceDesign Summary */}
+                      <div className={`p-3 rounded-lg ${(selectedTemplate.functionCount > 0 || selectedTemplate.typeCount > 0) ? 'bg-emerald-100' : 'bg-gray-100'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Icon name="project-diagram" className={(selectedTemplate.functionCount > 0 || selectedTemplate.typeCount > 0) ? 'text-emerald-600' : 'text-gray-400'} />
+                          <span className={`font-medium ${(selectedTemplate.functionCount > 0 || selectedTemplate.typeCount > 0) ? 'text-emerald-800' : 'text-gray-500'}`}>
+                            Schnittstellendesign
+                          </span>
+                        </div>
+                        {(selectedTemplate.functionCount > 0 || selectedTemplate.typeCount > 0) ? (
+                          <div className="text-sm text-emerald-700">
+                            {selectedTemplate.functionCount} Funktionen, {selectedTemplate.exceptionCount} Exceptions, {selectedTemplate.typeCount} Types, {selectedTemplate.enumCount} Enums
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-400">Keine Schnittstellendefinitionen</div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
 
                 <div className="flex justify-end gap-3">
                   <button
-                    onClick={() => { setShowCreateModal(false); setNewInstanceName(''); setSelectedTemplateId(''); }}
+                    onClick={() => { setShowCreateModal(false); setNewInstanceName(''); setSelectedTemplateId(''); setRedirecting(false); }}
                     className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                    disabled={creating || redirecting}
                   >
                     Abbrechen
                   </button>
                   <button
                     onClick={createInstance}
-                    disabled={creating || !newInstanceName.trim()}
+                    disabled={creating || redirecting || !newInstanceName.trim()}
                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 flex items-center gap-2"
                   >
                     {creating ? (
@@ -526,6 +598,17 @@
                     )}
                   </button>
                 </div>
+                
+                {/* Redirecting Overlay - dimmed with loading spinner */}
+                {redirecting && (
+                  <div className="absolute inset-0 bg-slate-900 bg-opacity-80 rounded-lg flex flex-col items-center justify-center z-10">
+                    <div className="bg-white rounded-xl p-8 shadow-2xl flex flex-col items-center">
+                      <div className="loading-spinner w-16 h-16 mb-4" style={{borderWidth: '4px', borderTopColor: '#10b981'}}></div>
+                      <p className="text-xl font-semibold text-gray-800">Instanz wird geladen...</p>
+                      <p className="text-sm text-gray-500 mt-2">Dies kann einen Moment dauern</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
