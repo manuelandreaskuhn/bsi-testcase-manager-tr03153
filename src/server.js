@@ -50,7 +50,6 @@ Verfügbare URLs:
   http://localhost:${PORT}/           - Instanz-Auswahl
   http://localhost:${PORT}/<instance> - Instanz öffnen
   http://localhost:${PORT}/<instance>/interfacedesign - InterfaceDesign öffnen
-  http://localhost:${PORT}/api/interfacedesign/status - API Status
 =================================================
 `);
 });
