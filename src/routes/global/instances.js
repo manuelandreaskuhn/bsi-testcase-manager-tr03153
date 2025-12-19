@@ -45,6 +45,10 @@ router.get('/', async (req, res) => {
             const match = instances.find(i => i.id === instance.id);
             if (match) {
                 match.hasInterfaces = instance.hasInterfaces;
+                match.functionCount = instance.functionCount || 0;
+                match.exceptionCount = instance.exceptionCount || 0;
+                match.typeCount = instance.typeCount || 0;
+                match.enumCount = instance.enumCount || 0;
             } else {
                 instances.push(instance);
             }

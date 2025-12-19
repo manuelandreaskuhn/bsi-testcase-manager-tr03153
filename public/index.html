@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Testcase Manager</title>
+  <title>Instanz-Manager</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
@@ -146,14 +146,6 @@
         setCreating(false);
       };
 
-      const openInstance = (instanceid, instancehastestcase, instancehasinterfaces) => {
-        if(instancehastestcase) {
-          window.location.href = `/${instanceid}`;
-        } else if(instancehasinterfaces) {
-          window.location.href = `/${instanceid}/interfacedesign`;
-        }
-      };
-
       const selectedTemplate = templates.find(t => t.id === selectedTemplateId);
 
       if (loading) {
@@ -166,17 +158,17 @@
 
       return (
         <div className="min-h-screen bg-gray-100">
-          <header className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-6 shadow-lg">
-            <div className="max-w-4xl mx-auto px-4">
+          <header className="bg-gradient-to-r from-slate-700 to-slate-900 text-white py-6 shadow-lg">
+            <div className="max-w-5xl mx-auto px-4">
               <h1 className="text-3xl font-bold flex items-center gap-3">
-                <Icon name="clipboard-check" />
-                Testcase Manager
+                <Icon name="server" />
+                Instanz-Manager
               </h1>
-              <p className="text-blue-200 mt-2">Wählen Sie eine Instanz oder erstellen Sie eine neue</p>
+              <p className="text-slate-300 mt-2">Testcases &amp; Schnittstellendesign verwalten</p>
             </div>
           </header>
 
-          <main className="max-w-4xl mx-auto px-4 py-8">
+          <main className="max-w-5xl mx-auto px-4 py-8">
             {error && (
               <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
                 <Icon name="exclamation-circle" />
@@ -187,10 +179,10 @@
               </div>
             )}
 
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold text-gray-800">
-                  <Icon name="folder-open" className="mr-2 text-blue-500" />
+                  <Icon name="folder-open" className="mr-2 text-slate-500" />
                   Verfügbare Instanzen
                 </h2>
                 <button
@@ -209,56 +201,169 @@
                   <p className="text-sm mt-2">Erstellen Sie eine neue Instanz oder legen Sie einen Ordner im <code className="bg-gray-100 px-1 rounded">instances/</code> Verzeichnis an.</p>
                 </div>
               ) : (
-                <div className="grid gap-4">
+                <div className="grid gap-6">
                   {instances.map((instance) => (
-                    <button
+                    <div
                       key={instance.id}
-                      onClick={() => openInstance(instance.id, instance.hasTestCases, instance.hasInterfaces)}
-                      className="w-full text-left p-4 border rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors group"
+                      className="border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                     >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 bg-blue-100 rounded-lg text-blue-600 group-hover:bg-blue-200">
-                            <Icon name="box" className="text-xl" />
+                      {/* Info Section - Not clickable */}
+                      <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-4 text-white">
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 bg-white/20 rounded-lg">
+                            <Icon name="box" className="text-2xl" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-800 group-hover:text-blue-700">
-                              {instance.name}
-                            </h3>
-                            <p className="text-sm text-gray-500">ID: {instance.id}</p>
-                            {instance.manufacturer && (
-                              <p className="text-sm text-gray-500">Hersteller: {instance.manufacturer}</p>
+                            <h3 className="font-bold text-lg">{instance.name}</h3>
+                            <p className="text-slate-300 text-sm">ID: {instance.id}</p>
+                            {(instance.manufacturer || instance.version) && (
+                              <div className="flex gap-4 mt-1 text-xs text-slate-400">
+                                {instance.manufacturer && (
+                                  <span><Icon name="industry" className="mr-1" />{instance.manufacturer}</span>
+                                )}
+                                {instance.version && (
+                                  <span><Icon name="tag" className="mr-1" />v{instance.version}</span>
+                                )}
+                              </div>
                             )}
-                            {instance.version && (
-                              <p className="text-sm text-gray-500">Version: {instance.version}</p>
-                            )}
-                            <div className="flex gap-4 mt-2 text-xs text-gray-400">
-                              <span><Icon name="folder" className="mr-1" />{instance.moduleCount} Module</span>
-                              <span>
-                                <Icon name="file-code" className="mr-1" />
-                                {instance.profilesCompleted && instance.filteredTestcaseCount !== instance.testcaseCount 
-                                  ? `${instance.filteredTestcaseCount}/${instance.testcaseCount}` 
-                                  : instance.testcaseCount} Testcases
-                              </span>
-                              {instance.hasProfiles && (
-                                instance.profilesCompleted ? (
-                                  <span className="text-green-500">
-                                    <Icon name="check-circle" className="mr-1" />
-                                    ICS ✓ ({instance.activeProfileCount} Profile)
-                                  </span>
-                                ) : (
-                                  <span className="text-yellow-500">
-                                    <Icon name="edit" className="mr-1" />
-                                    ICS nicht ausgefüllt
-                                  </span>
-                                )
-                              )}
-                            </div>
                           </div>
                         </div>
-                        <Icon name="arrow-right" className="text-gray-400 group-hover:text-blue-500" />
                       </div>
-                    </button>
+
+                      {/* Two Column Section */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                        
+                        {/* Testcases Section - Clickable */}
+                        <div
+                          onClick={() => instance.hasTestCases && (window.location.href = `/${instance.id}`)}
+                          className={`p-4 ${instance.hasTestCases 
+                            ? 'cursor-pointer hover:bg-blue-50 transition-colors group' 
+                            : 'bg-gray-50 opacity-60'}`}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className={`font-semibold flex items-center gap-2 ${
+                              instance.hasTestCases ? 'text-blue-700 group-hover:text-blue-800' : 'text-gray-500'
+                            }`}>
+                              <Icon name="clipboard-list" />
+                              Testcases
+                            </h4>
+                            {instance.hasTestCases && (
+                              <Icon name="arrow-right" className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                            )}
+                          </div>
+                          
+                          {instance.hasTestCases ? (
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">
+                                  <Icon name="folder" className="mr-1 text-blue-400" />
+                                  Module
+                                </span>
+                                <span className="font-medium text-gray-800">{instance.moduleCount}</span>
+                              </div>
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">
+                                  <Icon name="file-code" className="mr-1 text-blue-400" />
+                                  Testcases
+                                </span>
+                                <span className="font-medium text-gray-800">
+                                  {instance.profilesCompleted && instance.filteredTestcaseCount !== instance.testcaseCount 
+                                    ? `${instance.filteredTestcaseCount} / ${instance.testcaseCount}` 
+                                    : instance.testcaseCount}
+                                </span>
+                              </div>
+                              {instance.hasProfiles && (
+                                <div className="flex justify-between text-sm">
+                                  <span className="text-gray-600">
+                                    <Icon name="id-badge" className="mr-1 text-blue-400" />
+                                    ICS Status
+                                  </span>
+                                  {instance.profilesCompleted ? (
+                                    <span className="text-green-600 font-medium">
+                                      <Icon name="check-circle" className="mr-1" />
+                                      {instance.activeProfileCount} Profile
+                                    </span>
+                                  ) : (
+                                    <span className="text-yellow-600 font-medium">
+                                      <Icon name="edit" className="mr-1" />
+                                      Nicht ausgefüllt
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="text-center py-4 text-gray-400">
+                              <Icon name="times-circle" className="text-2xl mb-1" />
+                              <p className="text-xs">Keine Testcases</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Interface Design Section - Clickable */}
+                        <div
+                          onClick={() => instance.hasInterfaces && (window.location.href = `/${instance.id}/interfacedesign`)}
+                          className={`p-4 ${instance.hasInterfaces 
+                            ? 'cursor-pointer hover:bg-emerald-50 transition-colors group' 
+                            : 'bg-gray-50 opacity-60'}`}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className={`font-semibold flex items-center gap-2 ${
+                              instance.hasInterfaces ? 'text-emerald-700 group-hover:text-emerald-800' : 'text-gray-500'
+                            }`}>
+                              <Icon name="project-diagram" />
+                              Schnittstellendesign
+                            </h4>
+                            {instance.hasInterfaces && (
+                              <Icon name="arrow-right" className="text-gray-300 group-hover:text-emerald-500 transition-colors" />
+                            )}
+                          </div>
+                          
+                          {instance.hasInterfaces && (instance.functionCount > 0 || instance.exceptionCount > 0 || instance.typeCount > 0 || instance.enumCount > 0) ? (
+                            <div className="grid grid-cols-2 gap-2">
+                              <div className="flex justify-between text-sm bg-blue-50 rounded px-2 py-1">
+                                <span className="text-gray-600">
+                                  <Icon name="code" className="mr-1 text-blue-500" />
+                                  Funktionen
+                                </span>
+                                <span className="font-medium text-blue-700">{instance.functionCount || 0}</span>
+                              </div>
+                              <div className="flex justify-between text-sm bg-red-50 rounded px-2 py-1">
+                                <span className="text-gray-600">
+                                  <Icon name="exclamation-triangle" className="mr-1 text-red-500" />
+                                  Exceptions
+                                </span>
+                                <span className="font-medium text-red-700">{instance.exceptionCount || 0}</span>
+                              </div>
+                              <div className="flex justify-between text-sm bg-purple-50 rounded px-2 py-1">
+                                <span className="text-gray-600">
+                                  <Icon name="cube" className="mr-1 text-purple-500" />
+                                  Types
+                                </span>
+                                <span className="font-medium text-purple-700">{instance.typeCount || 0}</span>
+                              </div>
+                              <div className="flex justify-between text-sm bg-amber-50 rounded px-2 py-1">
+                                <span className="text-gray-600">
+                                  <Icon name="list-ol" className="mr-1 text-amber-500" />
+                                  Enums
+                                </span>
+                                <span className="font-medium text-amber-700">{instance.enumCount || 0}</span>
+                              </div>
+                            </div>
+                          ) : instance.hasInterfaces ? (
+                            <div className="text-center py-4 text-gray-400">
+                              <Icon name="folder-open" className="text-2xl mb-1" />
+                              <p className="text-xs">Leer</p>
+                            </div>
+                          ) : (
+                            <div className="text-center py-4 text-gray-400">
+                              <Icon name="times-circle" className="text-2xl mb-1" />
+                              <p className="text-xs">Nicht verfügbar</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
